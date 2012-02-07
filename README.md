@@ -16,7 +16,7 @@ In the future it will also provide connectors to RDF Stores like [AllegoGraph](h
 
 #### Usage example
 
-    var _QuadStore = new QuadStore<String, String, String, String, String>(
+    var _QuadStore = new QuadStore<String, String, String, String>(
                              SystemId:        "System1",
                              QuadIdConverter: (QuadId) => QuadId.ToString(),
                              DefaultContext:  ()       => "0");
