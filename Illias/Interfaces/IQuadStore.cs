@@ -30,9 +30,19 @@ namespace de.ahzf.Illias
     /// Subject -Predicate-> Object [Context]
     /// Vertex  -Edge->      Vertex [HyperEdge]
     /// </summary>
-    /// <typeparam name="T">The type of the subjects, predicates and objects of the stored quads.</typeparam>
-    public interface IQuadStore<T>
-        where T : IEquatable<T>, IComparable<T>, IComparable
+    /// <typeparam name="TSystemId">The type of the SystemId.</typeparam>
+    /// <typeparam name="TQuadId">The type of the QuadId.</typeparam>
+    /// <typeparam name="TTransactionId">The type of the transaction id.</typeparam>
+    /// <typeparam name="TSPO">The type of the subjects, predicates and objects.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
+    public interface IQuadStore<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+        where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
+        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+
     {
 
         #region BeginTransaction(...)
@@ -47,12 +57,13 @@ namespace de.ahzf.Illias
         /// <param name="CreationTime">The timestamp when this transaction started.</param>
         /// <param name="InvalidationTime">The timestamp when this transaction will be invalid.</param>
         /// <returns>A new transaction object.</returns>
-        Transaction<T> BeginTransaction(String         Name             = "",
-                                        Boolean        Distributed      = false,
-                                        Boolean        LongRunning      = false,
-                                        IsolationLevel IsolationLevel   = IsolationLevel.Write,
-                                        DateTime?      CreationTime     = null,
-                                        DateTime?      InvalidationTime = null);
+        Transaction<TTransactionId, TSystemId>
+            BeginTransaction(String         Name             = "",
+                             Boolean        Distributed      = false,
+                             Boolean        LongRunning      = false,
+                             IsolationLevel IsolationLevel   = IsolationLevel.Write,
+                             DateTime?      CreationTime     = null,
+                             DateTime?      InvalidationTime = null);
         
         #endregion
 
@@ -64,14 +75,15 @@ namespace de.ahzf.Illias
         /// <param name="Subject">The Subject.</param>
         /// <param name="Predicate">The Predicate.</param>
         /// <param name="Object">The Object.</param>
-        /// <param name="ContextOrGraph">The Context or Graph.</param>
+        /// <param name="Context">The Context.</param>
         /// <param name="Connect">Connect this quad to other quads in order to achieve an index-free adjacency.</param>
         /// <returns>A new quad based on the given parameters.</returns>
-        IQuad<T> Add(T       Subject,
-                     T       Predicate,
-                     T       Object,
-                     T       ContextOrGraph = default(T),
-                     Boolean Connect        = true);
+        IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+            Add(TSPO     Subject,
+                TSPO     Predicate,
+                TSPO     Object,
+                TContext Context = default(TContext),
+                Boolean  Connect = true);
 
         #endregion
 
@@ -82,7 +94,8 @@ namespace de.ahzf.Illias
         /// </summary>
         /// <param name="QuadId">The QuadId.</param>
         /// <returns>The quad having the given QuadId.</returns>
-        IQuad<T> GetQuad(T QuadId);
+        IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+            GetQuad(TQuadId QuadId);
 
 
         /// <summary>
@@ -91,12 +104,13 @@ namespace de.ahzf.Illias
         /// <param name="Subject">The Subject.</param>
         /// <param name="Predicate">The Predicate.</param>
         /// <param name="Object">The Object.</param>
-        /// <param name="ContextOrGraph">The Context or Graph.</param>
+        /// <param name="Context">The Context.</param>
         /// <returns>All quads matched by the given parameters.</returns>
-        IEnumerable<IQuad<T>> GetQuads(T Subject,
-                                       T Predicate,
-                                       T Object,
-                                       T ContextOrGraph = default(T));
+        IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>
+            GetQuads(TSPO     Subject,
+                     TSPO     Predicate,
+                     TSPO     Object,
+                     TContext Context = default(TContext));
 
 
         /// <summary>
@@ -107,10 +121,11 @@ namespace de.ahzf.Illias
         /// <param name="ObjectSelector">A delegate for selcting objects.</param>
         /// <param name="ContextOrGraphSelector">A delegate for selcting contexts or graphs.</param>
         /// <returns>An enumeration of selected Quads.</returns>
-        IEnumerable<IQuad<T>> GetQuads(SubjectSelector<T>        SubjectSelector        = null,
-                                       PredicateSelector<T>      PredicateSelector      = null,
-                                       ObjectSelector<T>         ObjectSelector         = null,
-                                       ContextOrGraphSelector<T> ContextOrGraphSelector = null);
+        IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>
+            GetQuads(SubjectSelector<TSPO> SubjectSelector = null,
+                     PredicateSelector<TSPO>      PredicateSelector      = null,
+                     ObjectSelector<TSPO>         ObjectSelector         = null,
+                     ContextSelector<TContext> ContextOrGraphSelector = null);
 
         #endregion
 
@@ -121,7 +136,8 @@ namespace de.ahzf.Illias
         /// </summary>
         /// <param name="QuadId">The QuadId.</param>
         /// <returns>The quad after removal having the given QuadId.</returns>
-        IQuad<T> Remove(T QuadId);
+        IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+            Remove(TQuadId QuadId);
 
         /// <summary>
         /// Removes all matching quads based on the given parameters.
@@ -129,12 +145,13 @@ namespace de.ahzf.Illias
         /// <param name="Subject">The Subject.</param>
         /// <param name="Predicate">The Predicate.</param>
         /// <param name="Object">The Object.</param>
-        /// <param name="ContextOrGraph">The Context or Graph.</param>
+        /// <param name="Context">The Context.</param>
         /// <returns>All quads after removal matched by the given parameters.</returns>
-        IEnumerable<IQuad<T>> Remove(T Subject,
-                                     T Predicate,
-                                     T Object,
-                                     T ContextOrGraph = default(T));
+        IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>
+            Remove(TSPO     Subject,
+                   TSPO     Predicate,
+                   TSPO     Object,
+                   TContext Context = default(TContext));
 
         /// <summary>
         /// Removes all matching quads based on the given selectors.
@@ -142,16 +159,25 @@ namespace de.ahzf.Illias
         /// <param name="SubjectSelector">A delegate for selcting subjects.</param>
         /// <param name="PredicateSelector">A delegate for selcting predicates.</param>
         /// <param name="ObjectSelector">A delegate for selcting objects.</param>
-        /// <param name="ContextOrGraphSelector">A delegate for selcting contexts or graphs.</param>
+        /// <param name="ContextSelector">A delegate for selcting contexts.</param>
         /// <returns>All quads after removal matched by the given parameters.</returns>
-        IEnumerable<IQuad<T>> Remove(SubjectSelector<T>        SubjectSelector        = null,
-                                     PredicateSelector<T>      PredicateSelector      = null,
-                                     ObjectSelector<T>         ObjectSelector         = null,
-                                     ContextOrGraphSelector<T> ContextOrGraphSelector = null);
+        IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>
+            Remove(SubjectSelector<TSPO>     SubjectSelector   = null,
+                   PredicateSelector<TSPO> PredicateSelector = null,
+                   ObjectSelector<TSPO>       ObjectSelector    = null,
+                   ContextSelector<TContext>     ContextSelector   = null);
 
         #endregion
 
-        void UpdateReferences(IQuad<T> Quad);
+        #region Utils
+
+        /// <summary>
+        /// Update all references of the given Quad to provide an index-free adjacency.
+        /// </summary>
+        /// <param name="Quad">A quad.</param>
+        void UpdateReferences(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad);
+
+        #endregion
 
     }
 

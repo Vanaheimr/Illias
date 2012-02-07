@@ -30,9 +30,22 @@ namespace de.ahzf.Illias
     /// QuadId: Subject -Predicate-> Object [Context/Graph] or
     /// VertexId: Vertex -Edge-> AnotherVertex [HyperEdge]
     /// </summary>
-    /// <typeparam name="T">The type of the subject, predicate, objects and context of a quad.</typeparam>
-    public interface IQuad<T> : IEquatable<IQuad<T>>, IComparable<IQuad<T>>, IComparable
-        where T : IEquatable<T>, IComparable<T>, IComparable
+    /// <typeparam name="TSystemId">The type of the SystemId.</typeparam>
+    /// <typeparam name="TQuadId">The type of the QuadId.</typeparam>
+    /// <typeparam name="TTransactionId">The type of the transaction id.</typeparam>
+    /// <typeparam name="TSPO">The type of the subjects, predicates and objects.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
+    public interface IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+                         : IEquatable <IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>,
+                           IComparable<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>,
+                           IComparable
+
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+        where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
+        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+
     {
 
         #region SystemId, QuadId and TransactionId
@@ -41,7 +54,7 @@ namespace de.ahzf.Illias
         /// The Id of the QuadStore which created this quad.
         /// This Id has to be unique within the distributed cluster of QuadStores.
         /// </summary>
-        T SystemId { get; }
+        TSystemId SystemId { get; }
 
         /// <summary>
         /// The Id of the quad.
@@ -49,14 +62,14 @@ namespace de.ahzf.Illias
         /// Id add the SystemId of the QuadStore.
         /// From the perspective of graphs this is an EdgeId.
         /// </summary>
-        T QuadId        { get; }
+        TQuadId QuadId { get; }
 
         /// <summary>
         /// The Id of the transaction this quad was build in.
         /// This Id is just local unique. To get a global unique
         /// Id add the SystemId of the QuadStore.
         /// </summary>
-        T TransactionId { get; }
+        TTransactionId TransactionId { get; }
 
         #endregion
 
@@ -66,24 +79,24 @@ namespace de.ahzf.Illias
         /// The Subject of this quad.
         /// From another point of view this is an VertexId.
         /// </summary>
-        T Subject       { get; }
+        TSPO Subject { get; }
 
         /// <summary>
         /// The Predicate of this quad.
         /// From another point of view this is a PropertyId.
         /// </summary>
-        T Predicate     { get; }
+        TSPO Predicate { get; }
 
         /// <summary>
         /// The Object of this quad.
         /// </summary>
-        T Object        { get; }
+        TSPO Object { get; }
 
         /// <summary>
         /// The Context or Graph of this quad.
         /// From another point of view this is a HyperEdgeId.
         /// </summary>
-        T Context       { get; }
+        TContext Context { get; }
 
         #endregion
 
@@ -93,7 +106,7 @@ namespace de.ahzf.Illias
         /// A hashset of references to quads having
         /// the Object of this quad as Subject.
         /// </summary>
-        HashSet<IQuad<T>> ObjectReference { get; set; }
+        HashSet<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>> ObjectReference { get; set; }
 
         #endregion
 
@@ -102,7 +115,7 @@ namespace de.ahzf.Illias
         /// <summary>
         /// The on disc position of this quad.
         /// </summary>
-        T ObjectOnDisc { get; }
+        UInt64 ObjectOnDisc { get; }
 
         #endregion
 

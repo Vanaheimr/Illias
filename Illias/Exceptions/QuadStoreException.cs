@@ -41,4 +41,34 @@ namespace de.ahzf.Illias
 
     }
 
+
+    /// <summary>
+    /// The base class for all QuadStoreExceptions.
+    /// </summary>
+    public class QuadStoreException<TSystemId, TQuadId, TTransactionId, TSPO, TContext> : QuadStoreException
+
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+        where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
+        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+
+    {
+
+        /// <summary>
+        /// A general QuadStore exception occurred!
+        /// </summary>
+        /// <param name="Message">The message that describes the error.</param>
+        /// <param name="InnerException">The exception that is the cause of the current exception.</param>
+        public QuadStoreException(String Message = null, Exception InnerException = null)
+            : base(Message, InnerException)
+        { }
+
+    }
+
+
+
+
+    
+
 }

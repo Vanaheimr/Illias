@@ -30,14 +30,25 @@ namespace de.ahzf.Illias
     /// QuadId: Subject -Predicate-> Object [Context/Graph] or
     /// VertexId: Vertex -Edge-> AnotherVertex [HyperEdge]
     /// </summary>
-    /// <typeparam name="T">The type of the subject, predicate, objects and context of a quad.</typeparam>
-    public class Quad<T> : IQuad<T>
-        where T : IEquatable<T>, IComparable<T>, IComparable
+    /// <typeparam name="TSystemId">The type of the SystemId.</typeparam>
+    /// <typeparam name="TQuadId">The type of the QuadId.</typeparam>
+    /// <typeparam name="TTransactionId">The type of the transaction id.</typeparam>
+    /// <typeparam name="TSPO">The type of the subjects, predicates and objects.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
+    public class Quad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+                     : IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+        where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
+        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+
     {
 
         #region Data
 
-        #region SystemId, TransactionId and QuadId
+        #region QuadId, SystemId and TransactionId
 
         /// <summary>
         /// The Id of the quad.
@@ -45,19 +56,19 @@ namespace de.ahzf.Illias
         /// This Id is just local unique. To get a global unique
         /// Id add the SystemId of the QuadStore.
         /// </summary>
-        public T QuadId         { get; private set; }
+        public TQuadId QuadId                { get; private set; }
 
         /// <summary>
         /// The Id of the QuadStore which created this quad.
         /// </summary>
-        public T SystemId       { get; private set; }
+        public TSystemId SystemId            { get; private set; }
 
         /// <summary>
         /// The Id of the transaction this quad was build in.
         /// This Id is just local unique. To get a global unique
         /// Id add the SystemId of the QuadStore.
         /// </summary>
-        public T TransactionId  { get; private set; }
+        public TTransactionId TransactionId  { get; private set; }
 
         #endregion
 
@@ -67,39 +78,43 @@ namespace de.ahzf.Illias
         /// The Subject of this quad.
         /// From another point of view this is an VertexId.
         /// </summary>
-        public T Subject         { get; private set; }
+        public TSPO Subject     { get; private set; }
 
         /// <summary>
         /// The Predicate of this quad.
         /// From another point of view this is a PropertyId.
         /// </summary>
-        public T Predicate       { get; private set; }
+        public TSPO Predicate { get; private set; }
 
         /// <summary>
         /// The Object of this quad.
         /// </summary>
-        public T Object          { get; private set; }
+        public TSPO Object       { get; private set; }
 
         /// <summary>
         /// The Context of this quad.
         /// From another point of view this is a HyperEdgeId.
         /// </summary>
-        public T Context         { get; private set; }
+        public TContext Context     { get; private set; }
 
         #endregion
 
-        #region ObjectOnDisc and ObjectReference
-
-        /// <summary>
-        /// The on disc position of this quad.
-        /// </summary>
-        public T ObjectOnDisc   { get; private set; }
+        #region ObjectReference
 
         /// <summary>
         /// A hashset of references to quads having
         /// the Object of this quad as Subject.
         /// </summary>
-        public HashSet<IQuad<T>> ObjectReference    { get; set; }
+        public HashSet<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>> ObjectReference { get; set; }
+
+        #endregion
+
+        #region ObjectOnDisc
+
+        /// <summary>
+        /// The on disc position of this quad.
+        /// </summary>
+        public UInt64 ObjectOnDisc { get; private set; }
 
         #endregion
 
@@ -117,32 +132,39 @@ namespace de.ahzf.Illias
         /// <param name="SystemId">The Id of the QuadStore which created this quad.</param>
         /// <param name="TransactionId">The Id of the transaction this quad was build in.</param>
         /// <param name="QuadId">The Id of this quad.</param>
-        /// <param name="Subject">The Subject.</param>
-        /// <param name="Predicate">The Predicate.</param>
-        /// <param name="Object">The Object.</param>
-        /// <param name="Context">The Context.</param>
+        /// <param name="Subject">The subject of this quad.</param>
+        /// <param name="Predicate">The predicate of this quad.</param>
+        /// <param name="Object">The object of this quad.</param>
+        /// <param name="Context">The context of this quad.</param>
         /// <param name="ObjectOnDisc"></param>
-        public Quad(T SystemId, T TransactionId, T QuadId, T Subject, T Predicate, T Object, T Context, T ObjectOnDisc = default(T))
+        public Quad(TSystemId      SystemId,
+                    TTransactionId TransactionId,
+                    TQuadId        QuadId,
+                    TSPO       Subject,
+                    TSPO     Predicate,
+                    TSPO        Object,
+                    TContext       Context,
+                    UInt64         ObjectOnDisc = default(UInt64))
         {
 
             #region Initial checks
 
-            if (SystemId  == null || SystemId .Equals(default(T)))
+            if (SystemId  == null || SystemId .Equals(default(TSystemId)))
                 throw new ArgumentNullException("The SystemId must not be null or default(T)!");
 
-            if (QuadId    == null || QuadId   .Equals(default(T)))
+            if (QuadId    == null || QuadId   .Equals(default(TQuadId)))
                 throw new ArgumentNullException("The QuadId must not be null or default(T)!");
 
-            if (Subject   == null || Subject  .Equals(default(T)))
+            if (Subject   == null || Subject  .Equals(default(TSPO)))
                 throw new ArgumentNullException("The Subject must not be null or default(T)!");
 
-            if (Predicate == null || Predicate.Equals(default(T)))
+            if (Predicate == null || Predicate.Equals(default(TSPO)))
                 throw new ArgumentNullException("The Predicate must not be null or default(T)!");
 
-            if (Object    == null || Object   .Equals(default(T)))
+            if (Object    == null || Object   .Equals(default(TSPO)))
                 throw new ArgumentNullException("The Object must not be null or default(T)!");
 
-            if (Context   == null || Context.  Equals(default(T)))
+            if (Context   == null || Context.  Equals(default(TContext)))
                 throw new ArgumentNullException("The Context must not be null or default(T)!");
 
             #endregion
@@ -174,7 +196,8 @@ namespace de.ahzf.Illias
         /// <param name="Quad1">A Quad.</param>
         /// <param name="Quad2">Another Quad.</param>
         /// <returns>true|false</returns>
-        public static Boolean operator == (Quad<T> Quad1, Quad<T> Quad2)
+        public static Boolean operator == (Quad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad1,
+                                           Quad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad2)
         {
 
             // If both are null, or both are same instance, return true.
@@ -199,7 +222,8 @@ namespace de.ahzf.Illias
         /// <param name="Quad1">A Quad.</param>
         /// <param name="Quad2">Another Quad.</param>
         /// <returns>true|false</returns>
-        public static Boolean operator != (Quad<T> Quad1, Quad<T> Quad2)
+        public static Boolean operator != (Quad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad1,
+                                           Quad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad2)
         {
             return !(Quad1 == Quad2);
         }
@@ -223,10 +247,10 @@ namespace de.ahzf.Illias
             if (Object == null)
                 throw new ArgumentNullException("The given object must not be null!");
 
-            // Check if the given object is a IQuad<T>
-            var AnotherQuad = Object as IQuad<T>;
+            // Check if the given object is a IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+            var AnotherQuad = Object as IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>;
             if ((Object) AnotherQuad == null)
-                throw new ArgumentException("The given object is not a IQuad<T>!");
+                throw new ArgumentException("The given object is not a IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>!");
 
             return this.Equals(AnotherQuad);
 
@@ -241,7 +265,7 @@ namespace de.ahzf.Illias
         /// </summary>
         /// <param name="AnotherQuad">Another quad to compare with.</param>
         /// <returns>true|false</returns>
-        public Boolean Equals(IQuad<T> AnotherQuad)
+        public Boolean Equals(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> AnotherQuad)
         {
 
             if ((Object) AnotherQuad == null)
@@ -270,8 +294,8 @@ namespace de.ahzf.Illias
             if (Object == null)
                 throw new ArgumentNullException("The given object must not be null!");
 
-            // Check if the given object is a IQuad<T>
-            var AnotherQuad = Object as IQuad<T>;
+            // Check if the given object is a IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+            var AnotherQuad = Object as IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>;
             if ((Object) AnotherQuad == null)
                 throw new ArgumentException("The given object is not a IQuad<T>!");
 
@@ -288,11 +312,11 @@ namespace de.ahzf.Illias
         /// </summary>
         /// <param name="AnotherQuad">Another quad to compare with.</param>
         /// <returns>true|false</returns>
-        public Int32 CompareTo(IQuad<T> AnotherQuad)
+        public Int32 CompareTo(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> AnotherQuad)
         {
 
             if ((Object) AnotherQuad == null)
-                throw new ArgumentNullException("The given IQuad<T> must not be null!");
+                throw new ArgumentNullException("The given IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> must not be null!");
 
             return QuadId.CompareTo(AnotherQuad.QuadId);
 

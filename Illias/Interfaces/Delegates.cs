@@ -30,7 +30,7 @@ namespace de.ahzf.Illias
     /// <typeparam name="T">The type of the subject.</typeparam>
     /// <param name="Subject">A subject.</param>
     /// <returns>TRUE if the subject had been selected, FALSE if not.</returns>
-    public delegate Boolean SubjectSelector       <in T>(T Subject);
+    public delegate Boolean SubjectSelector<in T>(T Subject);
 
     /// <summary>
     /// A delegate for selecting the predicate of a Quad.
@@ -38,7 +38,7 @@ namespace de.ahzf.Illias
     /// <typeparam name="T">The type of the predicate.</typeparam>
     /// <param name="Predicate">A predicate.</param>
     /// <returns>TRUE if the predicate had been selected, FALSE if not.</returns>
-    public delegate Boolean PredicateSelector     <in T>(T Predicate);
+    public delegate Boolean PredicateSelector<in T>(T Predicate);
 
     /// <summary>
     /// A delegate for selecting the object of a Quad.
@@ -46,15 +46,14 @@ namespace de.ahzf.Illias
     /// <typeparam name="T">The type of the object.</typeparam>
     /// <param name="Object">An object.</param>
     /// <returns>TRUE if the object had been selected, FALSE if not.</returns>
-
-    public delegate Boolean ObjectSelector        <in T>(T Object);
+    public delegate Boolean ObjectSelector<in T>(T Object);
 
     /// <summary>
-    /// A delegate for selecting the Context or Graph of a Quad.
+    /// A delegate for selecting the context of a Quad.
     /// </summary>
-    /// <typeparam name="T">The type of the context or graph.</typeparam>
-    /// <param name="ContextOrGraph">A context or graph.</param>
-    /// <returns>TRUE if the context or graph had been selected, FALSE if not.</returns>
-    public delegate Boolean ContextOrGraphSelector<in T>(T ContextOrGraph);
+    /// <typeparam name="T">The type of the context.</typeparam>
+    /// <param name="Context">A context.</param>
+    /// <returns>TRUE if the context had been selected, FALSE if not.</returns>
+    public delegate Boolean ContextSelector<in T>(T Context);
 
 }

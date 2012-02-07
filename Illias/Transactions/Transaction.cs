@@ -28,10 +28,15 @@ namespace de.ahzf.Illias
 {
 
     /// <summary>
-    /// A transaction.
+    /// A (distributed) transaction.
     /// </summary>
-    public class Transaction<T> : IDisposable
-        where T : IEquatable<T>, IComparable, IComparable<T>
+    /// <typeparam name="TTransactionId">The type of the transaction Id.</typeparam>
+    /// <typeparam name="TSystemId">The type of the system Id.</typeparam>
+    public class Transaction<TTransactionId, TSystemId> : IDisposable
+
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+
     {
 
         #region Data
@@ -39,12 +44,12 @@ namespace de.ahzf.Illias
         /// <summary>
         /// The Id of this transaction.
         /// </summary>
-        public T Id { get; private set; }
+        public TTransactionId Id { get; private set; }
 
         /// <summary>
         /// The SystemId of the QuadStore initiating this transaction.
         /// </summary>
-        public T SystemId { get; private set; }
+        public TSystemId SystemId { get; private set; }
 
         /// <summary>
         /// A user-friendly name or identification for this transaction.
@@ -54,7 +59,7 @@ namespace de.ahzf.Illias
         /// <summary>
         /// The parent transaction, if this is a nested transaction.
         /// </summary>
-        public Transaction<T> ParentTransaction { get; private set; }
+        public Transaction<TTransactionId, TSystemId> ParentTransaction { get; private set; }
 
         /// <summary>
         /// The creation time of this transaction.
@@ -83,7 +88,7 @@ namespace de.ahzf.Illias
         public DateTime InvalidationTime { get; private set; }
 
 
-        internal readonly List<Transaction<T>> _NestedTransactions;
+        internal readonly List<Transaction<TTransactionId, TSystemId>> _NestedTransactions;
 
         #endregion
 
@@ -188,8 +193,8 @@ namespace de.ahzf.Illias
         /// <param name="IsolationLevel">The isolation level of this transaction.</param>
         /// <param name="CreationTime"></param>
         /// <param name="InvalidationTime"></param>
-        public Transaction(T              Id,
-                           T              SystemId,
+        public Transaction(TTransactionId Id,
+                           TSystemId      SystemId,
                            String         Name             = "",
                            Boolean        Distributed      = false,
                            Boolean        LongRunning      = false,
@@ -198,7 +203,7 @@ namespace de.ahzf.Illias
                            DateTime?      InvalidationTime = null)
         {
 
-            this._NestedTransactions  = new List<Transaction<T>>();
+            this._NestedTransactions  = new List<Transaction<TTransactionId, TSystemId>>();
             this.Id                   = Id;
             this.SystemId             = SystemId;
             this._State               = TransactionState.Running;
@@ -229,7 +234,7 @@ namespace de.ahzf.Illias
         /// <param name="Id"></param>
         /// <param name="SystemId"></param>
         /// <param name="ParentTransaction"></param>
-        internal Transaction(T Id, T SystemId, Transaction<T> ParentTransaction)
+        internal Transaction(TTransactionId Id, TSystemId SystemId, Transaction<TTransactionId, TSystemId> ParentTransaction)
             : this(Id, SystemId, "", ParentTransaction.Distributed, ParentTransaction.LongRunning, ParentTransaction.IsolationLevel)
         {
             this.ParentTransaction = ParentTransaction;
@@ -269,7 +274,7 @@ namespace de.ahzf.Illias
                 case TransactionState.NestedTransaction:
                     if (_NestedTransactions.Last().State == TransactionState.Committed)
                         goto case TransactionState.Running;
-                    throw new CouldNotCommitNestedTransactionException<T>(this);
+                    throw new CouldNotCommitNestedTransactionException<TTransactionId, TSystemId>(this);
 
 
                 // Committing => OK!
@@ -278,20 +283,20 @@ namespace de.ahzf.Illias
 
                 // Commited => Error!
                 case TransactionState.Committed:
-                    throw new TransactionAlreadyCommitedException<T>(this);
+                    throw new TransactionAlreadyCommitedException<TTransactionId, TSystemId>(this);
 
 
                 // RollingBack => Error!
                 case TransactionState.RollingBack:
-                    throw new TransactionAlreadyRolledbackException<T>(this);
+                    throw new TransactionAlreadyRolledbackException<TTransactionId, TSystemId>(this);
 
                 // Rolledback => Error!
                 case TransactionState.RolledBack:
-                    throw new TransactionAlreadyRolledbackException<T>(this);
+                    throw new TransactionAlreadyRolledbackException<TTransactionId, TSystemId>(this);
 
 
                 default:
-                    throw new TransactionException<T>(this, Message: "Transaction.Commit() is invalid!");
+                    throw new TransactionException<TTransactionId, TSystemId>(this, Message: "Transaction.Commit() is invalid!");
 
             }
 
@@ -327,16 +332,16 @@ namespace de.ahzf.Illias
                 // NestedTransactions => Error!
                 // At the moment do not allow to auto-rollback the nested transaction!
                 case TransactionState.NestedTransaction:
-                    throw new CouldNotRolleBackNestedTransactionException<T>(this);
+                    throw new CouldNotRolleBackNestedTransactionException<TTransactionId, TSystemId>(this);
 
 
                 // Committing => Error!
                 case TransactionState.Committing:
-                    throw new TransactionAlreadyCommitedException<T>(this);
+                    throw new TransactionAlreadyCommitedException<TTransactionId, TSystemId>(this);
 
                 // Commited => Error!
                 case TransactionState.Committed:
-                    throw new TransactionAlreadyCommitedException<T>(this);
+                    throw new TransactionAlreadyCommitedException<TTransactionId, TSystemId>(this);
 
 
                 // RollingBack => OK!
@@ -345,11 +350,11 @@ namespace de.ahzf.Illias
 
                 // RolledBack => Error!
                 case TransactionState.RolledBack:
-                    throw new TransactionAlreadyRolledbackException<T>(this);
+                    throw new TransactionAlreadyRolledbackException<TTransactionId, TSystemId>(this);
 
 
                 default:
-                    throw new TransactionException<T>(this, Message: "Transaction.Rollback() is invalid!");
+                    throw new TransactionException<TTransactionId, TSystemId>(this, Message: "Transaction.Rollback() is invalid!");
 
             }
 
@@ -368,7 +373,12 @@ namespace de.ahzf.Illias
         /// <param name="IsolationLevel">The isolation level of the nested transaction.</param>
         /// <param name="Name">A name or identification for the nested transaction.</param>
         /// <param name="TimeStamp">A timestamp.</param>
-        public Transaction<T> BeginNestedTransaction(Boolean Distributed = false, Boolean LongRunning = false, IsolationLevel IsolationLevel = IsolationLevel.Read, String Name = "", DateTime? TimeStamp = null)
+        public Transaction<TTransactionId, TSystemId>
+                   BeginNestedTransaction(Boolean        Distributed    = false,
+                                          Boolean        LongRunning    = false,
+                                          IsolationLevel IsolationLevel = IsolationLevel.Read,
+                                          String         Name           = "",
+                                          DateTime?      TimeStamp      = null)
         {
 
             switch (State)
@@ -376,7 +386,7 @@ namespace de.ahzf.Illias
 
                 // Running => Rolledback
                 case TransactionState.Running:
-                    var _NestedTransaction = new Transaction<T>(default(T), SystemId, this);
+                    var _NestedTransaction = new Transaction<TTransactionId, TSystemId>(default(TTransactionId), SystemId, this);
                     _NestedTransactions.Add(_NestedTransaction);
                     return _NestedTransaction;
 
@@ -384,29 +394,29 @@ namespace de.ahzf.Illias
                 // NestedTransactions => Error!
                 // At the moment do not allow to auto-commit the nested transactions!
                 case TransactionState.NestedTransaction:
-                    throw new TransactionAlreadyRolledbackException<T>(this);
+                    throw new TransactionAlreadyRolledbackException<TTransactionId, TSystemId>(this);
 
 
                 // Committing => Error!
                 case TransactionState.Committing:
-                    throw new TransactionCurrentlyCommittingException<T>(this);
+                    throw new TransactionCurrentlyCommittingException<TTransactionId, TSystemId>(this);
 
                 // Commited => Error!
                 case TransactionState.Committed:
-                    throw new TransactionAlreadyCommitedException<T>(this);
+                    throw new TransactionAlreadyCommitedException<TTransactionId, TSystemId>(this);
 
 
                 // RollingBack => Error!
                 case TransactionState.RollingBack:
-                    throw new TransactionCurrentlyRollingBackException<T>(this);
+                    throw new TransactionCurrentlyRollingBackException<TTransactionId, TSystemId>(this);
 
                 // RolledBack => Error!
                 case TransactionState.RolledBack:
-                    throw new TransactionAlreadyRolledbackException<T>(this);
+                    throw new TransactionAlreadyRolledbackException<TTransactionId, TSystemId>(this);
 
 
                 default:
-                    throw new TransactionException<T>(this, Message: "Transaction.BeginNestedTransaction() is invalid!");
+                    throw new TransactionException<TTransactionId, TSystemId>(this, Message: "Transaction.BeginNestedTransaction() is invalid!");
 
             }
 
@@ -419,7 +429,7 @@ namespace de.ahzf.Illias
         /// <summary>
         /// Return the current nested transaction.
         /// </summary>
-        public Transaction<T> GetNestedTransaction()
+        public Transaction<TTransactionId, TSystemId> GetNestedTransaction()
         {
             return _NestedTransactions.Last();
         }

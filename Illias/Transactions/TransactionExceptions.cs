@@ -24,19 +24,24 @@ using System;
 namespace de.ahzf.Illias
 {
 
-    #region TransactionException<T>
+    #region TransactionException<TTransactionId, TSystemId>
 
     /// <summary>
     /// An exception during transaction processing occurred!
     /// </summary>
-    public class TransactionException<T> : Exception
-        where T : IEquatable<T>, IComparable, IComparable<T>
+    /// <typeparam name="TTransactionId">The type of the transaction Id.</typeparam>
+    /// <typeparam name="TSystemId">The type of the system Id.</typeparam>
+    public class TransactionException<TTransactionId, TSystemId> : Exception
+
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+
     {
 
         /// <summary>
         /// The transaction causing this exception.
         /// </summary>
-        protected Transaction<T> _Transaction = null;
+        protected Transaction<TTransactionId, TSystemId> _Transaction = null;
 
         /// <summary>
         /// An exception during transaction processing occurred!
@@ -44,7 +49,7 @@ namespace de.ahzf.Illias
         /// <param name="Transaction">A transaction.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public TransactionException(Transaction<T> Transaction, String Message = null, Exception InnerException = null)
+        public TransactionException(Transaction<TTransactionId, TSystemId> Transaction, String Message = null, Exception InnerException = null)
             : base(Message, InnerException)
         {
             _Transaction = Transaction;
@@ -60,8 +65,14 @@ namespace de.ahzf.Illias
     /// <summary>
     /// A transaction could not be started.
     /// </summary>
-    public class CouldNotBeginTransactionException<T> : TransactionException<T>
-        where T : IEquatable<T>, IComparable, IComparable<T>
+    /// <typeparam name="TTransactionId">The type of the transaction Id.</typeparam>
+    /// <typeparam name="TSystemId">The type of the system Id.</typeparam>
+    public class CouldNotBeginTransactionException<TTransactionId, TSystemId>
+                     : TransactionException<TTransactionId, TSystemId>
+
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+
     {
 
         /// <summary>
@@ -70,7 +81,7 @@ namespace de.ahzf.Illias
         /// <param name="Transaction">A transaction.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public CouldNotBeginTransactionException(Transaction<T> Transaction, String Message = null, Exception InnerException = null)
+        public CouldNotBeginTransactionException(Transaction<TTransactionId, TSystemId> Transaction, String Message = null, Exception InnerException = null)
             : base(Transaction, Message, InnerException)
         { }
 
@@ -83,8 +94,14 @@ namespace de.ahzf.Illias
     /// <summary>
     /// A nested transaction could not be committed.
     /// </summary>
-    public class CouldNotCommitNestedTransactionException<T> : TransactionException<T>
-        where T : IEquatable<T>, IComparable, IComparable<T>
+    /// <typeparam name="TTransactionId">The type of the transaction Id.</typeparam>
+    /// <typeparam name="TSystemId">The type of the system Id.</typeparam>
+    public class CouldNotCommitNestedTransactionException<TTransactionId, TSystemId>
+                     : TransactionException<TTransactionId, TSystemId>
+
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+
     {
 
         /// <summary>
@@ -93,7 +110,7 @@ namespace de.ahzf.Illias
         /// <param name="Transaction">A transaction.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public CouldNotCommitNestedTransactionException(Transaction<T> Transaction, String Message = null, Exception InnerException = null)
+        public CouldNotCommitNestedTransactionException(Transaction<TTransactionId, TSystemId> Transaction, String Message = null, Exception InnerException = null)
             : base(Transaction, Message, InnerException)
         { }
 
@@ -106,8 +123,14 @@ namespace de.ahzf.Illias
     /// <summary>
     /// A nested transaction could not be rolled back.
     /// </summary>
-    public class CouldNotRolleBackNestedTransactionException<T> : TransactionException<T>
-        where T : IEquatable<T>, IComparable, IComparable<T>
+    /// <typeparam name="TTransactionId">The type of the transaction Id.</typeparam>
+    /// <typeparam name="TSystemId">The type of the system Id.</typeparam>
+    public class CouldNotRolleBackNestedTransactionException<TTransactionId, TSystemId>
+                     : TransactionException<TTransactionId, TSystemId>
+        
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+
     {
 
         /// <summary>
@@ -116,7 +139,7 @@ namespace de.ahzf.Illias
         /// <param name="Transaction">A transaction.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public CouldNotRolleBackNestedTransactionException(Transaction<T> Transaction, String Message = null, Exception InnerException = null)
+        public CouldNotRolleBackNestedTransactionException(Transaction<TTransactionId, TSystemId> Transaction, String Message = null, Exception InnerException = null)
             : base(Transaction, Message, InnerException)
         { }
 
@@ -129,8 +152,14 @@ namespace de.ahzf.Illias
     /// <summary>
     /// The transaction was already committed.
     /// </summary>
-    public class TransactionAlreadyCommitedException<T> : TransactionException<T>
-        where T : IEquatable<T>, IComparable, IComparable<T>
+    /// <typeparam name="TTransactionId">The type of the transaction Id.</typeparam>
+    /// <typeparam name="TSystemId">The type of the system Id.</typeparam>
+    public class TransactionAlreadyCommitedException<TTransactionId, TSystemId>
+                     : TransactionException<TTransactionId, TSystemId>
+        
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+
     {
 
         /// <summary>
@@ -139,7 +168,7 @@ namespace de.ahzf.Illias
         /// <param name="Transaction">A transaction.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public TransactionAlreadyCommitedException(Transaction<T> Transaction, String Message = null, Exception InnerException = null)
+        public TransactionAlreadyCommitedException(Transaction<TTransactionId, TSystemId> Transaction, String Message = null, Exception InnerException = null)
             : base(Transaction, Message, InnerException)
         { }
 
@@ -152,8 +181,14 @@ namespace de.ahzf.Illias
     /// <summary>
     /// The transaction was already rolled back!
     /// </summary>
-    public class TransactionAlreadyRolledbackException<T> : TransactionException<T>
-        where T : IEquatable<T>, IComparable, IComparable<T>
+    /// <typeparam name="TTransactionId">The type of the transaction Id.</typeparam>
+    /// <typeparam name="TSystemId">The type of the system Id.</typeparam>
+    public class TransactionAlreadyRolledbackException<TTransactionId, TSystemId>
+                     : TransactionException<TTransactionId, TSystemId>
+        
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+
     {
 
         /// <summary>
@@ -162,7 +197,7 @@ namespace de.ahzf.Illias
         /// <param name="Transaction">A transaction.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public TransactionAlreadyRolledbackException(Transaction<T> Transaction, String Message = null, Exception InnerException = null)
+        public TransactionAlreadyRolledbackException(Transaction<TTransactionId, TSystemId> Transaction, String Message = null, Exception InnerException = null)
             : base(Transaction, Message, InnerException)
         { }
 
@@ -175,8 +210,14 @@ namespace de.ahzf.Illias
     /// <summary>
     /// The transaction is already running!
     /// </summary>
-    public class TransactionAlreadyRunningException<T> : TransactionException<T>
-        where T : IEquatable<T>, IComparable, IComparable<T>
+    /// <typeparam name="TTransactionId">The type of the transaction Id.</typeparam>
+    /// <typeparam name="TSystemId">The type of the system Id.</typeparam>
+    public class TransactionAlreadyRunningException<TTransactionId, TSystemId>
+                     : TransactionException<TTransactionId, TSystemId>
+        
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+
     {
 
         /// <summary>
@@ -185,7 +226,7 @@ namespace de.ahzf.Illias
         /// <param name="Transaction">A transaction.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public TransactionAlreadyRunningException(Transaction<T> Transaction, String Message = null, Exception InnerException = null)
+        public TransactionAlreadyRunningException(Transaction<TTransactionId, TSystemId> Transaction, String Message = null, Exception InnerException = null)
             : base(Transaction, Message, InnerException)
         { }
 
@@ -198,8 +239,14 @@ namespace de.ahzf.Illias
     /// <summary>
     /// The transaction is currently committing!
     /// </summary>
-    public class TransactionCurrentlyCommittingException<T> : TransactionException<T>
-        where T : IEquatable<T>, IComparable, IComparable<T>
+    /// <typeparam name="TTransactionId">The type of the transaction Id.</typeparam>
+    /// <typeparam name="TSystemId">The type of the system Id.</typeparam>
+    public class TransactionCurrentlyCommittingException<TTransactionId, TSystemId>
+                     : TransactionException<TTransactionId, TSystemId>
+        
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+
     {
 
         /// <summary>
@@ -208,7 +255,7 @@ namespace de.ahzf.Illias
         /// <param name="Transaction">A transaction.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public TransactionCurrentlyCommittingException(Transaction<T> Transaction, String Message = null, Exception InnerException = null)
+        public TransactionCurrentlyCommittingException(Transaction<TTransactionId, TSystemId> Transaction, String Message = null, Exception InnerException = null)
             : base(Transaction, Message, InnerException)
         { }
 
@@ -221,8 +268,14 @@ namespace de.ahzf.Illias
     /// <summary>
     /// The transaction is currently rolling back!
     /// </summary>
-    public class TransactionCurrentlyRollingBackException<T> : TransactionException<T>
-        where T : IEquatable<T>, IComparable, IComparable<T>
+    /// <typeparam name="TTransactionId">The type of the transaction Id.</typeparam>
+    /// <typeparam name="TSystemId">The type of the system Id.</typeparam>
+    public class TransactionCurrentlyRollingBackException<TTransactionId, TSystemId>
+                     : TransactionException<TTransactionId, TSystemId>
+        
+        where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
+        where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
+
     {
 
         /// <summary>
@@ -231,7 +284,7 @@ namespace de.ahzf.Illias
         /// <param name="Transaction">A transaction.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public TransactionCurrentlyRollingBackException(Transaction<T> Transaction, String Message = null, Exception InnerException = null)
+        public TransactionCurrentlyRollingBackException(Transaction<TTransactionId, TSystemId> Transaction, String Message = null, Exception InnerException = null)
             : base(Transaction, Message, InnerException)
         { }
 

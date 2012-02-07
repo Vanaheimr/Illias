@@ -30,7 +30,7 @@ namespace de.ahzf.Illias.TestApplication1
         public static void Main(String[] Args)
         {
 
-            var _QuadStore = new QuadStore<String>(
+            var _QuadStore = new QuadStore<String, String, String, String, String>(
                                      SystemId:        "System1",
                                      QuadIdConverter: (QuadId) => QuadId.ToString(),
                                      DefaultContext:  ()       => "0");
