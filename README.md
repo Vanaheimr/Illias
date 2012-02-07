@@ -3,10 +3,10 @@
 #### Description
 
  A Quad is a little fragment of a graph with additional information to make the handling of this data structure more easy and scaleable:    
- QuadId: Subject -Predicate-> Object [Context/Graph]    
+    QuadId: Subject -Predicate-> Object [Context/Graph]    
  
  Quads can easily be translated to fragments of property graphs:    
- VertexId: Vertex -Edge-> AnotherVertex [HyperEdge]    
+    VertexId: Vertex -Edge-> AnotherVertex [HyperEdge]    
 
 
 #### Usage example
