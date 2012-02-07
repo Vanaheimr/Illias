@@ -1,23 +1,7 @@
-![Blueprints.NET logo](/ahzf/blueprints.NET/raw/master/logo.png)
 
-Blueprints.NET is a generic graph model [[1](http://en.wikipedia.org/wiki/Graph_(mathematics\)), 
-[2](http://en.wikipedia.org/wiki/Graph_(data_structure\)), [3](http://en.wikipedia.org/wiki/Graph_theory)] 
-interface for .NET, Silverlight and Mono. Graph libraries, Graph databases 
-[[1](http://en.wikipedia.org/wiki/Graph_database), [2](http://www.graph-database.org)] and frameworks 
-that implement the Blueprints interface automatically support Blueprints-enabled applications. Likewise, 
-Blueprints-enabled applications can plug-and-play different Blueprints-enabled graph backends.
+[Illias](http://github.com/ahzf/Illias) is an implementation of a distributed QuadStore.
 
-Blueprints does not define an interface for remote network access. For a
-[HTTP/REST](http://en.wikipedia.org/wiki/Representational_State_Transfer) interface please take a look
-at [Gera](http://github.com/ahzf/Gera).
-
-#### Implementations
-
-* In-Memory Generic Graphs
-* In-Memory Generic Property Graphs
-* In-Memory Simplified Property Graphs
-
-#### An usage example for property graphs
+#### Usage example
 
     var _TinkerGraph = new PropertyGraph();
 
@@ -70,27 +54,23 @@ at [Gera](http://github.com/ahzf/Gera).
 
 #### Help and Documentation
 
-Additional help and background information can be found in the [Wiki](http://github.com/ahzf/blueprints.NET/wiki).
-For more examples and tutorials please look at the [Thor](http://github.com/ahzf/Thor) project if you are interessted
-in simple but interactive graph visualizations consult the [Loki](http://github.com/ahzf/Loki) project.    
+Additional help and background information can be found in the [Wiki](http://github.com/ahzf/Illias/wiki).
 News and updates can also be found on twitter by following: [@ahzf](http://www.twitter.com/ahzf) or [@graphdbs](http://www.twitter.com/graphdbs).
 
 #### Installation
 
-The installation of Blueprints.NET is very straightforward.    
+The installation of Illias is very straightforward.    
 Just check out or download its sources and all its dependencies:
 
 - [NUnit](http://www.nunit.org/) for unit tests
 
 #### License and your contribution
 
-[Blueprints.NET](http://github.com/ahzf/blueprints.NET) is released under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0). For details see the [LICENSE](/ahzf/blueprints.NET/blob/master/LICENSE) file.    
-To suggest a feature, report a bug or general discussion: [http://github.com/ahzf/blueprints.NET/issues](http://github.com/ahzf/blueprints.NET/issues)    
+[Illias](http://github.com/ahzf/Illias) is released under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0). For details see the [LICENSE](/ahzf/Illias/blob/master/LICENSE) file.    
+To suggest a feature, report a bug or general discussion: [http://github.com/ahzf/Illias/issues](http://github.com/ahzf/Illias/issues)    
 If you want to help or contribute source code to this project, please use the same license.   
 The coding standards can be found by reading the code ;)
 
 #### Acknowledgments
 
-Blueprints.NET is a reimplementation of the [blueprints](http://github.com/tinkerpop/blueprints) library for Java
-provided by [Tinkerpop](http://tinkerpop.com). Additional ideas are based on the [Boost Graph Library](http://www.boost.org/doc/libs/1_47_0/libs/graph/doc/index.html).    
-Please read the [NOTICE](/ahzf/blueprints.NET/blob/master/NOTICE) file for further credits.
+Please read the [NOTICE](/ahzf/Illias/blob/master/NOTICE) file for further credits.
