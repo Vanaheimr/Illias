@@ -1,0 +1,13 @@
+*.pidb
+*.VisualState.xml
+*.suo
+*.csproj.user
+*.vsp
+/UnitTests/bin
+/UnitTests/obj
+/UnitTests/TestResult.xml
+
+/TestApplication1/bin
+/TestApplication1/obj
+/Illias/obj
+/Illias/bin
