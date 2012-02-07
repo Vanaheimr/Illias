@@ -29,21 +29,20 @@ namespace de.ahzf.Illias
     /// <summary>
     /// An exception during index processing occurred!
     /// </summary>
-    public class IndexingException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
-                     : QuadStoreException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+    public class IndexingException<TSystemId, TQuadId, TTransactionId, TSPOC>
+                     : QuadStoreException<TSystemId, TQuadId, TTransactionId, TSPOC>
 
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
         where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
         where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
-        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
-        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+        where TSPOC          : IEquatable<TSPOC>,          IComparable<TSPOC>,          IComparable
 
     {
 
         /// <summary>
         /// The quad causing this exception.
         /// </summary>
-        public IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad { get; private set; }
+        public IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> Quad { get; private set; }
 
         /// <summary>
         /// An exception during transaction processing occurred!
@@ -51,7 +50,7 @@ namespace de.ahzf.Illias
         /// <param name="Quad">The quad causing the exception.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public IndexingException(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad, String Message = null, Exception InnerException = null)
+        public IndexingException(IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> Quad, String Message = null, Exception InnerException = null)
             : base(Message, InnerException)
         {
             this.Quad = Quad;
@@ -67,14 +66,13 @@ namespace de.ahzf.Illias
     /// <summary>
     /// A quad could not be added to an index.
     /// </summary>
-    public class AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
-                     : IndexingException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+    public class AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>
+                     : IndexingException<TSystemId, TQuadId, TTransactionId, TSPOC>
 
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
         where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
         where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
-        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
-        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+        where TSPOC          : IEquatable<TSPOC>,          IComparable<TSPOC>,          IComparable
 
     {
 
@@ -85,7 +83,7 @@ namespace de.ahzf.Illias
         /// <param name="Quad">The quad causing the exception.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public AddToIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad = null, String Message = null, Exception InnerException = null)
+        public AddToIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> Quad = null, String Message = null, Exception InnerException = null)
             : base(Quad, Message, InnerException)
         { }
 
@@ -99,14 +97,13 @@ namespace de.ahzf.Illias
     /// <summary>
     /// A quad could not be added to the QuadIdIndex.
     /// </summary>
-    public class AddToQuadIdIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
-                     : AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+    public class AddToQuadIdIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>
+                     : AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>
 
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
         where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
         where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
-        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
-        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+        where TSPOC          : IEquatable<TSPOC>,          IComparable<TSPOC>,          IComparable
 
     {
 
@@ -117,7 +114,7 @@ namespace de.ahzf.Illias
         /// <param name="Quad">The quad causing the exception.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public AddToQuadIdIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad = null, String Message = null, Exception InnerException = null)
+        public AddToQuadIdIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> Quad = null, String Message = null, Exception InnerException = null)
             : base(Quad, Message, InnerException)
         { }
 
@@ -130,14 +127,13 @@ namespace de.ahzf.Illias
     /// <summary>
     /// A quad could not be added to the SubjectIndex.
     /// </summary>
-    public class AddToSubjectIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
-                     : AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+    public class AddToSubjectIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>
+                     : AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>
 
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
         where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
         where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
-        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
-        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+        where TSPOC          : IEquatable<TSPOC>,          IComparable<TSPOC>,          IComparable
 
     {
 
@@ -148,7 +144,7 @@ namespace de.ahzf.Illias
         /// <param name="Quad">The quad causing the exception.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public AddToSubjectIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad = null, String Message = null, Exception InnerException = null)
+        public AddToSubjectIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> Quad = null, String Message = null, Exception InnerException = null)
             : base(Quad, Message, InnerException)
         { }
 
@@ -161,14 +157,13 @@ namespace de.ahzf.Illias
     /// <summary>
     /// A quad could not be added to the PredicateIndex.
     /// </summary>
-    public class AddToPredicateIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
-                     : AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+    public class AddToPredicateIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>
+                     : AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>
 
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
         where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
         where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
-        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
-        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+        where TSPOC          : IEquatable<TSPOC>,          IComparable<TSPOC>,          IComparable
 
     {
 
@@ -179,7 +174,7 @@ namespace de.ahzf.Illias
         /// <param name="Quad">The quad causing the exception.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public AddToPredicateIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad = null, String Message = null, Exception InnerException = null)
+        public AddToPredicateIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> Quad = null, String Message = null, Exception InnerException = null)
             : base(Quad, Message, InnerException)
         { }
 
@@ -192,14 +187,13 @@ namespace de.ahzf.Illias
     /// <summary>
     /// A quad could not be added to the ObjectIndex.
     /// </summary>
-    public class AddToObjectIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
-                     : AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+    public class AddToObjectIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>
+                     : AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>
 
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
         where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
         where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
-        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
-        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+        where TSPOC          : IEquatable<TSPOC>,          IComparable<TSPOC>,          IComparable
 
     {
 
@@ -210,7 +204,7 @@ namespace de.ahzf.Illias
         /// <param name="Quad">The quad causing the exception.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public AddToObjectIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad = null, String Message = null, Exception InnerException = null)
+        public AddToObjectIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> Quad = null, String Message = null, Exception InnerException = null)
             : base(Quad, Message, InnerException)
         { }
 
@@ -223,14 +217,13 @@ namespace de.ahzf.Illias
     /// <summary>
     /// A quad could not be added to the ContextIndex.
     /// </summary>
-    public class AddToContextIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
-                     : AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+    public class AddToContextIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>
+                     : AddToIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>
         
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
         where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
         where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
-        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
-        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+        where TSPOC          : IEquatable<TSPOC>,          IComparable<TSPOC>,          IComparable
 
     {
 
@@ -241,7 +234,7 @@ namespace de.ahzf.Illias
         /// <param name="Quad">The quad causing the exception.</param>
         /// <param name="Message">The message that describes the error.</param>
         /// <param name="InnerException">The exception that is the cause of the current exception.</param>
-        public AddToContextIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad = null, String Message = null, Exception InnerException = null)
+        public AddToContextIndexException(IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> Quad = null, String Message = null, Exception InnerException = null)
             : base(Quad, Message, InnerException)
         { }
 

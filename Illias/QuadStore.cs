@@ -35,16 +35,15 @@ namespace de.ahzf.Illias
     /// <typeparam name="TSystemId">The type of the SystemId.</typeparam>
     /// <typeparam name="TQuadId">The type of the QuadId.</typeparam>
     /// <typeparam name="TTransactionId">The type of the transaction id.</typeparam>
-    /// <typeparam name="TSPO">The type of the subjects, predicates and objects.</typeparam>
+    /// <typeparam name="TSPOC">The type of the subjects, predicates and objects.</typeparam>
     /// <typeparam name="TContext">The type of the context.</typeparam>
-    public class QuadStore<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
-                     : IQuadStore<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+    public class QuadStore<TSystemId, TQuadId, TTransactionId, TSPOC>
+                     : IQuadStore<TSystemId, TQuadId, TTransactionId, TSPOC>
         
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
         where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
         where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
-        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
-        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+        where TSPOC          : IEquatable<TSPOC>,          IComparable<TSPOC>,          IComparable
 
     {
 
@@ -58,11 +57,11 @@ namespace de.ahzf.Illias
         #region Indices for the Subject, Predicate, Object and Context
 
         // Maybe look for better data structures in the future.
-        private ConcurrentDictionary<TQuadId,       IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>  _QuadIdIndex;
-        private ConcurrentDictionary<TSPO,     List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>> _SubjectIndex;
-        private ConcurrentDictionary<TSPO,     List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>> _PredicateIndex;
-        private ConcurrentDictionary<TSPO,     List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>> _ObjectIndex;
-        private ConcurrentDictionary<TContext, List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>> _ContextIndex;
+        private ConcurrentDictionary<TQuadId,      IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>  _QuadIdIndex;
+        private ConcurrentDictionary<TSPOC,   List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>> _SubjectIndex;
+        private ConcurrentDictionary<TSPOC,   List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>> _PredicateIndex;
+        private ConcurrentDictionary<TSPOC,   List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>> _ObjectIndex;
+        private ConcurrentDictionary<TSPOC,   List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>> _ContextIndex;
 
         #endregion
 
@@ -84,7 +83,7 @@ namespace de.ahzf.Illias
         /// A delegate returning the default context of a quad
         /// if none was given.
         /// </summary>
-        public delegate TContext DefaultContextDelegate();
+        public delegate TSPOC DefaultContextDelegate();
 
         #endregion
 
@@ -120,11 +119,11 @@ namespace de.ahzf.Illias
             this._QuadIdConverter = QuadIdConverter;
             this._DefaultContext  = DefaultContext;
 
-            this._QuadIdIndex     = new ConcurrentDictionary<TQuadId,         IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>> ();
-            this._SubjectIndex    = new ConcurrentDictionary<TSPO,   List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>>();
-            this._PredicateIndex  = new ConcurrentDictionary<TSPO, List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>>();
-            this._ObjectIndex     = new ConcurrentDictionary<TSPO,    List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>>();
-            this._ContextIndex    = new ConcurrentDictionary<TContext,   List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>>();
+            this._QuadIdIndex     = new ConcurrentDictionary<TQuadId,      IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>> ();
+            this._SubjectIndex    = new ConcurrentDictionary<TSPOC,   List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>>();
+            this._PredicateIndex  = new ConcurrentDictionary<TSPOC,   List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>>();
+            this._ObjectIndex     = new ConcurrentDictionary<TSPOC,   List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>>();
+            this._ContextIndex    = new ConcurrentDictionary<TSPOC,   List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>>();
 
         }
 
@@ -187,8 +186,8 @@ namespace de.ahzf.Illias
         /// <param name="NewQuad">The quad to add to the store.</param>
         /// <param name="Connect">Connect this quad to other quads in order to achieve an index-free adjacency.</param>
         /// <returns>The given quad.</returns>
-        private IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
-            Add(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> NewQuad,
+        private IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>
+            Add(IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> NewQuad,
                 Boolean Connect = true)
         {
 
@@ -201,39 +200,39 @@ namespace de.ahzf.Illias
 
             #region Add quad to Subject, Predicate, Object and Context indices
 
-            List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>> _QuadList = null;
+            List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>> _QuadList = null;
 
             // Add to QuadId index
             if (_QuadIdIndex.ContainsKey(NewQuad.QuadId) || !_QuadIdIndex.TryAdd(NewQuad.QuadId, NewQuad))
-                    throw new AddToQuadIdIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>(NewQuad);
+                    throw new AddToQuadIdIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>(NewQuad);
 
             // Add to Subject index
             if (_SubjectIndex.TryGetValue(NewQuad.Subject, out _QuadList))
                 _QuadList.Add(NewQuad);
             else
-                if (!_SubjectIndex.TryAdd(NewQuad.Subject, new List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>() { NewQuad }))
-                    throw new AddToSubjectIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>(NewQuad);
+                if (!_SubjectIndex.TryAdd(NewQuad.Subject, new List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>() { NewQuad }))
+                    throw new AddToSubjectIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>(NewQuad);
 
             // Add to Predicate index
             if (_PredicateIndex.TryGetValue(NewQuad.Predicate, out _QuadList))
                 _QuadList.Add(NewQuad);
             else
-                if (!_PredicateIndex.TryAdd(NewQuad.Predicate, new List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>() { NewQuad }))
-                    throw new AddToPredicateIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>(NewQuad);
+                if (!_PredicateIndex.TryAdd(NewQuad.Predicate, new List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>() { NewQuad }))
+                    throw new AddToPredicateIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>(NewQuad);
 
             // Add to Object index
             if (_ObjectIndex.TryGetValue(NewQuad.Object, out _QuadList))
                 _QuadList.Add(NewQuad);
             else
-                if (!_ObjectIndex.TryAdd(NewQuad.Object, new List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>() { NewQuad }))
-                    throw new AddToObjectIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>(NewQuad);
+                if (!_ObjectIndex.TryAdd(NewQuad.Object, new List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>() { NewQuad }))
+                    throw new AddToObjectIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>(NewQuad);
 
             // Add to Context index
             if (_ContextIndex.TryGetValue(NewQuad.Context, out _QuadList))
                 _QuadList.Add(NewQuad);
             else
-                if (!_ContextIndex.TryAdd(NewQuad.Context, new List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>() { NewQuad }))
-                    throw new AddToContextIndexException<TSystemId, TQuadId, TTransactionId, TSPO, TContext>(NewQuad);
+                if (!_ContextIndex.TryAdd(NewQuad.Context, new List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>() { NewQuad }))
+                    throw new AddToContextIndexException<TSystemId, TQuadId, TTransactionId, TSPOC>(NewQuad);
 
             #endregion
 
@@ -259,26 +258,26 @@ namespace de.ahzf.Illias
         /// <param name="Context">The Context.</param>
         /// <param name="Connect">Connect this quad to other quads in order to achieve an index-free adjacency.</param>
         /// <returns>A new quad based on the given parameters.</returns>
-        public IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
-                   Add(TSPO   Subject,
-                       TSPO Predicate,
-                       TSPO    Object,
-                       TContext   Context = default(TContext),
-                       Boolean    Connect = true)
+        public IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>
+                   Add(TSPOC   Subject,
+                       TSPOC   Predicate,
+                       TSPOC   Object,
+                       TSPOC   Context = default(TSPOC),
+                       Boolean Connect = true)
         {
 
             #region Initial checks
 
-            if (Subject   == null || Subject.Equals(default(TSPO)))
+            if (Subject   == null || Subject.Equals(default(TSPOC)))
                 throw new ArgumentNullException("The Subject must not be null or default(T)!");
 
-            if (Predicate == null || Predicate.Equals(default(TSPO)))
+            if (Predicate == null || Predicate.Equals(default(TSPOC)))
                 throw new ArgumentNullException("The Predicate must not be null or default(T)!");
 
-            if (Object    == null || Object.Equals(default(TSPO)))
+            if (Object    == null || Object.Equals(default(TSPOC)))
                 throw new ArgumentNullException("The Object must not be null or default(T)!");
 
-            if (Context   == null || Context.Equals(default(TContext)))
+            if (Context   == null || Context.Equals(default(TSPOC)))
                 Context = _DefaultContext();
 
             #endregion
@@ -287,7 +286,7 @@ namespace de.ahzf.Illias
             Interlocked.Increment(ref _CurrentQuadId);
 
             // Create a new quad...
-            var _Quad = new Quad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+            var _Quad = new Quad<TSystemId, TQuadId, TTransactionId, TSPOC>
                                  (SystemId:      _SystemId,
                                   TransactionId: default(TTransactionId),
                                   QuadId:        _QuadIdConverter(_CurrentQuadId),
@@ -315,11 +314,11 @@ namespace de.ahzf.Illias
         /// </summary>
         /// <param name="QuadId">The QuadId.</param>
         /// <returns>The quad having the given QuadId.</returns>
-        public IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
+        public IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>
                    GetQuad(TQuadId QuadId)
         {
 
-            IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> _Quad = null;
+            IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> _Quad = null;
 
             if (_QuadIdIndex.TryGetValue(QuadId, out _Quad))
                 return _Quad;
@@ -340,11 +339,11 @@ namespace de.ahzf.Illias
         /// <param name="Object">The Object.</param>
         /// <param name="Context">The Context.</param>
         /// <returns>All quads matched by the given parameters.</returns>
-        public IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>
-                   GetQuads(TSPO     Subject,
-                            TSPO     Predicate,
-                            TSPO     Object,
-                            TContext Context = default(TContext))
+        public IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>
+                   GetQuads(TSPOC Subject,
+                            TSPOC Predicate,
+                            TSPOC Object,
+                            TSPOC Context = default(TSPOC))
         {
             throw new NotImplementedException();
         }
@@ -361,11 +360,11 @@ namespace de.ahzf.Illias
         /// <param name="ObjectSelector">A delegate for selcting objects.</param>
         /// <param name="ContextOrGraphSelector">A delegate for selcting contexts or graphs.</param>
         /// <returns>An enumeration of selected Quads.</returns>
-        public IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>
-                   GetQuads(SubjectSelector<TSPO>     SubjectSelector        = null,
-                            PredicateSelector<TSPO> PredicateSelector      = null,
-                            ObjectSelector<TSPO>       ObjectSelector         = null,
-                            ContextSelector<TContext>     ContextOrGraphSelector = null)
+        public IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>
+                   GetQuads(SubjectSelector<TSPOC>   SubjectSelector        = null,
+                            PredicateSelector<TSPOC> PredicateSelector      = null,
+                            ObjectSelector<TSPOC>    ObjectSelector         = null,
+                            ContextSelector<TSPOC>   ContextOrGraphSelector = null)
         {
             throw new NotImplementedException();
         }
@@ -384,7 +383,7 @@ namespace de.ahzf.Illias
         /// </summary>
         /// <param name="QuadId">The QuadId.</param>
         /// <returns>The quad after removal having the given QuadId.</returns>
-        public IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Remove(TQuadId QuadId)
+        public IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> Remove(TQuadId QuadId)
         {
             throw new NotImplementedException();
         }
@@ -401,11 +400,11 @@ namespace de.ahzf.Illias
         /// <param name="Object">The Object.</param>
         /// <param name="Context">The Context.</param>
         /// <returns>All quads after removal matched by the given parameters.</returns>
-        public IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>
-                   Remove(TSPO   Subject,
-                          TSPO Predicate,
-                          TSPO    Object,
-                          TContext   Context = default(TContext))
+        public IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>
+                   Remove(TSPOC Subject,
+                          TSPOC Predicate,
+                          TSPOC Object,
+                          TSPOC Context = default(TSPOC))
         {
             throw new NotImplementedException();
         }
@@ -422,11 +421,11 @@ namespace de.ahzf.Illias
         /// <param name="ObjectSelector">A delegate for selcting objects.</param>
         /// <param name="ContextSelector">A delegate for selcting contexts.</param>
         /// <returns>All quads after removal matched by the given parameters.</returns>
-        public IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>
-                   Remove(SubjectSelector<TSPO>     SubjectSelector   = null,
-                          PredicateSelector<TSPO>   PredicateSelector = null,
-                          ObjectSelector<TSPO>      ObjectSelector    = null,
-                          ContextSelector<TContext> ContextSelector   = null)
+        public IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>
+                   Remove(SubjectSelector<TSPOC>   SubjectSelector   = null,
+                          PredicateSelector<TSPOC> PredicateSelector = null,
+                          ObjectSelector<TSPOC>    ObjectSelector    = null,
+                          ContextSelector<TSPOC>   ContextSelector = null)
 
         {
             throw new NotImplementedException();
@@ -443,10 +442,10 @@ namespace de.ahzf.Illias
         /// Connect this quad to other quads in order to achieve an index-free adjacency.
         /// </summary>
         /// <param name="Quad">A quad to connect to its friends.</param>
-        public void UpdateReferences(IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext> Quad)
+        public void UpdateReferences(IQuad<TSystemId, TQuadId, TTransactionId, TSPOC> Quad)
         {
 
-            List<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>> _QuadList = null;
+            List<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>> _QuadList = null;
 
             // Look for other quads having this Subject as an Object.
             // This means: Which quads want to be connected with me.
@@ -454,7 +453,7 @@ namespace de.ahzf.Illias
             if (_ObjectIndex.TryGetValue(Quad.Subject, out _QuadList))
                 foreach (var _Friends in _QuadList)
                     if (_Friends.ObjectReference == null)
-                        _Friends.ObjectReference = new HashSet<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>() { Quad };
+                        _Friends.ObjectReference = new HashSet<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>() { Quad };
                     else
                         _Friends.ObjectReference.Add(Quad);
 
@@ -464,7 +463,7 @@ namespace de.ahzf.Illias
             if (_SubjectIndex.TryGetValue(Quad.Object, out _QuadList))
                 foreach (var _Quad in _QuadList)
                     if (Quad.ObjectReference == null)
-                        Quad.ObjectReference = new HashSet<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>() { _Quad };
+                        Quad.ObjectReference = new HashSet<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>() { _Quad };
                     else
                         Quad.ObjectReference.Add(_Quad);
 

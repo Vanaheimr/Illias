@@ -45,13 +45,12 @@ namespace de.ahzf.Illias
     /// <summary>
     /// The base class for all QuadStoreExceptions.
     /// </summary>
-    public class QuadStoreException<TSystemId, TQuadId, TTransactionId, TSPO, TContext> : QuadStoreException
+    public class QuadStoreException<TSystemId, TQuadId, TTransactionId, TSPOC> : QuadStoreException
 
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
         where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
         where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
-        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
-        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+        where TSPOC          : IEquatable<TSPOC>,          IComparable<TSPOC>,          IComparable
 
     {
 

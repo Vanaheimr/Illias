@@ -33,18 +33,17 @@ namespace de.ahzf.Illias
     /// <typeparam name="TSystemId">The type of the SystemId.</typeparam>
     /// <typeparam name="TQuadId">The type of the QuadId.</typeparam>
     /// <typeparam name="TTransactionId">The type of the transaction id.</typeparam>
-    /// <typeparam name="TSPO">The type of the subjects, predicates and objects.</typeparam>
+    /// <typeparam name="TSPOC">The type of the subjects, predicates and objects.</typeparam>
     /// <typeparam name="TContext">The type of the context.</typeparam>
-    public interface IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>
-                         : IEquatable <IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>,
-                           IComparable<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>>,
+    public interface IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>
+                         : IEquatable <IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>,
+                           IComparable<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>,
                            IComparable
 
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
         where TQuadId        : IEquatable<TQuadId>,        IComparable<TQuadId>,        IComparable
         where TTransactionId : IEquatable<TTransactionId>, IComparable<TTransactionId>, IComparable
-        where TSPO           : IEquatable<TSPO>,           IComparable<TSPO>,           IComparable
-        where TContext       : IEquatable<TContext>,       IComparable<TContext>,       IComparable
+        where TSPOC          : IEquatable<TSPOC>,          IComparable<TSPOC>,          IComparable
 
     {
 
@@ -79,24 +78,24 @@ namespace de.ahzf.Illias
         /// The Subject of this quad.
         /// From another point of view this is an VertexId.
         /// </summary>
-        TSPO Subject { get; }
+        TSPOC Subject { get; }
 
         /// <summary>
         /// The Predicate of this quad.
         /// From another point of view this is a PropertyId.
         /// </summary>
-        TSPO Predicate { get; }
+        TSPOC Predicate { get; }
 
         /// <summary>
         /// The Object of this quad.
         /// </summary>
-        TSPO Object { get; }
+        TSPOC Object { get; }
 
         /// <summary>
         /// The Context or Graph of this quad.
         /// From another point of view this is a HyperEdgeId.
         /// </summary>
-        TContext Context { get; }
+        TSPOC Context { get; }
 
         #endregion
 
@@ -106,7 +105,7 @@ namespace de.ahzf.Illias
         /// A hashset of references to quads having
         /// the Object of this quad as Subject.
         /// </summary>
-        HashSet<IQuad<TSystemId, TQuadId, TTransactionId, TSPO, TContext>> ObjectReference { get; set; }
+        HashSet<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>> ObjectReference { get; set; }
 
         #endregion
 
