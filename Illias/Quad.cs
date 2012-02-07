@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace de.ahzf.Illias.QuadStore
+namespace de.ahzf.Illias
 {
 
     /// <summary>
@@ -32,7 +32,7 @@ namespace de.ahzf.Illias.QuadStore
     /// </summary>
     /// <typeparam name="T">The type of the subject, predicate, objects and context of a quad.</typeparam>
     public class Quad<T> : IQuad<T>
-        where T : IEquatable<T>, IComparable, IComparable<T>
+        where T : IEquatable<T>, IComparable<T>, IComparable
     {
 
         #region Data
@@ -61,7 +61,7 @@ namespace de.ahzf.Illias.QuadStore
 
         #endregion
 
-        #region Subject, Predicate, Object and Context/Graph
+        #region Subject, Predicate, Object and Context
 
         /// <summary>
         /// The Subject of this quad.
@@ -80,45 +80,11 @@ namespace de.ahzf.Illias.QuadStore
         /// </summary>
         public T Object          { get; private set; }
 
-        private T ContextOrGraph;
-
         /// <summary>
-        /// The Context or Graph of this quad.
+        /// The Context of this quad.
         /// From another point of view this is a HyperEdgeId.
         /// </summary>
-        public T Context
-        {
-            
-            get
-            {
-                return ContextOrGraph;
-            }
-
-            private set
-            {
-                ContextOrGraph = value;
-            }
-
-        }
-
-        /// <summary>
-        /// The Context or Graph of this quad.
-        /// From another point of view this is a HyperEdgeId.
-        /// </summary>
-        public T Graph
-        {
-
-            get
-            {
-                return ContextOrGraph;
-            }
-
-            private set
-            {
-                ContextOrGraph = value;
-            }
-
-        }
+        public T Context         { get; private set; }
 
         #endregion
 

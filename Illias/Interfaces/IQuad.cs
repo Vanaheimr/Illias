@@ -31,24 +31,25 @@ namespace de.ahzf.Illias
     /// VertexId: Vertex -Edge-> AnotherVertex [HyperEdge]
     /// </summary>
     /// <typeparam name="T">The type of the subject, predicate, objects and context of a quad.</typeparam>
-    public interface IQuad<T> : IEquatable<IQuad<T>>, IComparable, IComparable<IQuad<T>>
-        where T : IEquatable<T>, IComparable, IComparable<T>
+    public interface IQuad<T> : IEquatable<IQuad<T>>, IComparable<IQuad<T>>, IComparable
+        where T : IEquatable<T>, IComparable<T>, IComparable
     {
 
-        #region SystemId, TransactionId and QuadId
-
-        /// <summary>
-        /// The Id of the quad.
-        /// From another point of view this is an EdgeId.
-        /// This Id is just local unique. To get a global unique
-        /// Id add the SystemId of the QuadStore.
-        /// </summary>
-        T QuadId        { get; }
+        #region SystemId, QuadId and TransactionId
 
         /// <summary>
         /// The Id of the QuadStore which created this quad.
+        /// This Id has to be unique within the distributed cluster of QuadStores.
         /// </summary>
-        T SystemId      { get; }
+        T SystemId { get; }
+
+        /// <summary>
+        /// The Id of the quad.
+        /// This Id is just local unique. To get a global unique
+        /// Id add the SystemId of the QuadStore.
+        /// From the perspective of graphs this is an EdgeId.
+        /// </summary>
+        T QuadId        { get; }
 
         /// <summary>
         /// The Id of the transaction this quad was build in.
@@ -59,7 +60,7 @@ namespace de.ahzf.Illias
 
         #endregion
 
-        #region Subject, Predicate, Object and Context/Graph
+        #region Subject, Predicate, Object and Context
 
         /// <summary>
         /// The Subject of this quad.
@@ -84,26 +85,24 @@ namespace de.ahzf.Illias
         /// </summary>
         T Context       { get; }
 
-        /// <summary>
-        /// The Context or Graph of this quad.
-        /// From another point of view this is a HyperEdgeId.
-        /// </summary>
-        T Graph         { get; }
-
         #endregion
 
-        #region ObjectOnDisc and ObjectReference
-
-        /// <summary>
-        /// The on disc position of this quad.
-        /// </summary>
-        T ObjectOnDisc  { get; }
+        #region ObjectReference
 
         /// <summary>
         /// A hashset of references to quads having
         /// the Object of this quad as Subject.
         /// </summary>
         HashSet<IQuad<T>> ObjectReference { get; set; }
+
+        #endregion
+
+        #region ObjectOnDisc
+
+        /// <summary>
+        /// The on disc position of this quad.
+        /// </summary>
+        T ObjectOnDisc { get; }
 
         #endregion
 
@@ -115,7 +114,7 @@ namespace de.ahzf.Illias
         Int32 GetHashCode();
 
         /// <summary>
-        /// Shows information on this quad.
+        /// Shows debug information about this quad.
         /// </summary>
         String ToString();
 

@@ -24,7 +24,7 @@ using System.Collections.Concurrent;
 
 #endregion
 
-namespace de.ahzf.Illias.QuadStore
+namespace de.ahzf.Illias
 {
 
     /// <summary>
@@ -34,7 +34,7 @@ namespace de.ahzf.Illias.QuadStore
     /// </summary>
     /// <typeparam name="T">The type of the subjects, predicates and objects of the stored quads.</typeparam>
     public class QuadStore<T> : IQuadStore<T>
-        where T : IEquatable<T>, IComparable, IComparable<T>
+        where T : IEquatable<T>, IComparable<T>, IComparable
     {
 
         #region Data

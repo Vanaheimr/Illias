@@ -21,7 +21,7 @@ using System;
 
 #endregion
 
-namespace de.ahzf.Illias.QuadStore
+namespace de.ahzf.Illias
 {
     
     /// <summary>
