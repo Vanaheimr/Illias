@@ -2,11 +2,11 @@
  * Copyright (c) 2010-2012 Achim 'ahzf' Friedland <code@ahzf.de>
  * This file is part of Illias <http://www.github.com/ahzf/Illias>
  *
- * Licensed under the Affero GPL license, Version 3.0 (the "License");
+ * Licensed under the General Public License, Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.gnu.org/licenses/agpl.html
+ *     http://www.gnu.org/licenses/gpl.html
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,27 +33,27 @@ namespace de.ahzf.Illias
 
             var QuadStore = UnitTests.SimpleQuadStoreTests.CreateTestStore();
 
-            //var AllOf_Alice1     = QuadStore.AllOf("Alice").ToList();
-            //var AllOf_Alice2     = QuadStore.GetQuads(Subject:   "Alice").ToList();
+            var AllOf_Alice1     = QuadStore.AllOf("Alice").ToList();
+            var AllOf_Alice2     = QuadStore.GetQuads(Subject:   "Alice").ToList();
 
-            //var AllBy_Love1      = QuadStore.AllBy("loves").ToList();
-            //var AllBy_Love2      = QuadStore.GetQuads(Predicate: "loves").ToList();
+            var AllBy_Love1      = QuadStore.AllBy("loves").ToList();
+            var AllBy_Love2      = QuadStore.GetQuads(Predicate: "loves").ToList();
 
-            //var AllWith_Alice1   = QuadStore.AllWith("Alice").ToList();
-            //var AllWith_Alice2   = QuadStore.GetQuads(Object:    "Alice").ToList();
+            var AllWith_Alice1   = QuadStore.AllWith("Alice").ToList();
+            var AllWith_Alice2   = QuadStore.GetQuads(Object:    "Alice").ToList();
 
-            //var AllFrom_Context1 = QuadStore.AllFrom("0").ToList();
-            //var AllFrom_Context2 = QuadStore.GetQuads(Context:   "0"    ).ToList();
+            var AllFrom_Context1 = QuadStore.AllFrom("0").ToList();
+            var AllFrom_Context2 = QuadStore.GetQuads(Context:   "0"    ).ToList();
 
-            //var test5 = QuadStore.GetQuads(Subject: "Alice",
-            //                               Object:  "Bob").ToList();
+            var test5 = QuadStore.GetQuads(Subject: "Alice",
+                                           Object:  "Bob").ToList();
 
 
-            //var test6 = QuadStore.SelectQuads(SubjectSelector: s => String.Compare(s, "Alice") >= 0,
-            //                                  ObjectSelector:  o => o.EndsWith("e")).ToList();
+            var test6 = QuadStore.SelectQuads(SubjectSelector: s => String.Compare(s, "Alice") >= 0,
+                                              ObjectSelector:  o => o.EndsWith("e")).ToList();
 
-            var test7a = QuadStore.Traverse("Alice", "knows", true ).ToList();
-            var test7b = QuadStore.Traverse("Alice", "knows", false).ToList();
+            var test7a = QuadStore.Traverse("Alice", "knows", IncludeFirst: true ).ToList();
+            var test7b = QuadStore.Traverse("Alice", "knows", IncludeFirst: false).ToList();
 
         }
 

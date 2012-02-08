@@ -2,20 +2,18 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AE07E901-48E0-4A8D-8D14-3DB84B101724}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{105B961B-9414-4ABD-BEC8-83DCB34D5461}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestApplication1</RootNamespace>
-    <AssemblyName>TestApplication1</AssemblyName>
+    <RootNamespace>GenericGraphInterfaces</RootNamespace>
+    <AssemblyName>GenericGraphInterfaces</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,8 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,21 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Copy of IGenericGraph.cs" />
+    <Compile Include="Copy of IGenericVertex.cs" />
+    <Compile Include="Delegates.cs" />
+    <Compile Include="IGenericEdge.cs" />
+    <Compile Include="IGenericElement.cs" />
+    <Compile Include="IGenericGraph.cs" />
+    <Compile Include="IGenericHyperEdge.cs" />
+    <Compile Include="IGenericVertex.cs" />
+    <Compile Include="IGraphExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QuadStoreInterfaces\QuadStoreInterfaces.csproj">
-      <Project>{CFAB9833-4C11-40B9-B12F-0CBC511F90E9}</Project>
-      <Name>QuadStoreInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QuadStoreTests\QuadStoreTests.csproj">
-      <Project>{7CFA036C-A7D2-4CDD-827B-8C3DC4BD7077}</Project>
-      <Name>QuadStoreTests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QuadStore\QuadStore.csproj">
-      <Project>{5E78CBC4-181A-4479-A30C-DD4C1CEBE238}</Project>
-      <Name>QuadStore</Name>
+    <ProjectReference Include="..\Commons\Commons.csproj">
+      <Project>{16C85DF8-5DE6-4A9F-9FC7-7CA5B0440DF3}</Project>
+      <Name>Commons %28Commons\Commons%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
