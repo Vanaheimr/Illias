@@ -47,18 +47,18 @@ In the future it will also provide connectors to RDF Stores like [AllegoGraph](h
 
     // All quads having the given subject and object
     var test5 = QuadStore.GetQuads(Subject: "Alice",
-                                   Object:  "Bob").ToList();
+                                   Object:  "Bob");
 
 
 ##### More advanced quad selections
 
     var test6 = QuadStore.SelectQuads(SubjectSelector: s => String.Compare(s, "Alice") >= 0,
-                                      ObjectSelector:  o => o.EndsWith("e")).ToList();
+                                      ObjectSelector:  o => o.EndsWith("e"));
 
 ##### Traverse the graph of quads
 
-    var test7a = QuadStore.Traverse("Alice", "knows", true ).ToList();
-    var test7b = QuadStore.Traverse("Alice", "knows", false).ToList();
+    var test7a = QuadStore.Traverse("Alice", "knows", true );
+    var test7b = QuadStore.Traverse("Alice", "knows", false);
 
 
 #### Help and Documentation
