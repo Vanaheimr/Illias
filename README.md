@@ -12,9 +12,12 @@ In the future it will also provide connectors to RDF Stores like [AllegoGraph](h
  Quads can easily be translated to fragments of property graphs:    
  
     VertexId: Vertex -Edge-> AnotherVertex [HyperEdge]    
+    VertexId: Vertex -Property-> PropertyData [HyperEdge]    
 
 
 #### Usage example
+
+##### Create and Add operations
 
     var _QuadStore = new QuadStore<String, String, String, String>(
                              SystemId:        "System1",
@@ -26,6 +29,36 @@ In the future it will also provide connectors to RDF Stores like [AllegoGraph](h
     var s3 = _QuadStore.Add("Bob",   "knows", "Carol");
     var s4 = _QuadStore.Add("Eve",   "loves", "Alice");
     var s5 = _QuadStore.Add("Carol", "loves", "Alice");
+
+
+##### Simple exact match operations
+
+    var AllOf_Alice1     = QuadStore.AllOf("Alice").ToList();
+    var AllOf_Alice2     = QuadStore.GetQuads(Subject:   "Alice");
+
+    var AllBy_Love1      = QuadStore.AllBy("loves").ToList();
+    var AllBy_Love2      = QuadStore.GetQuads(Predicate: "loves");
+
+    var AllWith_Alice1   = QuadStore.AllWith("Alice").ToList();
+    var AllWith_Alice2   = QuadStore.GetQuads(Object:    "Alice");
+
+    var AllFrom_Context1 = QuadStore.AllFrom("0").ToList();
+    var AllFrom_Context2 = QuadStore.GetQuads(Context:   "0");
+
+    // All quads having the given subject and object
+    var test5 = QuadStore.GetQuads(Subject: "Alice",
+                                   Object:  "Bob").ToList();
+
+
+##### More advanced quad selections
+
+    var test6 = QuadStore.SelectQuads(SubjectSelector: s => String.Compare(s, "Alice") >= 0,
+                                      ObjectSelector:  o => o.EndsWith("e")).ToList();
+
+##### Traverse the graph of quads
+
+    var test7a = QuadStore.Traverse("Alice", "knows", true ).ToList();
+    var test7b = QuadStore.Traverse("Alice", "knows", false).ToList();
 
 
 #### Help and Documentation
