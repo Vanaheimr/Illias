@@ -57,8 +57,8 @@ In the future it will also provide connectors to RDF Stores like [StarDog](http:
 
 ##### Traverse the graph of quads
 
-    var Traversal        = QuadStore.Traverse("Alice", "knows");
-                            => [Alice, Bob, Carol, Dave]
+    var Traversal        = QuadStore.Traverse("Alice", "knows", IncludeFirst: false);
+                            => [Bob, Carol, Dave]
 
 #### Help and Documentation
 
