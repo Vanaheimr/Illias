@@ -33,17 +33,17 @@ In the future it will also provide connectors to RDF Stores like [AllegoGraph](h
 
 ##### Simple exact match operations
 
-    var AllOf_Alice1     = QuadStore.AllOf("Alice").ToList();
-    var AllOf_Alice2     = QuadStore.GetQuads(Subject:   "Alice");
+    var AllOf_Alice1     = QuadStore.AllOf("Alice");
+    var AllOf_Alice2     = QuadStore.GetQuads(Subject: "Alice");
 
-    var AllBy_Love1      = QuadStore.AllBy("loves").ToList();
+    var AllBy_Love1      = QuadStore.AllBy("loves");
     var AllBy_Love2      = QuadStore.GetQuads(Predicate: "loves");
 
-    var AllWith_Alice1   = QuadStore.AllWith("Alice").ToList();
-    var AllWith_Alice2   = QuadStore.GetQuads(Object:    "Alice");
+    var AllWith_Alice1   = QuadStore.AllWith("Alice");
+    var AllWith_Alice2   = QuadStore.GetQuads(Object: "Alice");
 
-    var AllFrom_Context1 = QuadStore.AllFrom("0").ToList();
-    var AllFrom_Context2 = QuadStore.GetQuads(Context:   "0");
+    var AllFrom_Context1 = QuadStore.AllFrom("0");
+    var AllFrom_Context2 = QuadStore.GetQuads(Context: "0");
 
     // All quads having the given subject and object
     var test5 = QuadStore.GetQuads(Subject: "Alice",
