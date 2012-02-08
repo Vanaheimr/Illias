@@ -43,6 +43,12 @@
   <ItemGroup>
     <Compile Include="AutoDiscovery\AutoDiscovery.cs" />
     <Compile Include="AutoDiscovery\AutoDiscoveryException.cs" />
+    <Compile Include="Collections\GroupedCollection.cs" />
+    <Compile Include="Collections\ImmutableMap.cs" />
+    <Compile Include="Collections\Imutable\IBinarySearchTree.cs" />
+    <Compile Include="Collections\Imutable\IImmutableMap.cs" />
+    <Compile Include="Collections\Mutable\IGroupedCollection.cs" />
+    <Compile Include="Collections\Mutable\IMap.cs" />
     <Compile Include="Delegates\ItemFilter.cs" />
     <Compile Include="Delegates\KeyValueFilter.cs" />
     <Compile Include="ExtensionMethods\IComparableExtensions.cs" />
