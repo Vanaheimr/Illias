@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApplication1", "TestApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{A4F5E27A-C87B-49C0-BD34-3D2704B4CF98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IlliasHTTP", "IlliasHTTP\IlliasHTTP.csproj", "{CAC67C46-2C15-4405-BFBA-94F1A5033254}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{CFE2C7A9-527F-4CED-9CC9-B43B62B985D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hermod", "..\Hermod\Hermod\Hermod.csproj", "{477EFD16-3627-4473-957D-44CA9A9DFB79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,8 +53,31 @@ Global
 		{A4F5E27A-C87B-49C0-BD34-3D2704B4CF98}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A4F5E27A-C87B-49C0-BD34-3D2704B4CF98}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A4F5E27A-C87B-49C0-BD34-3D2704B4CF98}.Release|x86.ActiveCfg = Release|Any CPU
+		{CAC67C46-2C15-4405-BFBA-94F1A5033254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC67C46-2C15-4405-BFBA-94F1A5033254}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC67C46-2C15-4405-BFBA-94F1A5033254}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CAC67C46-2C15-4405-BFBA-94F1A5033254}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CAC67C46-2C15-4405-BFBA-94F1A5033254}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CAC67C46-2C15-4405-BFBA-94F1A5033254}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC67C46-2C15-4405-BFBA-94F1A5033254}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAC67C46-2C15-4405-BFBA-94F1A5033254}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CAC67C46-2C15-4405-BFBA-94F1A5033254}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CAC67C46-2C15-4405-BFBA-94F1A5033254}.Release|x86.ActiveCfg = Release|Any CPU
+		{477EFD16-3627-4473-957D-44CA9A9DFB79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{477EFD16-3627-4473-957D-44CA9A9DFB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{477EFD16-3627-4473-957D-44CA9A9DFB79}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{477EFD16-3627-4473-957D-44CA9A9DFB79}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{477EFD16-3627-4473-957D-44CA9A9DFB79}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{477EFD16-3627-4473-957D-44CA9A9DFB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{477EFD16-3627-4473-957D-44CA9A9DFB79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{477EFD16-3627-4473-957D-44CA9A9DFB79}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{477EFD16-3627-4473-957D-44CA9A9DFB79}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{477EFD16-3627-4473-957D-44CA9A9DFB79}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{477EFD16-3627-4473-957D-44CA9A9DFB79} = {CFE2C7A9-527F-4CED-9CC9-B43B62B985D0}
 	EndGlobalSection
 EndGlobal

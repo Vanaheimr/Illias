@@ -1,12 +1,12 @@
 ﻿/*
- * Copyright (c) 2010-2012, Achim 'ahzf' Friedland <code@ahzf.de>
+ * Copyright (c) 2010-2012 Achim 'ahzf' Friedland <code@ahzf.de>
  * This file is part of Illias <http://www.github.com/ahzf/Illias>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Affero GPL license, Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.gnu.org/licenses/agpl.html
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,8 +33,7 @@ namespace de.ahzf.Illias
     /// <typeparam name="TSystemId">The type of the SystemId.</typeparam>
     /// <typeparam name="TQuadId">The type of the QuadId.</typeparam>
     /// <typeparam name="TTransactionId">The type of the transaction id.</typeparam>
-    /// <typeparam name="TSPOC">The type of the subjects, predicates and objects.</typeparam>
-    /// <typeparam name="TContext">The type of the context.</typeparam>
+    /// <typeparam name="TSPOC">The type of the subject, predicate, object and context.</typeparam>
     public interface IQuadStore<TSystemId, TQuadId, TTransactionId, TSPOC>
 
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
@@ -43,6 +42,11 @@ namespace de.ahzf.Illias
         where TSPOC          : IEquatable<TSPOC>,          IComparable<TSPOC>,          IComparable
 
     {
+
+        /// <summary>
+        /// The identification of this QuadStore.
+        /// </summary>
+        TSystemId SystemId { get; }
 
         #region BeginTransaction(...)
 
@@ -71,10 +75,10 @@ namespace de.ahzf.Illias
         /// <summary>
         /// Adds a new quad based on the given parameters to the QuadStore.
         /// </summary>
-        /// <param name="Subject">The Subject.</param>
-        /// <param name="Predicate">The Predicate.</param>
-        /// <param name="Object">The Object.</param>
-        /// <param name="Context">The Context.</param>
+        /// <param name="Subject">The subject.</param>
+        /// <param name="Predicate">The predicate.</param>
+        /// <param name="Object">The object.</param>
+        /// <param name="Context">The context.</param>
         /// <param name="Connect">Connect this quad to other quads in order to achieve an index-free adjacency.</param>
         /// <returns>A new quad based on the given parameters.</returns>
         IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>
@@ -86,7 +90,36 @@ namespace de.ahzf.Illias
 
         #endregion
 
-        #region Get(...)
+        #region NumberOf(...)
+
+        /// <summary>
+        /// Return the number of quads.
+        /// </summary>
+        UInt64 NumberOfQuads      { get; }
+
+        /// <summary>
+        /// Return the number of unique subjects.
+        /// </summary>
+        UInt64 NumberOfSubjects   { get; }
+
+        /// <summary>
+        /// Return the number of unique predicates.
+        /// </summary>
+        UInt64 NumberOfPredicates { get; }
+
+        /// <summary>
+        /// Return the number of unique objects.
+        /// </summary>
+        UInt64 NumberOfObjects    { get; }
+
+        /// <summary>
+        /// Return the number of unique contexts.
+        /// </summary>
+        UInt64 NumberOfContexts   { get; }
+
+        #endregion
+
+        #region Get/Select(...)/Traverse
 
         /// <summary>
         /// Returns the quad having the given QuadId.
@@ -100,31 +133,43 @@ namespace de.ahzf.Illias
         /// <summary>
         /// Returns all matching quads based on the given parameters.
         /// </summary>
-        /// <param name="Subject">The Subject.</param>
-        /// <param name="Predicate">The Predicate.</param>
-        /// <param name="Object">The Object.</param>
-        /// <param name="Context">The Context.</param>
-        /// <returns>All quads matched by the given parameters.</returns>
+        /// <param name="Subject">The subject.</param>
+        /// <param name="Predicate">The predicate.</param>
+        /// <param name="Object">The object.</param>
+        /// <param name="Context">The context.</param>
+        /// <returns>An enumeration of quads matched by the given parameters.</returns>
         IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>
-            GetQuads(TSPOC Subject,
-                     TSPOC Predicate,
-                     TSPOC Object,
-                     TSPOC Context = default(TSPOC));
+            GetQuads(TSPOC Subject   = default(TSPOC),
+                     TSPOC Predicate = default(TSPOC),
+                     TSPOC Object    = default(TSPOC),
+                     TSPOC Context   = default(TSPOC));
 
 
         /// <summary>
-        /// Removes all matching quads based on the given selectors.
+        /// Returns all matching quads based on the given selectors.
         /// </summary>
-        /// <param name="SubjectSelector">A delegate for selcting subjects.</param>
-        /// <param name="PredicateSelector">A delegate for selcting predicates.</param>
-        /// <param name="ObjectSelector">A delegate for selcting objects.</param>
-        /// <param name="ContextOrGraphSelector">A delegate for selcting contexts or graphs.</param>
-        /// <returns>An enumeration of selected Quads.</returns>
+        /// <param name="SubjectSelector">A delegate for selecting subjects.</param>
+        /// <param name="PredicateSelector">A delegate for selecting predicates.</param>
+        /// <param name="ObjectSelector">A delegate for selecting objects.</param>
+        /// <param name="ContextSelector">A delegate for selecting contexts.</param>
+        /// <returns>An enumeration of quads matched by the given selectors.</returns>
         IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>
-            GetQuads(SubjectSelector<TSPOC>   SubjectSelector        = null,
-                     PredicateSelector<TSPOC> PredicateSelector      = null,
-                     ObjectSelector<TSPOC>    ObjectSelector         = null,
-                     ContextSelector<TSPOC>   ContextOrGraphSelector = null);
+            SelectQuads(SubjectSelector<TSPOC>   SubjectSelector   = null,
+                        PredicateSelector<TSPOC> PredicateSelector = null,
+                        ObjectSelector<TSPOC>    ObjectSelector    = null,
+                        ContextSelector<TSPOC>   ContextSelector   = null);
+
+
+        /// <summary>
+        /// Traverses the graph of quads by following a single given predicate.
+        /// </summary>
+        /// <param name="Subject">The subject.</param>
+        /// <param name="Predicate">The predicate to follow.</param>
+        /// <param name="IncludeFirst">Include the subject as first element of the result set.</param>
+        /// <returns></returns>
+        IEnumerable<TSPOC> Traverse(TSPOC   Subject, 
+                                    TSPOC   Predicate,
+                                    Boolean IncludeFirst = true);
 
         #endregion
 
@@ -141,24 +186,24 @@ namespace de.ahzf.Illias
         /// <summary>
         /// Removes all matching quads based on the given parameters.
         /// </summary>
-        /// <param name="Subject">The Subject.</param>
-        /// <param name="Predicate">The Predicate.</param>
-        /// <param name="Object">The Object.</param>
-        /// <param name="Context">The Context.</param>
+        /// <param name="Subject">The subject.</param>
+        /// <param name="Predicate">The predicate.</param>
+        /// <param name="Object">The object.</param>
+        /// <param name="Context">The context.</param>
         /// <returns>All quads after removal matched by the given parameters.</returns>
         IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>
-            Remove(TSPOC Subject,
-                   TSPOC Predicate,
-                   TSPOC Object,
-                   TSPOC Context = default(TSPOC));
+            Remove(TSPOC Subject   = default(TSPOC),
+                   TSPOC Predicate = default(TSPOC),
+                   TSPOC Object    = default(TSPOC),
+                   TSPOC Context   = default(TSPOC));
 
         /// <summary>
         /// Removes all matching quads based on the given selectors.
         /// </summary>
-        /// <param name="SubjectSelector">A delegate for selcting subjects.</param>
-        /// <param name="PredicateSelector">A delegate for selcting predicates.</param>
-        /// <param name="ObjectSelector">A delegate for selcting objects.</param>
-        /// <param name="ContextSelector">A delegate for selcting contexts.</param>
+        /// <param name="SubjectSelector">A delegate for selecting subjects.</param>
+        /// <param name="PredicateSelector">A delegate for selecting predicates.</param>
+        /// <param name="ObjectSelector">A delegate for selecting objects.</param>
+        /// <param name="ContextSelector">A delegate for selecting contexts.</param>
         /// <returns>All quads after removal matched by the given parameters.</returns>
         IEnumerable<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>
             Remove(SubjectSelector<TSPOC>   SubjectSelector   = null,

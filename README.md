@@ -42,7 +42,7 @@ Just check out or download its sources and all its dependencies:
 
 #### License and your contribution
 
-[Illias](http://github.com/ahzf/Illias) is released under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0). For details see the [LICENSE](/ahzf/Illias/blob/master/LICENSE) file.    
+[Illias](http://github.com/ahzf/Illias) is released under the [GNU Affero General Public License, Version 3](http://www.gnu.org/licenses/agpl.html). For details see the [LICENSE](/ahzf/Illias/blob/master/LICENSE) file.    
 To suggest a feature, report a bug or general discussion: [http://github.com/ahzf/Illias/issues](http://github.com/ahzf/Illias/issues)    
 If you want to help or contribute source code to this project, please use the same license.   
 The coding standards can be found by reading the code ;)

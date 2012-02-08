@@ -1,12 +1,12 @@
 ﻿/*
- * Copyright (c) 2010-2012, Achim 'ahzf' Friedland <code@ahzf.de>
+ * Copyright (c) 2010-2012 Achim 'ahzf' Friedland <code@ahzf.de>
  * This file is part of Illias <http://www.github.com/ahzf/Illias>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Affero GPL license, Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.gnu.org/licenses/agpl.html
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,8 +33,7 @@ namespace de.ahzf.Illias
     /// <typeparam name="TSystemId">The type of the SystemId.</typeparam>
     /// <typeparam name="TQuadId">The type of the QuadId.</typeparam>
     /// <typeparam name="TTransactionId">The type of the transaction id.</typeparam>
-    /// <typeparam name="TSPOC">The type of the subjects, predicates and objects.</typeparam>
-    /// <typeparam name="TContext">The type of the context.</typeparam>
+    /// <typeparam name="TSPOC">The type of the subject, predicate, object and context.</typeparam>
     public interface IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>
                          : IEquatable <IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>,
                            IComparable<IQuad<TSystemId, TQuadId, TTransactionId, TSPOC>>,
@@ -53,7 +52,7 @@ namespace de.ahzf.Illias
         /// The Id of the QuadStore which created this quad.
         /// This Id has to be unique within the distributed cluster of QuadStores.
         /// </summary>
-        TSystemId SystemId { get; }
+        TSystemId      SystemId      { get; }
 
         /// <summary>
         /// The Id of the quad.
@@ -61,7 +60,7 @@ namespace de.ahzf.Illias
         /// Id add the SystemId of the QuadStore.
         /// From the perspective of graphs this is an EdgeId.
         /// </summary>
-        TQuadId QuadId { get; }
+        TQuadId        QuadId        { get; }
 
         /// <summary>
         /// The Id of the transaction this quad was build in.
@@ -78,7 +77,7 @@ namespace de.ahzf.Illias
         /// The Subject of this quad.
         /// From another point of view this is an VertexId.
         /// </summary>
-        TSPOC Subject { get; }
+        TSPOC Subject   { get; }
 
         /// <summary>
         /// The Predicate of this quad.
@@ -89,13 +88,13 @@ namespace de.ahzf.Illias
         /// <summary>
         /// The Object of this quad.
         /// </summary>
-        TSPOC Object { get; }
+        TSPOC Object    { get; }
 
         /// <summary>
         /// The Context or Graph of this quad.
         /// From another point of view this is a HyperEdgeId.
         /// </summary>
-        TSPOC Context { get; }
+        TSPOC Context   { get; }
 
         #endregion
 

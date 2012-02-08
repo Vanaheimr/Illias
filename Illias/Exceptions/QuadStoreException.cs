@@ -1,12 +1,12 @@
 ﻿/*
- * Copyright (c) 2010-2012, Achim 'ahzf' Friedland <code@ahzf.de>
+ * Copyright (c) 2010-2012 Achim 'ahzf' Friedland <code@ahzf.de>
  * This file is part of Illias <http://www.github.com/ahzf/Illias>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Affero GPL license, Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.gnu.org/licenses/agpl.html
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,6 +23,8 @@ using System;
 
 namespace de.ahzf.Illias
 {
+
+    #region QuadStoreException
 
     /// <summary>
     /// The base class for all QuadStoreExceptions.
@@ -41,10 +43,17 @@ namespace de.ahzf.Illias
 
     }
 
+    #endregion
+
+    #region QuadStoreException<TSystemId, TQuadId, TTransactionId, TSPOC>
 
     /// <summary>
     /// The base class for all QuadStoreExceptions.
     /// </summary>
+    /// <typeparam name="TSystemId">The type of the SystemId.</typeparam>
+    /// <typeparam name="TQuadId">The type of the QuadId.</typeparam>
+    /// <typeparam name="TTransactionId">The type of the transaction id.</typeparam>
+    /// <typeparam name="TSPOC">The type of the subject, predicate, object and context.</typeparam>
     public class QuadStoreException<TSystemId, TQuadId, TTransactionId, TSPOC> : QuadStoreException
 
         where TSystemId      : IEquatable<TSystemId>,      IComparable<TSystemId>,      IComparable
@@ -65,9 +74,6 @@ namespace de.ahzf.Illias
 
     }
 
-
-
-
-    
+    #endregion
 
 }
