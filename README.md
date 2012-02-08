@@ -1,18 +1,18 @@
 [Illias](http://github.com/ahzf/Illias) is an implementation of a distributed RDF QuadStore.    
 The implementation ensures an index-free adjacency for fast traversals.    
-In the future it will also provide connectors to RDF Stores like [AllegoGraph](http://www.franz.com/agraph/allegrograph) and others and expose itself via the [RDF Storage And Inference Layer (SAIL)](http://www.openrdf.org/doc/sesame/api/org/openrdf/sesame/sail/package-summary.html).
+In the future it will also provide connectors to RDF Stores like [StarDog](http://stardog.com) and [AllegoGraph](http://www.franz.com/agraph/allegrograph) and others and expose itself via the [RDF Storage And Inference Layer (SAIL)](http://www.openrdf.org/doc/sesame/api/org/openrdf/sesame/sail/package-summary.html).
 
 #### Description
 
  A Quad is a little fragment of a graph with additional information to make the handling of this data structure more easy and scaleable:    
  
-    QuadId: Subject -Predicate-> Object [Context/Graph]    
+    QuadId: Subject -Predicate-> Object [Context]    
  
  
  Quads can easily be translated to fragments of property graphs:    
  
-    VertexId: Vertex -Edge-> AnotherVertex [HyperEdge]    
-    VertexId: Vertex -Property-> PropertyData [HyperEdge]    
+    VertexId: Vertex -Edge->     AnotherVertex [HyperEdge]    
+    VertexId: Vertex -Property-> PropertyData  [HyperEdge]    
 
 
 #### Usage example
@@ -47,7 +47,8 @@ In the future it will also provide connectors to RDF Stores like [AllegoGraph](h
 
     // All quads having the given subject and object
     var AliceAndBob      = QuadStore.GetQuads(Subject: "Alice", Object:  "Bob");
-
+                           => Alice -likes-> Bob,
+                              Alice -knows-> Bob
 
 ##### More advanced quad selections
 
@@ -57,7 +58,7 @@ In the future it will also provide connectors to RDF Stores like [AllegoGraph](h
 ##### Traverse the graph of quads
 
     var Traversal        = QuadStore.Traverse("Alice", "knows");
-
+                            => [Alice, Bob, Carol, Dave]
 
 #### Help and Documentation
 
