@@ -18,38 +18,38 @@
 #region Usings
 
 using System;
-using System.Collections.Generic;
 
 #endregion
 
 namespace de.ahzf.Illias.Commons
 {
 
-    public static class Silverlight5Extensions
+    /// <summary>
+    /// Extensions to the String class.
+    /// </summary>
+    public static class StringExtensions
     {
 
-#if SILVERLIGHT
+        #region IsNotNullAndContains(this String, Substring)
 
-        public delegate Boolean TypeFilter(Type m, Object FilterCriteria);
-
-        public static Type[] FindInterfaces(this Type myType, TypeFilter TypeFilter, Object FilterCriteria)
+        /// <summary>
+        /// Returns a value indicating whether the specified Substring
+        /// occurs within the given string.
+        /// </summary>
+        /// <param name="String">A string.</param>
+        /// <param name="Substring">A substring to search for.</param>
+        /// <returns>True if the value parameter occurs within this string.</returns>
+        public static Boolean IsNotNullAndContains(this String String, String Substring)
         {
 
-            if (TypeFilter == null)
-                throw new ArgumentNullException("filter");
+            if (String != null)
+                return String.Contains(Substring);
 
-            var Interfaces = new List<Type>();
-            foreach (var Interface in myType.GetInterfaces())
-            {
-                if (TypeFilter(Interface, FilterCriteria))
-                    Interfaces.Add(Interface);
-            }
-
-            return Interfaces.ToArray();
+            return false;
 
         }
 
-#endif
+        #endregion
 
     }
 

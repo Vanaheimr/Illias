@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace de.ahzf.Blueprints
+namespace de.ahzf.Illias.Commons
 {
 
     /// <summary>

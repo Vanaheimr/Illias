@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace de.ahzf.Blueprints
+namespace de.ahzf.Illias.Commons
 {
 
     /// <summary>
@@ -32,7 +32,7 @@ namespace de.ahzf.Blueprints
     public static class IEnumerableExtensions
     {
 
-        #region StdDev(IEnumerable)
+        #region StdDev(this IEnumerable)
 
         /// <summary>
         /// Calculates the standard deviation of the given enumeration of doubles.
@@ -46,7 +46,7 @@ namespace de.ahzf.Blueprints
 
         #endregion
 
-        #region AverageAndStdDev(IEnumerable)
+        #region AverageAndStdDev(this IEnumerable)
 
         /// <summary>
         /// Calculates the standard deviation of the given enumeration of doubles.
@@ -83,8 +83,7 @@ namespace de.ahzf.Blueprints
 
         #endregion
 
-
-        #region ForEach<T>(IEnumerable, Action)
+        #region ForEach<T>(this IEnumerable, Action)
 
         /// <summary>
         /// Call the given delegate for each element of the enumeration.
