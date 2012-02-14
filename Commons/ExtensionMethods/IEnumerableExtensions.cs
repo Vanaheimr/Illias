@@ -111,6 +111,131 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
+        #region ForEach<S, T>(this myIEnumerable, mySeed, myAction)
+
+        public static S ForEach<S, T>(this IEnumerable<T> myIEnumerable, S mySeed, Action<S, T> myAction)
+        {
+
+            if (myIEnumerable == null)
+                throw new ArgumentNullException("myIEnumerable must not be null!");
+
+            if (myAction == null)
+                throw new ArgumentNullException("myAction must not be null!");
+
+            S _R = mySeed;
+
+            foreach (var _item in myIEnumerable)
+                myAction(_R, _item);
+
+            return _R;
+
+        }
+
+        #endregion
+
+        #region Skip<T>(this myIEnumerable, myCount)
+
+        public static IEnumerable<T> Skip<T>(this IEnumerable<T> myIEnumerable, UInt32 myCount)
+        {
+            return myIEnumerable.Skip((Int32)myCount);
+        }
+
+        #endregion
+
+        #region Take<T>(this myIEnumerable, myCount)
+
+        public static IEnumerable<T> Take<T>(this IEnumerable<T> myIEnumerable, UInt32 myCount)
+        {
+            return myIEnumerable.Take((Int32) myCount);
+        }
+
+        #endregion
+
+        #region IsNullOrEmpty<T>(this myEnumerable)
+
+        public static Boolean IsNullOrEmpty<T>(this IEnumerable<T> myEnumerable)
+        {
+
+            if (myEnumerable == null || !myEnumerable.Any())
+                return true;
+
+            return false;
+
+        }
+
+        #endregion
+
+        #region IsNeitherNullNorEmpty<T>(this myEnumerable)
+
+        public static Boolean IsNeitherNullNorEmpty<T>(this IEnumerable<T> myEnumerable)
+        {
+
+            if (myEnumerable == null || !myEnumerable.Any())
+                return false;
+
+            return true;
+
+        }
+
+        #endregion
+
+        #region CountIsAtLeast<T>(this myIEnumerable, myNumberOfElements)
+
+        public static Boolean CountIsAtLeast<T>(this IEnumerable<T> myIEnumerable, UInt64 myNumberOfElements)
+        {
+
+            if (myIEnumerable == null)
+                return false;
+
+            var _Enumerator = myIEnumerable.GetEnumerator();
+
+            while (myNumberOfElements > 0 && _Enumerator.MoveNext())
+                myNumberOfElements--;
+
+            return (myNumberOfElements == 0 && !_Enumerator.MoveNext());
+
+        }
+
+        #endregion
+
+        #region CountIsGreater<T>(this myIEnumerable, myNumberOfElements)
+
+        public static Boolean CountIsGreater<T>(this IEnumerable<T> myIEnumerable, UInt64 myNumberOfElements)
+        {
+
+            if (myIEnumerable == null)
+                return false;
+
+            var _Enumerator = myIEnumerable.GetEnumerator();
+
+            while (myNumberOfElements > 0 && _Enumerator.MoveNext())
+                myNumberOfElements--;
+
+            return (myNumberOfElements == 0 && _Enumerator.MoveNext());
+
+        }
+
+        #endregion
+
+        #region CountIsGreaterOrEquals<T>(this myIEnumerable, myNumberOfElements)
+
+        public static Boolean CountIsGreaterOrEquals<T>(this IEnumerable<T> myIEnumerable, UInt64 myNumberOfElements)
+        {
+
+            if (myIEnumerable == null)
+                return false;
+
+            var _Enumerator = myIEnumerable.GetEnumerator();
+
+            while (myNumberOfElements > 0 && _Enumerator.MoveNext())
+                myNumberOfElements--;
+
+            return (myNumberOfElements == 0);
+
+        }
+
+        #endregion
+
     }
 
 }

@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.Text;
 
 #endregion
 
@@ -29,6 +30,112 @@ namespace de.ahzf.Illias.Commons
     /// </summary>
     public static class StringExtensions
     {
+
+        #region IsNullOrEmpty
+
+        public static Boolean IsNullOrEmpty(this String myString)
+        {
+            return String.IsNullOrEmpty(myString);
+        }
+
+        #endregion
+
+        #region ToBase64(myString)
+
+        public static String ToBase64(this String myString)
+        {
+
+            try
+            {
+                return Convert.ToBase64String(Encoding.UTF8.GetBytes(myString));
+            }
+
+            catch (Exception e)
+            {
+                throw new Exception("Error in base64Encode" + e.Message);
+            }
+
+        }
+
+        #endregion
+
+        #region FromBase64(myBase64String)
+
+        public static String FromBase64(this String myBase64String)
+        {
+
+            try
+            {
+
+                var _UTF8Decoder  = new UTF8Encoding().GetDecoder();
+                var _Bytes        = Convert.FromBase64String(myBase64String);
+                var _DecodedChars = new Char[_UTF8Decoder.GetCharCount(_Bytes, 0, _Bytes.Length)];
+                _UTF8Decoder.GetChars(_Bytes, 0, _Bytes.Length, _DecodedChars, 0);
+
+                return new String(_DecodedChars);
+
+            }
+
+            catch (Exception e)
+            {
+                throw new Exception("Error in base64Decode" + e.Message);
+            }
+
+        }
+
+        #endregion
+
+        #region EscapeForXMLandHTML(myString)
+
+        public static String EscapeForXMLandHTML(this String myString)
+        {
+
+            if (myString == null)
+                throw new ArgumentNullException("myString must not be null!");
+
+            myString = myString.Replace("<", "&lt;");
+            myString = myString.Replace(">", "&gt;");
+            myString = myString.Replace("&", "&amp;");
+
+            return myString;
+
+        }
+
+        #endregion
+
+        #region ToUTF8String(this myByteArray, NumberOfBytes = 0)
+
+        public static String ToUTF8String(this Byte[] myByteArray, Int32 NumberOfBytes = 0)
+        {
+
+            if (myByteArray == null)
+                throw new ArgumentNullException("myString must not be null!");
+
+            if (myByteArray.Length == 0)
+                return String.Empty;
+
+            if (NumberOfBytes == 0)
+                return Encoding.UTF8.GetString(myByteArray);
+            else
+                return Encoding.UTF8.GetString(myByteArray, 0, NumberOfBytes);
+
+        }
+
+        #endregion
+
+        #region ToUTF8Bytes(this myString)
+
+        public static Byte[] ToUTF8Bytes(this String myString)
+        {
+
+            if (myString == null)
+                throw new ArgumentNullException("myString must not be null!");
+
+            return Encoding.UTF8.GetBytes(myString);
+
+        }
+
+        #endregion
 
         #region IsNotNullAndContains(this String, Substring)
 
@@ -47,6 +154,21 @@ namespace de.ahzf.Illias.Commons
 
             return false;
 
+        }
+
+        #endregion
+
+        #region DoubleNewLine
+
+        /// <summary>
+        /// NewLine but twice.
+        /// </summary>
+        public static String DoubleNewLine
+        {
+            get
+            {
+                return Environment.NewLine + Environment.NewLine;
+            }
         }
 
         #endregion

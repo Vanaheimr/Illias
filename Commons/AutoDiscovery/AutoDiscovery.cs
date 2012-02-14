@@ -35,9 +35,7 @@ namespace de.ahzf.Illias.Commons
     /// A factory which uses reflection to generate a apropriate
     /// implementation of T for you.
     /// </summary>
-    public class AutoDiscovery<T>
-        // This is not perfect! But there is no 'where T : interface'!
-        where T : class
+    public class AutoDiscovery<T> : IEnumerable<T>
     {
 
         #region Data
@@ -134,18 +132,18 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region AutoDiscovery(Autostart)
+        #region AutoDiscovery(myAutostart)
 
         /// <summary>
         /// Create a new AutoDiscovery instance. An automatic discovery
         /// can be avoided.
         /// </summary>
-        public AutoDiscovery(Boolean Autostart)
+        public AutoDiscovery(Boolean myAutostart)
         {
 
             _TypeDictionary = new ConcurrentDictionary<String, Type>();
             
-            if (Autostart)            
+            if (myAutostart)            
                 FindAndRegister();
 
         }
@@ -199,7 +197,7 @@ namespace de.ahzf.Illias.Commons
 
             #region Scan files of implementations of T
 
-			Parallel.ForEach(_ConcurrentBag, _File =>
+            Parallel.ForEach(_ConcurrentBag, _File =>
             {
 
                 // Seems to be a mono bug!
@@ -332,19 +330,16 @@ namespace de.ahzf.Illias.Commons
                     Type _Type;
 
                     if (_TypeDictionary.TryGetValue(myImplementationID, out _Type))
-                    {
                         if (_Type != null)
                         {
                             myInstance = (T) Activator.CreateInstance(_Type);
                             return true;
                         }
-                    }
+
 
                 }
-                catch (Exception e)
-                {
-                    throw new Exception("The plugin could not be activated!", e);
-                }
+                catch (Exception)
+                { }
 
                 myInstance = default(T);
 
@@ -355,6 +350,31 @@ namespace de.ahzf.Illias.Commons
         }
 
         #endregion
+
+
+        public IEnumerator<T> GetEnumerator()
+        {
+
+            var _List = new List<T>();
+
+            foreach (var _Type in _TypeDictionary.Keys)
+                _List.Add(Activate(_Type));
+
+            return _List.GetEnumerator();
+
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+
+            var _List = new List<T>();
+
+            foreach (var _Type in _TypeDictionary.Keys)
+                _List.Add(Activate(_Type));
+
+            return _List.GetEnumerator();
+        
+        }
 
     }
 
