@@ -63,9 +63,12 @@
     <Compile Include="Collections\Mutable\IMap.cs" />
     <Compile Include="Delegates\ItemFilter.cs" />
     <Compile Include="Delegates\KeyValueFilter.cs" />
+    <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="ExtensionMethods\IComparableExtensions.cs" />
     <Compile Include="ExtensionMethods\IEnumerableExtensions.cs" />
     <Compile Include="ExtensionMethods\SilverlightExtensions.cs" />
+    <Compile Include="ExtensionMethods\StringExtensions.cs" />
+    <Compile Include="ExtensionMethods\TypeExtensions.cs" />
     <Compile Include="Ids\IIdentifier.cs" />
     <Compile Include="Ids\IRevisionId.cs" />
     <Compile Include="Ids\RevisionId.cs" />

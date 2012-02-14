@@ -114,9 +114,11 @@ namespace de.ahzf.Illias.Commons
             if (myByteArray.Length == 0)
                 return String.Empty;
 
+#if !SILVERLIGHT
             if (NumberOfBytes == 0)
                 return Encoding.UTF8.GetString(myByteArray);
             else
+#endif
                 return Encoding.UTF8.GetString(myByteArray, 0, NumberOfBytes);
 
         }
