@@ -27,7 +27,7 @@ namespace de.ahzf.Illias.Commons
 {
 
     /// <summary>
-    /// A RevisionId is an identificator for a specific IElement revision in
+    /// A RevId is an identificator for a specific IElement revision in
     /// a distributed system consisting of a timestamp and a SystemId.
     /// </summary>
     public class RevisionId : IComparable, IComparable<RevisionId>, IEquatable<RevisionId>
@@ -126,21 +126,21 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region RevisionId(RevisionIdString)
+        #region RevisionId(RevIdString)
 
         /// <summary>
         /// Generates a RevisionId based on the "yyyyddMM.HHmmss.fffffff(SystemId)"
-        /// formated string representation of a RevisionId.
+        /// formated string representation of a RevId.
         /// </summary>
-        /// <param name="RevisionIdString">A RevisionId object as "yyyyddMM.HHmmss.fffffff(SystemId)"-formated string</param>
+        /// <param name="RevIdString">A RevId object as "yyyyddMM.HHmmss.fffffff(SystemId)"-formated string</param>
         /// <exception cref="System.FormatException"></exception>
-        public RevisionId(String RevisionIdString)
+        public RevisionId(String RevIdString)
         {
 
             try
             {            
-                var __Timestamp = RevisionIdString.Remove(RevisionIdString.IndexOf("("));
-                var __SystemId  = RevisionIdString.Substring(__Timestamp.Length + 1, RevisionIdString.Length - __Timestamp.Length - 2);
+                var __Timestamp = RevIdString.Remove(RevIdString.IndexOf("("));
+                var __SystemId  = RevIdString.Substring(__Timestamp.Length + 1, RevIdString.Length - __Timestamp.Length - 2);
 
                 this.Timestamp  = (UInt64)(DateTime.ParseExact(__Timestamp, "yyyyddMM.HHmmss.fffffff", null)).Ticks;
                 this.SystemId   = new SystemId(__SystemId);
@@ -159,65 +159,65 @@ namespace de.ahzf.Illias.Commons
 
         #region Operator overloading
 
-        #region Operator == (RevisionId1, RevisionId2)
+        #region Operator == (RevId1, RevId2)
 
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="RevisionId1">A RevisionId.</param>
-        /// <param name="RevisionId2">Another RevisionId.</param>
+        /// <param name="RevId1">A RevId.</param>
+        /// <param name="RevId2">Another RevId.</param>
         /// <returns>true|false</returns>
-        public static Boolean operator == (RevisionId RevisionId1, RevisionId RevisionId2)
+        public static Boolean operator == (RevisionId RevId1, RevisionId RevId2)
         {
 
             // If both are null, or both are same instance, return true.
-            if (Object.ReferenceEquals(RevisionId1, RevisionId2))
+            if (Object.ReferenceEquals(RevId1, RevId2))
                 return true;
 
             // If one is null, but not both, return false.
-            if (((Object) RevisionId1 == null) || ((Object) RevisionId2 == null))
+            if (((Object) RevId1 == null) || ((Object) RevId2 == null))
                 return false;
 
-            return RevisionId1.Equals(RevisionId2);
+            return RevId1.Equals(RevId2);
 
         }
 
         #endregion
 
-        #region Operator != (RevisionId1, RevisionId2)
+        #region Operator != (RevId1, RevId2)
 
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="RevisionId1">A RevisionId.</param>
-        /// <param name="RevisionId2">Another RevisionId.</param>
+        /// <param name="RevId1">A RevId.</param>
+        /// <param name="RevId2">Another RevId.</param>
         /// <returns>true|false</returns>
-        public static Boolean operator != (RevisionId RevisionId1, RevisionId RevisionId2)
+        public static Boolean operator != (RevisionId RevId1, RevisionId RevId2)
         {
-            return !(RevisionId1 == RevisionId2);
+            return !(RevId1 == RevId2);
         }
 
         #endregion
 
-        #region Operator <  (RevisionId1, RevisionId2)
+        #region Operator <  (RevId1, RevId2)
 
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="RevisionId1">A RevisionId.</param>
-        /// <param name="RevisionId2">Another RevisionId.</param>
+        /// <param name="RevId1">A RevId.</param>
+        /// <param name="RevId2">Another RevId.</param>
         /// <returns>true|false</returns>
-        public static Boolean operator < (RevisionId RevisionId1, RevisionId RevisionId2)
+        public static Boolean operator < (RevisionId RevId1, RevisionId RevId2)
         {
 
-            if (RevisionId1.Timestamp < RevisionId2.Timestamp)
+            if (RevId1.Timestamp < RevId2.Timestamp)
                 return true;
 
-            if (RevisionId1.Timestamp > RevisionId2.Timestamp)
+            if (RevId1.Timestamp > RevId2.Timestamp)
                 return false;
 
-            // RevisionId1.Timestamp == RevisionId2.Timestamp
-            if (RevisionId1.SystemId < RevisionId2.SystemId)
+            // RevId1.Timestamp == RevId2.Timestamp
+            if (RevId1.SystemId < RevId2.SystemId)
                 return true;
 
             return false;
@@ -226,40 +226,40 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region Operator <= (RevisionId1, RevisionId2)
+        #region Operator <= (RevId1, RevId2)
 
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="RevisionId1">A RevisionId.</param>
-        /// <param name="RevisionId2">Another RevisionId.</param>
+        /// <param name="RevId1">A RevId.</param>
+        /// <param name="RevId2">Another RevId.</param>
         /// <returns>true|false</returns>
-        public static Boolean operator <= (RevisionId RevisionId1, RevisionId RevisionId2)
+        public static Boolean operator <= (RevisionId RevId1, RevisionId RevId2)
         {
-            return !(RevisionId1 > RevisionId2);
+            return !(RevId1 > RevId2);
         }
 
         #endregion
 
-        #region Operator >  (RevisionId1, RevisionId2)
+        #region Operator >  (RevId1, RevId2)
 
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="RevisionId1">A RevisionId.</param>
-        /// <param name="RevisionId2">Another RevisionId.</param>
+        /// <param name="RevId1">A RevId.</param>
+        /// <param name="RevId2">Another RevId.</param>
         /// <returns>true|false</returns>
-        public static Boolean operator > (RevisionId RevisionId1, RevisionId RevisionId2)
+        public static Boolean operator > (RevisionId RevId1, RevisionId RevId2)
         {
 
-            if (RevisionId1.Timestamp > RevisionId2.Timestamp)
+            if (RevId1.Timestamp > RevId2.Timestamp)
                 return true;
 
-            if (RevisionId1.Timestamp < RevisionId2.Timestamp)
+            if (RevId1.Timestamp < RevId2.Timestamp)
                 return false;
 
-            // RevisionId1.Timestamp == RevisionId2.Timestamp
-            if (RevisionId1.SystemId > RevisionId2.SystemId)
+            // RevId1.Timestamp == RevId2.Timestamp
+            if (RevId1.SystemId > RevId2.SystemId)
                 return true;
 
             return false;
@@ -268,17 +268,17 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region Operator >= (RevisionId1, RevisionId2)
+        #region Operator >= (RevId1, RevId2)
 
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="RevisionId1">A RevisionId.</param>
-        /// <param name="RevisionId2">Another RevisionId.</param>
+        /// <param name="RevId1">A RevId.</param>
+        /// <param name="RevId2">Another RevId.</param>
         /// <returns>true|false</returns>
-        public static Boolean operator >= (RevisionId RevisionId1, RevisionId RevisionId2)
+        public static Boolean operator >= (RevisionId RevId1, RevisionId RevId2)
         {
-            return !(RevisionId1 < RevisionId2);
+            return !(RevId1 < RevId2);
         }
 
         #endregion
@@ -299,13 +299,13 @@ namespace de.ahzf.Illias.Commons
             if (Object == null)
                 throw new ArgumentNullException("The given object must not be null!");
 
-            // Check if the given object is a RevisionId.
-            var _RevisionId = Object as RevisionId;
-            if ((Object) _RevisionId == null)
-                throw new ArgumentException("The given object is not a RevisionId!");
+            // Check if the given object is a RevId.
+            var _RevId = Object as RevisionId;
+            if ((Object) _RevId == null)
+                throw new ArgumentException("The given object is not a RevId!");
 
-            if (this < _RevisionId) return -1;
-            if (this > _RevisionId) return +1;
+            if (this < _RevId) return -1;
+            if (this > _RevId) return +1;
 
             return 0;
 
@@ -318,7 +318,7 @@ namespace de.ahzf.Illias.Commons
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="RevisionId">An object to compare with.</param>
+        /// <param name="RevisionId">A RevisionId to compare with.</param>
         public Int32 CompareTo(RevisionId RevisionId)
         {
 
@@ -336,7 +336,7 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region IEquatable<RevisionId> Members
+        #region IEquatable<RevId> Members
 
         #region Equals(Object)
 
@@ -351,12 +351,12 @@ namespace de.ahzf.Illias.Commons
             if (Object == null)
                 return false;
 
-            // Check if the given object is a RevisionId.
-            var _RevisionId = Object as RevisionId;
-            if ((Object) _RevisionId == null)
+            // Check if the given object is a RevId.
+            var _RevId = Object as RevisionId;
+            if ((Object) _RevId == null)
                 return false;
 
-            return Equals(_RevisionId);
+            return Equals(_RevId);
 
         }
 
@@ -365,7 +365,7 @@ namespace de.ahzf.Illias.Commons
         #region Equals(RevisionId)
 
         /// <summary>
-        /// Compares two RevisionIds for equality.
+        /// Compares two RevIds for equality.
         /// </summary>
         /// <param name="RevisionId">A RevisionId to compare with.</param>
         /// <returns>True if both match; False otherwise.</returns>

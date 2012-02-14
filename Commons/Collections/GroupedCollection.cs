@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace de.ahzf.Blueprints
+namespace de.ahzf.Illias.Commons
 {
 
     public class GroupedCollection<TGroup, TId, TValue> : IGroupedCollection<TGroup, TId, TValue>

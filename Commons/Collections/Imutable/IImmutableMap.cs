@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace de.ahzf.Blueprints
+namespace de.ahzf.Illias.Commons
 {
 
     // http://msdn.microsoft.com/en-us/library/hh136548(v=vs.110).aspx

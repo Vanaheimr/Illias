@@ -37,7 +37,7 @@ namespace de.ahzf.Illias.Commons
         /// A generic revision identifier.
         /// All vertices, edges and hyper edges of a graph must have unique identifiers.
         /// </summary>
-        TRevisionId RevisionId { get; }
+        TRevisionId RevId { get; }
 
     }
 
