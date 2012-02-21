@@ -175,6 +175,37 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
+        #region RemoveQuotes(this String)
+
+        /// <summary>
+        /// Removes leading and/or tailing (double) quotes.
+        /// </summary>
+        /// <param name="String">The string to check.</param>
+        public static String RemoveQuotes(this String String)
+        {
+
+            var Length       = String.Length;
+            var LeadingQuote = String.StartsWith("\"") || String.StartsWith("\'");
+            var TailingQuote = String.EndsWith("\"")   || String.EndsWith("\'");
+
+            if (!LeadingQuote && !TailingQuote)
+                return String;
+
+            if (LeadingQuote && TailingQuote && Length > 2)
+                return String.Substring(1, Length - 1);
+
+            if (LeadingQuote && Length > 1)
+                return String.Substring(1, Length);
+
+            if (TailingQuote && Length > 1)
+                return String.Substring(0, Length - 1);
+
+            return String.Empty;
+
+        }
+
+        #endregion
+
     }
 
 }
