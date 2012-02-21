@@ -362,7 +362,7 @@ namespace de.ahzf.Illias.GenericGraph.InMemory
         /// <summary>
         /// 
         /// </summary>
-        public TRevisionIdVertex RevisionId
+        public TRevisionIdVertex RevId
         {
             get { throw new NotImplementedException(); }
         }

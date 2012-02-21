@@ -84,7 +84,7 @@ namespace de.ahzf.Illias.GenericGraph.InMemory
         /// <summary>
         /// A revision identification.
         /// </summary>
-        public TRevisionIdEdge RevisionId { get; private set; }
+        public TRevisionIdEdge RevId { get; private set; }
 
         #region Label
 

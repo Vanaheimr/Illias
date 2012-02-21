@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Illias Commons")]
-[assembly: AssemblyDescription("Data structure libraries and network access for .NET and Mono.")]
+[assembly: AssemblyTitle("KeyValueStoreInterfaces")]
+[assembly: AssemblyDescription("A store for key-value data.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ahzf.de")]
-[assembly: AssemblyProduct("Commons")]
-[assembly: AssemblyCopyright("Copyright © Achim 'ahzf' Friedland 2010-2012")]
+[assembly: AssemblyProduct("KeyValueStoreInterfaces")]
+[assembly: AssemblyCopyright("Copyright © Achim 'ahzf' Friedland 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b723908a-3e65-44ef-b951-afef6ec37077")]
+[assembly: Guid("2a4c8649-8da9-431e-974b-14cb2b15c434")]
 
 // Version information for an assembly consists of the following four values:
 //

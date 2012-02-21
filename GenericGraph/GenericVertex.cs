@@ -84,7 +84,7 @@ namespace de.ahzf.Illias.GenericGraph.InMemory
         /// <summary>
         /// 
         /// </summary>
-        public TRevisionIdVertex RevisionId { get; private set; }
+        public TRevisionIdVertex RevId { get; private set; }
 
 
         //public String Type
@@ -582,6 +582,7 @@ namespace de.ahzf.Illias.GenericGraph.InMemory
         }
 
         #endregion
+
 
     }
 

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{15CCB66C-7006-4CD8-90F2-66E105398B07}</ProjectGuid>
+    <ProjectGuid>{C461823B-E5CA-4AB1-91A6-8DE8A4AEB157}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GenericGraph</RootNamespace>
-    <AssemblyName>GenericGraph</AssemblyName>
+    <RootNamespace>GeometryTests</RootNamespace>
+    <AssemblyName>GeometryTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\libs\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,23 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GenericEdge.cs" />
-    <Compile Include="GenericGraph.cs" />
-    <Compile Include="GenericVertex.cs" />
+    <Compile Include="Forest\BintreeTests.cs" />
+    <Compile Include="Forest\QuadTreeTests.cs" />
+    <Compile Include="Geometry\PixelTests.cs" />
+    <Compile Include="Geometry\RectangleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Eunomia\Eunomia\Eunomia.csproj">
-      <Project>{1DF1A588-33B1-4168-9487-604FE5680681}</Project>
-      <Name>Eunomia</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Commons\Commons.csproj">
-      <Project>{16C85DF8-5DE6-4A9F-9FC7-7CA5B0440DF3}</Project>
-      <Name>Commons %28Commons\Commons%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GenericGraphInterfaces\GenericGraphInterfaces.csproj">
-      <Project>{105B961B-9414-4ABD-BEC8-83DCB34D5461}</Project>
-      <Name>GenericGraphInterfaces</Name>
+    <ProjectReference Include="..\Geometry\Geometry.csproj">
+      <Project>{9F38DCC9-CD80-4B71-8A9C-B3F37E471CAB}</Project>
+      <Name>Geometry</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
