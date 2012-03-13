@@ -63,6 +63,7 @@
     <Compile Include="Ids\RevisionId.cs" />
     <Compile Include="Ids\SystemId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Time\Measurement.cs" />
     <Compile Include="Transactions\IsolationLevel.cs" />
     <Compile Include="Transactions\Transaction.cs" />
     <Compile Include="Transactions\TransactionExceptions.cs" />
