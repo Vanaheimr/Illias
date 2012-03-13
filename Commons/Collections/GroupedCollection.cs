@@ -142,7 +142,24 @@ namespace de.ahzf.Illias.Commons
 
         public Boolean TryRemoveValue(TGroup Group, TId Id, TValue Value)
         {
-            throw new NotImplementedException();
+
+            if (Group == null || Group.Equals(default(TGroup)))
+            {
+                return DefaultGroup.Remove(Value);
+            }
+
+            else
+            {
+
+                LinkedList<TValue> _Group = null;
+
+                if (Groups.TryGetValue(Group, out _Group))
+                    return _Group.Remove(Value);
+
+                return false;
+
+            }
+
         }
 
 
