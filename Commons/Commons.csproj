@@ -47,6 +47,7 @@
     <Compile Include="Collections\ImmutableMap.cs" />
     <Compile Include="Collections\Imutable\IBinarySearchTree.cs" />
     <Compile Include="Collections\Imutable\IImmutableMap.cs" />
+    <Compile Include="Collections\TSQueue.cs" />
     <Compile Include="Collections\Mutable\IGroupedCollection.cs" />
     <Compile Include="Collections\Mutable\IMap.cs" />
     <Compile Include="Delegates\ItemFilter.cs" />
