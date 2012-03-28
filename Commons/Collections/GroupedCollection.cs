@@ -163,8 +163,13 @@ namespace de.ahzf.Illias.Commons
         }
 
 
-
-
+        public UInt64 Count
+        {
+            get
+            {
+                return (UInt64) Ids.Keys.Count;
+            }
+        }
 
         public void Clear()
         {

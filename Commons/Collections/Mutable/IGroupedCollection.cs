@@ -34,6 +34,7 @@ namespace de.ahzf.Illias.Commons
         Boolean TryGetById     (TId    Id,    out TValue Value);
         Boolean TryGetByGroup  (TGroup Group, out IEnumerable<TValue> Values);
         Boolean ContainsId     (TId    Id);
+        UInt64 Count { get; }
         void Clear();
 
     }
