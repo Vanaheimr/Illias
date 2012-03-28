@@ -19,170 +19,299 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Collections;
 
 #endregion
 
 namespace de.ahzf.Illias.Commons
 {
 
-    public class GroupedCollection<TGroup, TId, TValue> : IGroupedCollection<TGroup, TId, TValue>
+    /// <summary>
+    /// A collection of values with the additional possibility
+    /// to group these values.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the collection keys.</typeparam>
+    /// <typeparam name="TValue">The type of the collection values.</typeparam>
+    /// <typeparam name="TGroup">The type of the collection groups.</typeparam>
+    public class GroupedCollection<TKey, TValue, TGroup> : IGroupedCollection<TKey, TValue, TGroup>
     {
 
-        private readonly IDictionary<TId,    TValue>             Ids;
-        private readonly IDictionary<TGroup, LinkedList<TValue>> Groups;
-        private readonly LinkedList<TValue>                      DefaultGroup;
+        #region Data
 
+        private Int64 _NumberOfElements;
+
+        private readonly ConcurrentDictionary<TKey, TValue>               Keys;
+        private readonly ConcurrentDictionary<TGroup, LinkedList<TValue>> Groups;
+
+        #endregion
+
+        #region Constructor(s)
+
+        #region GroupedCollection()
+
+        /// <summary>
+        /// Create a new grouped collection.
+        /// </summary>
         public GroupedCollection()
         {
-            Ids          = new Dictionary<TId, TValue>();
-            Groups       = new Dictionary<TGroup, LinkedList<TValue>>();
-            DefaultGroup = new LinkedList<TValue>();
+            this.Keys   = new ConcurrentDictionary<TKey, TValue>();
+            this.Groups = new ConcurrentDictionary<TGroup, LinkedList<TValue>>();
         }
 
-        public Boolean TryAddValue(TGroup Group, TId Id, TValue Value)
+        #endregion
+
+        #endregion
+
+
+        #region TryAddValue(Key, Value, Group)
+
+        /// <summary>
+        /// Tries to add a KeyValueGroupTriple to the collection.
+        /// </summary>
+        /// <param name="Key">The key of the triple.</param>
+        /// <param name="Value">The value of the triple.</param>
+        /// <param name="Group">The group of the triple.</param>
+        /// <returns>True if success; false otherwise.</returns>
+        public Boolean TryAddValue(TKey Key, TValue Value, TGroup Group)
         {
 
-            Ids.Add(Id, Value);
+            #region Initial checks
 
-            if (Group == null || Group.Equals(default(TGroup)))
-                DefaultGroup.AddLast(Value);
+            if (Key == null)
+                throw new ArgumentNullException("Key", "The parameter Key must not be null!");
 
-            else
+            if (Group == null)
+                throw new ArgumentNullException("Group", "The parameter Group must not be null!");
+
+            #endregion
+
+            if (Keys.TryAdd(Key, Value))
             {
 
-                LinkedList<TValue> _Group = null;
+                LinkedList<TValue> _Group;
 
                 if (Groups.TryGetValue(Group, out _Group))
                 {
-                    try
-                    {
-                        _Group.AddLast(Value);
-                    }
-                    catch (Exception e)
-                    {
-                        return false;
-                    }
+
+                    _Group.AddLast(Value);
+                    return true;
+
                 }
                 else
                 {
+
                     _Group = new LinkedList<TValue>();
                     _Group.AddLast(Value);
-                    Groups.Add(Group, _Group);
-                }
 
-            }
+                    if (Groups.TryAdd(Group, _Group))
+                    {
+                        Interlocked.Increment(ref _NumberOfElements);
+                    }
 
-            return true;
-
-        }
-
-        public Boolean TryGetById(TId Id, out TValue Value)
-        {
-            return Ids.TryGetValue(Id, out Value);
-        }
-
-
-        public Boolean TryGetByGroup(TGroup Group, out IEnumerable<TValue> Entries)
-        {
-
-            if (Group == null || Group.Equals(default(TGroup)))
-            {
-                Entries = DefaultGroup;
-                return true;
-            }
-
-            else
-            {
-
-                LinkedList<TValue> _Group = null;
-
-                if (Groups.TryGetValue(Group, out _Group))
-                {
-                    Entries = _Group;
                     return true;
+
                 }
 
             }
-
-            Entries = new TValue[0];
 
             return false;
 
         }
 
+        #endregion
 
 
-        public IEnumerator<TValue> GetEnumerator()
+        #region ContainsKey(Key)
+
+        /// <summary>
+        /// Determines whether the collection contains the specified key.
+        /// </summary>
+        /// <param name="Key">A key.</param>
+        public Boolean ContainsKey(TKey Key)
+        {
+            return this.Keys.ContainsKey(Key);
+        }
+
+        #endregion
+
+        #region ContainsGroup(Group)
+
+        /// <summary>
+        /// Determines whether the collection contains the specified group.
+        /// </summary>
+        /// <param name="Group">A group.</param>
+        public Boolean ContainsGroup(TGroup Group)
+        {
+            return this.Groups.ContainsKey(Group);
+        }
+
+        #endregion
+
+
+        #region Count()
+
+        /// <summary>
+        /// The total number of values in the grouped collection.
+        /// </summary>
+        public UInt64 Count()
+        {
+            return (UInt64) _NumberOfElements;
+        }
+
+        #endregion
+
+        #region Count(Group)
+
+        /// <summary>
+        /// The number of values in the given group collection.
+        /// </summary>
+        public UInt64 Count(TGroup Group)
         {
 
-            foreach (var Value in DefaultGroup)
-                yield return Value;
+            LinkedList<TValue> _Group = null;
 
-            foreach (var Group in Groups.Values)
-                foreach (var Value in Group)
-                    yield return Value;
+            if (Groups.TryGetValue(Group, out _Group))
+                return (UInt64) _Group.Count;
+
+            return 0;
 
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        #endregion
+
+
+        #region TryGetByKey(Key, out Value)
+
+        /// <summary>
+        /// Attempts to get the value associated with the specified key.
+        /// </summary>
+        /// <param name="Key">The key.</param>
+        /// <param name="Value">The value.</param>
+        /// <returns>True, if the key was found in the grouped collection; False otherwise.</returns>
+        public Boolean TryGetByKey(TKey Key, out TValue Value)
         {
-
-            foreach (var Value in DefaultGroup)
-                yield return Value;
-
-            foreach (var Group in Groups.Values)
-                foreach (var Value in Group)
-                    yield return Value;
-
+            return Keys.TryGetValue(Key, out Value);
         }
 
+        #endregion
 
+        #region TryGetByGroup(Group, out Values)
 
-
-        public Boolean TryRemoveValue(TGroup Group, TId Id, TValue Value)
+        /// <summary>
+        /// Attempts to get the values associated with the specified group.
+        /// </summary>
+        /// <param name="Group">The group.</param>
+        /// <param name="Values">An enumeration of values.</param>
+        /// <returns>True, if the group was found in the grouped collection; False otherwise.</returns>
+        public Boolean TryGetByGroup(TGroup Group, out IEnumerable<TValue> Values)
         {
 
-            if (Group == null || Group.Equals(default(TGroup)))
+            LinkedList<TValue> _Group = null;
+
+            if (Groups.TryGetValue(Group, out _Group))
             {
-                return DefaultGroup.Remove(Value);
+                Values = _Group;
+                return true;
             }
 
-            else
+            Values = new TValue[0];
+            return false;
+
+        }
+
+        #endregion
+
+
+        #region TryRemoveValue(Key, Value, Group)
+
+        /// <summary>
+        /// Attempts to remove the given value with the specified
+        /// key and group from the grouped collection.
+        /// </summary>
+        /// <param name="Key">The key of the value.</param>
+        /// <param name="Value">The value to remove.</param>
+        /// <param name="Group">The group of the value.</param>
+        /// <returns>True if success; false otherwise.</returns>
+        public Boolean TryRemoveValue(TKey Key, TValue Value, TGroup Group)
+        {
+
+            TValue _Value;
+
+            // Remove value from Key-lookup...
+            if (this.Keys.TryRemove(Key, out _Value))
             {
 
+                // Remove value from Group-lookup...
                 LinkedList<TValue> _Group = null;
 
                 if (Groups.TryGetValue(Group, out _Group))
-                    return _Group.Remove(Value);
+                {
+                    if (_Group.Remove(Value))
+                    {
 
-                return false;
+                        // Remove entire group if no value is left!
+                        if (_Group.Count == 0)
+                        {
+                            LinkedList<TValue> _RemovedGroup;
+                            return Groups.TryRemove(Group, out _RemovedGroup);
+                        }
 
+                        return true;
+
+                    }
+                }
+            
             }
+
+            return false;
 
         }
 
+        #endregion
 
-        public UInt64 Count
-        {
-            get
-            {
-                return (UInt64) Ids.Keys.Count;
-            }
-        }
+        #region Clear()
 
+        /// <summary>
+        /// Removes all keys, values and groups
+        /// from the grouped collection.
+        /// </summary>
         public void Clear()
         {
-            DefaultGroup.Clear();
-            Groups.Clear();
+            this.Keys.Clear();
+            this.Groups.Clear();
         }
 
+        #endregion
 
-        public Boolean ContainsId(TId Id)
+
+        #region GetEnumerator()
+
+        /// <summary>
+        /// Return an enumerator for the grouped collection.
+        /// </summary>
+        public IEnumerator<TValue> GetEnumerator()
         {
-            return Ids.ContainsKey(Id);
+            foreach (var Group in Groups.Values)
+                foreach (var Value in Group)
+                    yield return Value;
         }
+
+        /// <summary>
+        /// Return an enumerator for the grouped collection.
+        /// </summary>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            foreach (var Group in Groups.Values)
+                foreach (var Value in Group)
+                    yield return Value;
+        }
+
+        #endregion
 
     }
 
 }
+
