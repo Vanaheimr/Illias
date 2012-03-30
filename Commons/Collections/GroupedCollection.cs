@@ -96,7 +96,11 @@ namespace de.ahzf.Illias.Commons
                 if (Groups.TryGetValue(Group, out _Group))
                 {
 
-                    _Group.AddLast(Value);
+                    lock (_Group)
+                    {
+                        _Group.AddLast(Value);
+                        Interlocked.Increment(ref _NumberOfElements);
+                    }
                     return true;
 
                 }
