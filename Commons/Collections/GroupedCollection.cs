@@ -93,29 +93,32 @@ namespace de.ahzf.Illias.Commons
 
                 LinkedList<TValue> _Group;
 
-                if (Groups.TryGetValue(Group, out _Group))
+                lock (Groups)
                 {
 
-                    lock (_Group)
+                    if (Groups.TryGetValue(Group, out _Group))
                     {
+
                         _Group.AddLast(Value);
                         Interlocked.Increment(ref _NumberOfElements);
+
+                        return true;
+
                     }
-                    return true;
-
-                }
-                else
-                {
-
-                    _Group = new LinkedList<TValue>();
-                    _Group.AddLast(Value);
-
-                    if (Groups.TryAdd(Group, _Group))
+                    else
                     {
-                        Interlocked.Increment(ref _NumberOfElements);
-                    }
 
-                    return true;
+                        _Group = new LinkedList<TValue>();
+                        _Group.AddLast(Value);
+
+                        if (Groups.TryAdd(Group, _Group))
+                        {
+                            Interlocked.Increment(ref _NumberOfElements);
+                        }
+
+                        return true;
+
+                    }
 
                 }
 
