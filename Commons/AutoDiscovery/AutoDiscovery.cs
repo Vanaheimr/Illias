@@ -36,6 +36,7 @@ namespace de.ahzf.Illias.Commons
     /// implementation of T for you.
     /// </summary>
     public class AutoDiscovery<T> : IEnumerable<T>
+        where T : class
     {
 
         #region Data
@@ -132,19 +133,21 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region AutoDiscovery(Autostart)
+        #region AutoDiscovery(Autostart, IdentificatorFunc = null)
 
         /// <summary>
         /// Create a new AutoDiscovery instance. An automatic discovery
         /// can be avoided.
         /// </summary>
-        public AutoDiscovery(Boolean Autostart)
+        /// <param name="Autostart">Automatically start the reflection process.</param>
+        /// <param name="IdentificatorFunc">A transformation delegate to provide an unique identification for every matching class.</param>
+        public AutoDiscovery(Boolean Autostart, Func<T, String> IdentificatorFunc = null)
         {
 
             _TypeDictionary = new ConcurrentDictionary<String, Type>();
             
-            if (Autostart)            
-                FindAndRegister();
+            if (Autostart)
+                FindAndRegister(IdentificatorFunc: IdentificatorFunc);
 
         }
 
@@ -153,29 +156,29 @@ namespace de.ahzf.Illias.Commons
         #endregion
 
 
-        #region FindAndRegister(myPaths, myIdentificator)
+        #region FindAndRegister(ClearTypeDictionary = true, Paths = null, FileExtensions = null, IdentificatorFunc = null)
 
         /// <summary>
         /// Searches all matching files at the given paths for classes implementing the interface &lt;T&gt;.
         /// </summary>
-        /// <param name="myClearTypeDictionary">Clears the TypeDictionary before adding new implementations.</param>
-        /// <param name="myPaths">An enumeration of paths to search for implementations.</param>
-        /// <param name="myFileExtensions">A enumeration of file extensions for filtering.</param>
-        /// <param name="myIdentificator">A transformation of a type into its identification.</param>
-        public void FindAndRegister(Boolean myClearTypeDictionary = true, IEnumerable<String> myPaths = null, IEnumerable<String> myFileExtensions = null, Func<Type, String> myIdentificator = null)
+        /// <param name="ClearTypeDictionary">Clears the TypeDictionary before adding new implementations.</param>
+        /// <param name="Paths">An enumeration of paths to search for implementations.</param>
+        /// <param name="FileExtensions">A enumeration of file extensions for filtering.</param>
+        /// <param name="IdentificatorFunc">A transformation delegate to provide an unique identification for every matching class.</param>
+        public void FindAndRegister(Boolean ClearTypeDictionary = true, IEnumerable<String> Paths = null, IEnumerable<String> FileExtensions = null, Func<T, String> IdentificatorFunc = null)
         {
 
             #region Get a list of interesting files
 
             var _ConcurrentBag = new ConcurrentBag<String>();
 
-            if (myPaths == null)
-                myPaths = new List<String> { "." };
+            if (Paths == null)
+                Paths = new List<String> { "." };
 
-            if (myFileExtensions == null)
-                myFileExtensions = new List<String> { ".dll", ".exe" };
+            if (FileExtensions == null)
+                FileExtensions = new List<String> { ".dll", ".exe" };
 
-            foreach (var _Path in myPaths)
+            foreach (var _Path in Paths)
             {
 
                 Parallel.ForEach(Directory.GetFiles(_Path), _ActualFile =>
@@ -183,14 +186,14 @@ namespace de.ahzf.Illias.Commons
 
                     var _FileInfo = new FileInfo(_ActualFile);
 
-                    if (myFileExtensions.Contains(_FileInfo.Extension))
+                    if (FileExtensions.Contains(_FileInfo.Extension))
                         _ConcurrentBag.Add(_FileInfo.FullName);
 
                 });
 
             }
 
-            if (myClearTypeDictionary)
+            if (ClearTypeDictionary)
                 _TypeDictionary.Clear();
 
             #endregion
@@ -234,8 +237,12 @@ namespace de.ahzf.Illias.Commons
 
                                                     var __Id = _ActualType.Name;
 
-                                                    if (myIdentificator != null)
-                                                        __Id = myIdentificator(_ActualType);
+                                                    if (IdentificatorFunc != null)
+                                                    {
+                                                        var _T = Activator.CreateInstance(_ActualType) as T;
+                                                        if (_T != null)
+                                                            __Id = IdentificatorFunc(_T);
+                                                    }
 
                                                     if (__Id != null && __Id != String.Empty)
                                                         _TypeDictionary.TryAdd(__Id, _ActualType);
