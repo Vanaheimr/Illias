@@ -21,7 +21,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
@@ -35,13 +34,14 @@ namespace de.ahzf.Illias.Commons
     /// A factory which uses reflection to generate a apropriate
     /// implementation of T for you.
     /// </summary>
-    public class AutoDiscovery<T> : IEnumerable<T>
-        where T : class
+    public class AutoDiscovery<TClass> : IEnumerable<TClass>
+        where TClass : class
     {
 
         #region Data
 
-        private readonly ConcurrentDictionary<String, Type> _TypeDictionary;
+        private readonly ConcurrentDictionary<String, Type>   _TypeLookup;
+        private readonly ConcurrentDictionary<String, TClass> _InstanceLookup;
 
         #endregion
 
@@ -56,7 +56,7 @@ namespace de.ahzf.Illias.Commons
         {
             get
             {
-                return typeof(T).Name;
+                return typeof(TClass).Name;
             }
         }
 
@@ -71,7 +71,7 @@ namespace de.ahzf.Illias.Commons
         {
             get
             {
-                return from _StringTypePair in _TypeDictionary select _StringTypePair.Key;
+                return _TypeLookup.Keys;
             }
         }
 
@@ -82,7 +82,7 @@ namespace de.ahzf.Illias.Commons
         /// <summary>
         /// Returns an enumeration of activated instances of all registered types of T.
         /// </summary>
-        public IEnumerable<T> RegisteredTypes
+        public IEnumerable<TClass> RegisteredTypes
         {
             get
             {
@@ -90,7 +90,9 @@ namespace de.ahzf.Illias.Commons
                 try
                 {
 
-                    return from _StringTypePair in _TypeDictionary select (T) Activator.CreateInstance(_StringTypePair.Value);
+                    return from   _StringTypePair
+                           in     _TypeLookup
+                           select (TClass) Activator.CreateInstance(_StringTypePair.Value);
 
                 }
                 catch (Exception e)
@@ -112,7 +114,7 @@ namespace de.ahzf.Illias.Commons
         {
             get
             {
-                return (UInt64) _TypeDictionary.LongCount();
+                return (UInt64) _TypeLookup.LongCount();
             }
         }
 
@@ -141,10 +143,11 @@ namespace de.ahzf.Illias.Commons
         /// </summary>
         /// <param name="Autostart">Automatically start the reflection process.</param>
         /// <param name="IdentificatorFunc">A transformation delegate to provide an unique identification for every matching class.</param>
-        public AutoDiscovery(Boolean Autostart, Func<T, String> IdentificatorFunc = null)
+        public AutoDiscovery(Boolean Autostart, Func<TClass, String> IdentificatorFunc = null)
         {
 
-            _TypeDictionary = new ConcurrentDictionary<String, Type>();
+            _TypeLookup     = new ConcurrentDictionary<String, Type>();
+            _InstanceLookup = new ConcurrentDictionary<String, TClass>();
             
             if (Autostart)
                 FindAndRegister(IdentificatorFunc: IdentificatorFunc);
@@ -165,7 +168,7 @@ namespace de.ahzf.Illias.Commons
         /// <param name="Paths">An enumeration of paths to search for implementations.</param>
         /// <param name="FileExtensions">A enumeration of file extensions for filtering.</param>
         /// <param name="IdentificatorFunc">A transformation delegate to provide an unique identification for every matching class.</param>
-        public void FindAndRegister(Boolean ClearTypeDictionary = true, IEnumerable<String> Paths = null, IEnumerable<String> FileExtensions = null, Func<T, String> IdentificatorFunc = null)
+        public void FindAndRegister(Boolean ClearTypeDictionary = true, IEnumerable<String> Paths = null, IEnumerable<String> FileExtensions = null, Func<TClass, String> IdentificatorFunc = null)
         {
 
             #region Get a list of interesting files
@@ -194,7 +197,7 @@ namespace de.ahzf.Illias.Commons
             }
 
             if (ClearTypeDictionary)
-                _TypeDictionary.Clear();
+                _TypeLookup.Clear();
 
             #endregion
 
@@ -229,7 +232,7 @@ namespace de.ahzf.Illias.Commons
                                         foreach (var _Interface in _ActualTypeGetInterfaces)
                                         {
 
-                                            if (_Interface == typeof(T))
+                                            if (_Interface == typeof(TClass))
                                             {
 
                                                 try
@@ -239,19 +242,19 @@ namespace de.ahzf.Illias.Commons
 
                                                     if (IdentificatorFunc != null)
                                                     {
-                                                        var _T = Activator.CreateInstance(_ActualType) as T;
+                                                        var _T = Activator.CreateInstance(_ActualType) as TClass;
                                                         if (_T != null)
                                                             __Id = IdentificatorFunc(_T);
                                                     }
 
                                                     if (__Id != null && __Id != String.Empty)
-                                                        _TypeDictionary.TryAdd(__Id, _ActualType);
+                                                        _TypeLookup.TryAdd(__Id, _ActualType);
 
                                                 }
 
                                                 catch (Exception e)
                                                 {
-                                                    throw new AutoDiscoveryException("Could not activate or register " + typeof(T).Name + "-instance '" + _ActualType.Name + "'!", e);
+                                                    throw new AutoDiscoveryException("Could not activate or register " + typeof(TClass).Name + "-instance '" + _ActualType.Name + "'!", e);
                                                 }
 
                                             }
@@ -268,7 +271,7 @@ namespace de.ahzf.Illias.Commons
 
                     catch (Exception e)
                     {
-                        throw new AutoDiscoveryException("Autodiscovering implementations of interface '" + typeof(T).Name + "' within file '" + _File + "' failed!", e);
+                        throw new AutoDiscoveryException("Autodiscovering implementations of interface '" + typeof(TClass).Name + "' within file '" + _File + "' failed!", e);
                     }
 
                 }
@@ -281,107 +284,71 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region Activate(myImplementationID)
+        #region TryGetInstance(Identificator, out Instance)
 
         /// <summary>
-        /// Activates a new instance of an implementation based on its identification.
+        /// Attempts to get an instance associated with the identificator.
         /// </summary>
-        /// <param name="myImplementationID">The identification of the implementation to activate.</param>
-        /// <returns>An activated class implementing interface T.</returns>
-        public T Activate(String myImplementationID)
+        public Boolean TryGetInstance(String Identificator, out TClass Instance)
         {
+            
+            if (_InstanceLookup.TryGetValue(Identificator, out Instance))
+                return true;
 
-            lock (this)
+            Type _Type = null;
+            if (_TypeLookup.TryGetValue(Identificator, out _Type))
             {
 
                 try
                 {
 
-                    Type _Type;
+                    Instance = (TClass) Activator.CreateInstance(_Type);
 
-                    if (_TypeDictionary.TryGetValue(myImplementationID, out _Type))
-                        if (_Type != null)
-                            return (T) Activator.CreateInstance(_Type);
+                    // If it fails because of concurrency it does not matter!
+                    _InstanceLookup.TryAdd(Identificator, Instance);
+
+                    return true;
 
                 }
                 catch (Exception e)
                 {
-                    throw new AutoDiscoveryException(typeof(T).Name + " implementation '" + myImplementationID + "' could not be activated!", e);
+                    throw new AutoDiscoveryException("An instance of " + typeof(TClass).Name + " with identificator '" + Identificator + "' could not be activated!", e);
                 }
-
-                throw new AutoDiscoveryException(typeof(T).Name + " implementation '" + myImplementationID + "' could not be activated!");
 
             }
 
-        }
-
-        #endregion
-
-        #region TryActivate(myImplementationID, out myInstance)
-
-        /// <summary>
-        /// Tries to activate a new instance of an implementation based on its identification.
-        /// </summary>
-        /// <param name="myImplementationID">The identification of the implementation to activate.</param>
-        /// <param name="myInstance">The activated class implementing interface T.</param>
-        /// <returns>true|false</returns>
-        public Boolean TryActivate(String myImplementationID, out T myInstance)
-        {
-
-            lock (this)
-            {
-
-                try
-                {
-
-                    Type _Type;
-
-                    if (_TypeDictionary.TryGetValue(myImplementationID, out _Type))
-                        if (_Type != null)
-                        {
-                            myInstance = (T) Activator.CreateInstance(_Type);
-                            return true;
-                        }
-
-
-                }
-                catch (Exception)
-                { }
-
-                myInstance = default(T);
-
-                return false;
-
-            }
+            return false;
 
         }
 
         #endregion
 
 
-        public IEnumerator<T> GetEnumerator()
+        #region GetEnumerator()
+
+        public IEnumerator<TClass> GetEnumerator()
         {
 
-            var _List = new List<T>();
+            TClass Instance;
 
-            foreach (var _Type in _TypeDictionary.Keys)
-                _List.Add(Activate(_Type));
-
-            return _List.GetEnumerator();
+            foreach (var Identificator in _TypeLookup.Keys)
+                if (TryGetInstance(Identificator, out Instance))
+                    yield return Instance;
 
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
 
-            var _List = new List<T>();
+            TClass Instance;
 
-            foreach (var _Type in _TypeDictionary.Keys)
-                _List.Add(Activate(_Type));
+            foreach (var Identificator in _TypeLookup.Keys)
+                if (TryGetInstance(Identificator, out Instance))
+                    yield return Instance;
 
-            return _List.GetEnumerator();
-        
         }
+
+        #endregion
 
     }
 
