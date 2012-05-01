@@ -86,10 +86,10 @@ namespace de.ahzf.Illias.Commons
         #region ForEach<T>(this IEnumerable, Action)
 
         /// <summary>
-        /// Call the given delegate for each element of the enumeration.
+        /// Calls the given delegate for each element of the enumeration.
         /// </summary>
         /// <typeparam name="T">The type of the enumeration.</typeparam>
-        /// <param name="IEnumerable">An enumertion of type T.</param>
+        /// <param name="IEnumerable">An enumeration of type T.</param>
         /// <param name="Action">An action to call for each element of the enumeration.</param>
         public static void ForEach<T>(this IEnumerable<T> IEnumerable, Action<T> Action)
         {
@@ -111,42 +111,171 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region ForEach<S, T>(this myIEnumerable, mySeed, myAction)
+        #region ForEach<S, T>(this IEnumerable, Seed, Action)
 
-        public static S ForEach<S, T>(this IEnumerable<T> myIEnumerable, S mySeed, Action<S, T> myAction)
+        /// <summary>
+        /// Calls the given delegate for each element of the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type of the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration of type T.</param>
+        /// <param name="Action">An action to call for each element of the enumeration.</param>
+        public static S ForEach<S, T>(this IEnumerable<T> IEnumerable, S Seed, Action<S, T> Action)
         {
 
-            if (myIEnumerable == null)
-                throw new ArgumentNullException("myIEnumerable must not be null!");
+            #region Initial checks
 
-            if (myAction == null)
-                throw new ArgumentNullException("myAction must not be null!");
+            if (IEnumerable == null)
+                throw new ArgumentNullException("The given IEnumerable must not be null!");
 
-            S _R = mySeed;
+            if (Action == null)
+                throw new ArgumentNullException("The given Action must not be null!");
 
-            foreach (var _item in myIEnumerable)
-                myAction(_R, _item);
+            #endregion
 
-            return _R;
+            S _Seed = Seed;
+
+            foreach (var Item in IEnumerable)
+                Action(_Seed, Item);
+
+            return _Seed;
 
         }
 
         #endregion
 
-        #region Skip<T>(this myIEnumerable, myCount)
+        #region Skip<T>(this IEnumerable, Count)
 
-        public static IEnumerable<T> Skip<T>(this IEnumerable<T> myIEnumerable, UInt32 myCount)
+        /// <summary>
+        /// Skips the given number of elements in the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type fo the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Count">The number of elements to skip.</param>
+        public static IEnumerable<T> Skip<T>(this IEnumerable<T> IEnumerable, UInt32 Count)
         {
-            return myIEnumerable.Skip((Int32)myCount);
+
+            var IEnumerator = IEnumerable.GetEnumerator();
+
+            for (var i = 0U; i<Count; i++)
+                IEnumerator.MoveNext();
+
+            while (IEnumerator.MoveNext())
+                yield return IEnumerator.Current;
+
+        }
+
+        /// <summary>
+        /// Skips the given number of elements in the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type fo the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Count">The number of elements to skip.</param>
+        public static IEnumerable<T> Skip<T>(this IEnumerable<T> IEnumerable, UInt64 Count)
+        {
+
+            var IEnumerator = IEnumerable.GetEnumerator();
+
+            for (var i = 0UL; i < Count; i++)
+                IEnumerator.MoveNext();
+
+            while (IEnumerator.MoveNext())
+                yield return IEnumerator.Current;
+
+        }
+
+        /// <summary>
+        /// Skips the given number of elements in the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type fo the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Count">The number of elements to skip.</param>
+        public static IEnumerable<T> Skip<T>(this IEnumerable<T> IEnumerable, Int64 Count)
+        {
+
+            var IEnumerator = IEnumerable.GetEnumerator();
+
+            for (var i = 0L; i < Count; i++)
+                IEnumerator.MoveNext();
+
+            while (IEnumerator.MoveNext())
+                yield return IEnumerator.Current;
+
         }
 
         #endregion
 
-        #region Take<T>(this myIEnumerable, myCount)
+        #region Take<T>(this IEnumerable, Count)
 
-        public static IEnumerable<T> Take<T>(this IEnumerable<T> myIEnumerable, UInt32 myCount)
+        /// <summary>
+        /// Takes the given number of elements from the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type fo the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Count">The number of elements to skip.</param>
+        public static IEnumerable<T> Take<T>(this IEnumerable<T> IEnumerable, UInt32 Count)
         {
-            return myIEnumerable.Take((Int32) myCount);
+
+            var IEnumerator = IEnumerable.GetEnumerator();
+
+            for (var i = 0U; i < Count; i++)
+            {
+
+                if (IEnumerator.MoveNext())
+                    yield return IEnumerator.Current;
+
+                else
+                    break;
+
+            }
+
+        }
+
+        /// <summary>
+        /// Skips the given number of elements in the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type fo the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Count">The number of elements to skip.</param>
+        public static IEnumerable<T> Take<T>(this IEnumerable<T> IEnumerable, UInt64 Count)
+        {
+
+            var IEnumerator = IEnumerable.GetEnumerator();
+
+            for (var i = 0UL; i < Count; i++)
+            {
+
+                if (IEnumerator.MoveNext())
+                    yield return IEnumerator.Current;
+
+                else
+                    break;
+
+            }
+
+        }
+
+        /// <summary>
+        /// Skips the given number of elements in the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type fo the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Count">The number of elements to skip.</param>
+        public static IEnumerable<T> Take<T>(this IEnumerable<T> IEnumerable, Int64 Count)
+        {
+
+            var IEnumerator = IEnumerable.GetEnumerator();
+
+            for (var i = 0L; i < Count; i++)
+            {
+
+                if (IEnumerator.MoveNext())
+                    yield return IEnumerator.Current;
+
+                else
+                    break;
+
+            }
+
         }
 
         #endregion
