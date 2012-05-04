@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2010-2012 Achim 'ahzf' Friedland <code@ahzf.de>
+ * Copyright (c) 2010-2012 Achim 'ahzf' Friedland <achim@graph-database.org>
  * This file is part of Illias <http://www.github.com/ahzf/Illias>
  *
  * Licensed under the General Public License, Version 3.0 (the "License");
