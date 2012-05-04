@@ -44,6 +44,7 @@
     <Compile Include="AutoDiscovery\AutoDiscovery.cs" />
     <Compile Include="AutoDiscovery\AutoDiscoveryException.cs" />
     <Compile Include="Collections\GroupedCollection.cs" />
+    <Compile Include="Collections\IDictionaryInitializer.cs" />
     <Compile Include="Collections\ImmutableMap.cs" />
     <Compile Include="Collections\Imutable\IBinarySearchTree.cs" />
     <Compile Include="Collections\Imutable\IImmutableMap.cs" />
