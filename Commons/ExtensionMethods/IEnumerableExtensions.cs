@@ -365,6 +365,37 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
+
+
+        public static IEnumerable<IEnumerable<T>> ToPartitions<T>(this IEnumerable<T> IEnumerable, UInt64 Take)
+        {
+
+            UInt64 i;
+            T[] Partitions;
+            var IEnumerator = IEnumerable.GetEnumerator();
+
+            while (IEnumerator.MoveNext())
+            {
+
+                Partitions    = new T[Take];
+                Partitions[0] = IEnumerator.Current;
+                i             = 1UL;
+
+                while (i < Take && IEnumerator.MoveNext())
+                {
+                    Partitions[i] = IEnumerator.Current;
+                    i = i + 1;
+                }
+
+                if (i < Take)
+                    Partitions = Partitions.Take(i).ToArray();
+
+                yield return Partitions;
+
+            }
+
+        }
+
     }
 
 }
