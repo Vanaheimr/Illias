@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.Text;
 
 #endregion
 
@@ -25,18 +26,26 @@ namespace de.ahzf.Illias.Commons
 {
 
     /// <summary>
-    /// Provides a generic identifier that is unique for its implementing class.
+    /// Extensions to the DateTime class.
     /// </summary>
-    /// <typeparam name="TId">The type of the id.</typeparam>
-    public interface IIdentifier<TId> : IEquatable<TId>, IComparable<TId>, IComparable
-        where TId : IEquatable<TId>, IComparable<TId>, IComparable
+    public static class DateTimeExtensions
     {
 
-        /// <summary>
-        /// A generic identifier that is unique to its implementing class.
-        /// All vertices, edges and hyper edges of a graph must have unique identifiers.
-        /// </summary>
-        TId Id { get; }
+        #region UNIXTime conversion
+
+        private static DateTime _UNIXEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
+
+        public static Int64 ToUnixTimeStamp(this DateTime myDateTime)
+        {
+            return myDateTime.Subtract(_UNIXEpoch).Ticks;
+        }
+
+        public static DateTime FromUnixTimeStamp(this Int64 myTimestamp)
+        {
+            return _UNIXEpoch.AddTicks(myTimestamp);
+        }
+
+        #endregion
 
     }
 

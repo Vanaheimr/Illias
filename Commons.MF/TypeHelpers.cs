@@ -18,6 +18,8 @@
 #region Usings
 
 using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 #endregion
 
@@ -25,18 +27,26 @@ namespace de.ahzf.Illias.Commons
 {
 
     /// <summary>
-    /// Provides a generic identifier that is unique for its implementing class.
+    /// TypeHelpers
     /// </summary>
-    /// <typeparam name="TId">The type of the id.</typeparam>
-    public interface IIdentifier<TId> : IEquatable<TId>, IComparable<TId>, IComparable
-        where TId : IEquatable<TId>, IComparable<TId>, IComparable
+    public class TypeHelpers
     {
 
+		private const TypeAttributes AnonymousTypeAttributes = TypeAttributes.NotPublic;
+
         /// <summary>
-        /// A generic identifier that is unique to its implementing class.
-        /// All vertices, edges and hyper edges of a graph must have unique identifiers.
+        /// Is the given type an anonymous type?
         /// </summary>
-        TId Id { get; }
+        /// <param name="t"></param>
+        /// <returns></returns>
+		public static bool IsAnonymousType(Type t)
+		{
+			return t.GetCustomAttributes(typeof (CompilerGeneratedAttribute), false).Length == 1
+			       && t.IsGenericType
+			       && t.Name.Contains("AnonymousType")
+			       && (t.Name.StartsWith("<>") || t.Name.StartsWith("VB$"))
+			       && (t.Attributes & AnonymousTypeAttributes) == AnonymousTypeAttributes;
+		}
 
     }
 

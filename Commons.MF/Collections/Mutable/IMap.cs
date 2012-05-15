@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.Collections.Generic;
 
 #endregion
 
@@ -25,18 +26,16 @@ namespace de.ahzf.Illias.Commons
 {
 
     /// <summary>
-    /// Provides a generic identifier that is unique for its implementing class.
+    /// Provides a generic mutable map/dictionary.
     /// </summary>
-    /// <typeparam name="TId">The type of the id.</typeparam>
-    public interface IIdentifier<TId> : IEquatable<TId>, IComparable<TId>, IComparable
-        where TId : IEquatable<TId>, IComparable<TId>, IComparable
+    /// <typeparam name="TKey">The type of the keys.</typeparam>
+    /// <typeparam name="TValue">The type of the values.</typeparam>
+    public interface IMap<TKey, TValue> : IImmutableMap<TKey, TValue>
+        where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
     {
 
-        /// <summary>
-        /// A generic identifier that is unique to its implementing class.
-        /// All vertices, edges and hyper edges of a graph must have unique identifiers.
-        /// </summary>
-        TId Id { get; }
+        IMap<TKey, TValue>  Set(TKey Key, TValue Value);
+        IMap<TKey, TValue>  Remove(TKey Key);
 
     }
 

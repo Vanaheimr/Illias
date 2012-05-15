@@ -21,23 +21,17 @@ using System;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons
+namespace de.ahzf.Illias.Commons.Votes
 {
 
     /// <summary>
-    /// Provides a generic identifier that is unique for its implementing class.
+    /// A delegate for evaluating a vote based on the
+    /// overall number of votes and a shared integer.
     /// </summary>
-    /// <typeparam name="TId">The type of the id.</typeparam>
-    public interface IIdentifier<TId> : IEquatable<TId>, IComparable<TId>, IComparable
-        where TId : IEquatable<TId>, IComparable<TId>, IComparable
-    {
-
-        /// <summary>
-        /// A generic identifier that is unique to its implementing class.
-        /// All vertices, edges and hyper edges of a graph must have unique identifiers.
-        /// </summary>
-        TId Id { get; }
-
-    }
+    /// <typeparam name="TResult">The type of the voting result.</typeparam>
+    /// <param name="NumberOfVotes">The current number of votes.</param>
+    /// <param name="Vote">The vote to evaluate.</param>
+    /// <returns>True if the the result of the vote is yes; False otherwise.</returns>
+    public delegate TResult VoteEvaluator<TResult>(Int32 NumberOfVotes, Int32 Vote);
 
 }

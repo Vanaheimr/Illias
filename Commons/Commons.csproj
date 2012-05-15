@@ -51,12 +51,12 @@
     <Compile Include="Collections\TSQueue.cs" />
     <Compile Include="Collections\Mutable\IGroupedCollection.cs" />
     <Compile Include="Collections\Mutable\IMap.cs" />
+    <Compile Include="Description\IDescription.cs" />
     <Compile Include="Ids\IdGenerator.cs" />
     <Compile Include="Ids\IIdGenerator.cs" />
     <Compile Include="Label\ILabel.cs" />
     <Compile Include="Delegates\ItemFilter.cs" />
     <Compile Include="Delegates\KeyValueFilter.cs" />
-    <Compile Include="Description\IDescription.cs" />
     <Compile Include="ExtensionMethods\IntegerExtensions.cs" />
     <Compile Include="ExtensionMethods\TypeExtensions.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />

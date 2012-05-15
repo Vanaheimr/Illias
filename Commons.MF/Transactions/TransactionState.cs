@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2010-2012 Achim 'ahzf' Friedland <achim@graph-database.org>
  * This file is part of Illias Commons <http://www.github.com/ahzf/Illias>
  *
@@ -18,25 +18,48 @@
 #region Usings
 
 using System;
+using System.Text;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons
+namespace de.ahzf.Illias.Commons.Transactions
 {
 
     /// <summary>
-    /// Provides a generic identifier that is unique for its implementing class.
+    /// The state of a transaction.
     /// </summary>
-    /// <typeparam name="TId">The type of the id.</typeparam>
-    public interface IIdentifier<TId> : IEquatable<TId>, IComparable<TId>, IComparable
-        where TId : IEquatable<TId>, IComparable<TId>, IComparable
+    public enum TransactionState
     {
 
         /// <summary>
-        /// A generic identifier that is unique to its implementing class.
-        /// All vertices, edges and hyper edges of a graph must have unique identifiers.
+        /// The transaction is still running.
         /// </summary>
-        TId Id { get; }
+        Running,
+
+        /// <summary>
+        /// The transaction has nested transactions.
+        /// </summary>
+        NestedTransaction,
+
+        /// <summary>
+        /// The transaction is currently comitting.
+        /// </summary>
+        Committing,
+
+        /// <summary>
+        /// The transaction was comitted.
+        /// </summary>
+        Committed,
+
+        /// <summary>
+        /// The transaction is currently rolling back.
+        /// </summary>
+        RollingBack,
+
+        /// <summary>
+        /// The transaction was rolled back.
+        /// </summary>
+        RolledBack
 
     }
 

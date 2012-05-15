@@ -18,26 +18,21 @@
 #region Usings
 
 using System;
+using System.Collections.Generic;
 
 #endregion
 
 namespace de.ahzf.Illias.Commons
 {
+    public interface IBinarySearchTree<TKey, TValue> : IImmutableMap<TKey, TValue>
+        where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
-    /// <summary>
-    /// Provides a generic identifier that is unique for its implementing class.
-    /// </summary>
-    /// <typeparam name="TId">The type of the id.</typeparam>
-    public interface IIdentifier<TId> : IEquatable<TId>, IComparable<TId>, IComparable
-        where TId : IEquatable<TId>, IComparable<TId>, IComparable
     {
-
-        /// <summary>
-        /// A generic identifier that is unique to its implementing class.
-        /// All vertices, edges and hyper edges of a graph must have unique identifiers.
-        /// </summary>
-        TId Id { get; }
-
+        TKey Key { get; }
+        IBinarySearchTree<TKey, TValue> Left  { get; }
+        IBinarySearchTree<TKey, TValue> Right { get; }
+        IBinarySearchTree<TKey, TValue> Add(TKey key, TValue value);
+        IBinarySearchTree<TKey, TValue> Remove(TKey key);
+        IBinarySearchTree<TKey, TValue> Search(TKey key);
     }
-
 }

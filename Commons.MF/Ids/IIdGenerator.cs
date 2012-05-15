@@ -25,18 +25,17 @@ namespace de.ahzf.Illias.Commons
 {
 
     /// <summary>
-    /// Provides a generic identifier that is unique for its implementing class.
+    /// An interface for classes generating Ids.
     /// </summary>
-    /// <typeparam name="TId">The type of the id.</typeparam>
-    public interface IIdentifier<TId> : IEquatable<TId>, IComparable<TId>, IComparable
+    /// <typeparam name="TId">The type of the Ids.</typeparam>
+    public interface IIdGenerator<TId>
         where TId : IEquatable<TId>, IComparable<TId>, IComparable
     {
 
         /// <summary>
-        /// A generic identifier that is unique to its implementing class.
-        /// All vertices, edges and hyper edges of a graph must have unique identifiers.
+        /// Generate a new Id.
         /// </summary>
-        TId Id { get; }
+        TId NewId { get; }
 
     }
 

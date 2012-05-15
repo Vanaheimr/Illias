@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.Collections.Generic;
 
 #endregion
 
@@ -25,18 +26,18 @@ namespace de.ahzf.Illias.Commons
 {
 
     /// <summary>
-    /// Provides a generic identifier that is unique for its implementing class.
+    /// Provides a generic revision identifier.
     /// </summary>
-    /// <typeparam name="TId">The type of the id.</typeparam>
-    public interface IIdentifier<TId> : IEquatable<TId>, IComparable<TId>, IComparable
-        where TId : IEquatable<TId>, IComparable<TId>, IComparable
+    /// <typeparam name="TRevisionId">The type of the revision identifier.</typeparam>
+    public interface IRevisionId<TRevisionId>
+        where TRevisionId : IEquatable<TRevisionId>, IComparable<TRevisionId>, IComparable
     {
 
         /// <summary>
-        /// A generic identifier that is unique to its implementing class.
+        /// A generic revision identifier.
         /// All vertices, edges and hyper edges of a graph must have unique identifiers.
         /// </summary>
-        TId Id { get; }
+        TRevisionId RevId { get; }
 
     }
 

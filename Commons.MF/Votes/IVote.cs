@@ -21,23 +21,44 @@ using System;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons
+namespace de.ahzf.Illias.Commons.Votes
 {
 
+    #region IVote
+
     /// <summary>
-    /// Provides a generic identifier that is unique for its implementing class.
+    /// A vote is a simple way to ask multiple event subscribers
+    /// about their opinion and to evaluate the results.
     /// </summary>
-    /// <typeparam name="TId">The type of the id.</typeparam>
-    public interface IIdentifier<TId> : IEquatable<TId>, IComparable<TId>, IComparable
-        where TId : IEquatable<TId>, IComparable<TId>, IComparable
+    public interface IVote
     {
 
         /// <summary>
-        /// A generic identifier that is unique to its implementing class.
-        /// All vertices, edges and hyper edges of a graph must have unique identifiers.
+        /// The current number of votes.
         /// </summary>
-        TId Id { get; }
+        UInt32  NumberOfVotes { get; }
 
     }
+
+    #endregion
+
+    #region IVote<TResult>
+
+    /// <summary>
+    /// A vote is a simple way to ask multiple event subscribers
+    /// about their opinion and to evaluate the results.
+    /// </summary>
+    /// <typeparam name="TResult">The type of the voting result.</typeparam>
+    public interface IVote<TResult> : IVote
+    {
+
+        /// <summary>
+        /// The result of the voting.
+        /// </summary>
+        TResult Result { get; }
+
+    }
+
+    #endregion
 
 }

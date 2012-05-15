@@ -27,6 +27,7 @@ namespace de.ahzf.Illias.Commons
     /// <summary>
     /// Provides a description of something.
     /// </summary>
+    /// <typeparam name="T">The type of the description.</typeparam>
     public interface IDescription<T>
     {
 
