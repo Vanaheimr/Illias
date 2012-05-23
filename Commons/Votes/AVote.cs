@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.Threading;
 
 #endregion
 
@@ -35,14 +36,14 @@ namespace de.ahzf.Illias.Commons.Votes
         #region Data
 
         /// <summary>
-        /// The current vote.
+        /// The current number of positive votes.
         /// </summary>
-        protected Int32 _Vote;
+        protected Int32 _NumberOfPositiveVotes;
 
         /// <summary>
-        /// The current number of votes.
+        /// The current total number of votes.
         /// </summary>
-        protected Int32 _NumberOfVotes;
+        protected Int32 _TotalNumberOfVotes;
 
         /// <summary>
         /// A delegate for evaluating a vote based on the
@@ -63,7 +64,7 @@ namespace de.ahzf.Illias.Commons.Votes
         {
             get
             {
-                return (UInt32) _NumberOfVotes;
+                return (UInt32) _TotalNumberOfVotes;
             }
         }
 
@@ -80,7 +81,7 @@ namespace de.ahzf.Illias.Commons.Votes
             {
                 lock (this)
                 {
-                    return VoteEvaluator(_NumberOfVotes, _Vote);
+                    return VoteEvaluator(_TotalNumberOfVotes, _NumberOfPositiveVotes);
                 }
             }
         }
@@ -108,8 +109,8 @@ namespace de.ahzf.Illias.Commons.Votes
 
             #endregion
 
-            this._Vote          = 0;
-            this._NumberOfVotes = 0;
+            this._NumberOfPositiveVotes          = 0;
+            this._TotalNumberOfVotes = 0;
             this.VoteEvaluator  = VoteEvaluator;
 
         }
@@ -134,13 +135,78 @@ namespace de.ahzf.Illias.Commons.Votes
 
             #endregion
 
-            this._Vote          = InitialVote;
-            this._NumberOfVotes = 0;
+            this._NumberOfPositiveVotes          = InitialVote;
+            this._TotalNumberOfVotes = 0;
             this.VoteEvaluator  = VoteEvaluator;
 
         }
 
         #endregion
+
+        #endregion
+
+
+        #region Yes()
+
+        /// <summary>
+        /// Vote 'yes' or 'ok' or 'allow'.
+        /// </summary>
+        public void Yes()
+        {
+            Interlocked.Increment(ref _NumberOfPositiveVotes);
+            Interlocked.Increment(ref _TotalNumberOfVotes);
+        }
+
+        #endregion
+
+        #region Ok()
+
+        /// <summary>
+        /// Vote 'yes' or 'ok' or 'allow'.
+        /// </summary>
+        public void Ok()
+        {
+            Interlocked.Increment(ref _NumberOfPositiveVotes);
+            Interlocked.Increment(ref _TotalNumberOfVotes);
+        }
+
+        #endregion
+
+        #region Allow()
+
+        /// <summary>
+        /// Vote 'yes' or 'ok' or 'allow'.
+        /// </summary>
+        public void Allow()
+        {
+            Interlocked.Increment(ref _NumberOfPositiveVotes);
+            Interlocked.Increment(ref _TotalNumberOfVotes);
+        }
+
+        #endregion
+
+
+        #region No()
+
+        /// <summary>
+        /// Vote 'no' or 'deny'.
+        /// </summary>
+        public void No()
+        {
+            Interlocked.Increment(ref _TotalNumberOfVotes);
+        }
+
+        #endregion
+
+        #region Deny()
+
+        /// <summary>
+        /// Vote 'no' or 'deny'.
+        /// </summary>
+        public void Deny()
+        {
+            Interlocked.Increment(ref _TotalNumberOfVotes);
+        }
 
         #endregion
 

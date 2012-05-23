@@ -84,7 +84,6 @@
     <Compile Include="Votes\IVote.cs" />
     <Compile Include="Votes\MajorityVote.cs" />
     <Compile Include="Votes\VetoVote.cs" />
-    <Compile Include="Votes\VoteEvaluator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

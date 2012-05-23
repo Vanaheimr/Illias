@@ -24,6 +24,25 @@ using System;
 namespace de.ahzf.Illias.Commons.Votes
 {
 
+    // Delegates
+
+    #region VoteEvaluator
+
+    /// <summary>
+    /// A delegate for evaluating a vote based on the
+    /// overall number of votes and a shared integer.
+    /// </summary>
+    /// <typeparam name="TResult">The type of the voting result.</typeparam>
+    /// <param name="NumberOfVotes">The current number of votes.</param>
+    /// <param name="Vote">The vote to evaluate.</param>
+    /// <returns>True if the the result of the vote is yes; False otherwise.</returns>
+    public delegate TResult VoteEvaluator<TResult>(Int32 NumberOfVotes, Int32 Vote);
+
+    #endregion
+
+
+    // Interfaces
+
     #region IVote
 
     /// <summary>
@@ -32,6 +51,33 @@ namespace de.ahzf.Illias.Commons.Votes
     /// </summary>
     public interface IVote
     {
+
+        /// <summary>
+        /// Vote 'yes' or 'ok' or 'allow'.
+        /// </summary>
+        void    Yes();
+
+        /// <summary>
+        /// Vote 'yes' or 'ok' or 'allow'.
+        /// </summary>
+        void    Ok();
+
+        /// <summary>
+        /// Vote 'yes' or 'ok' or 'allow'.
+        /// </summary>
+        void    Allow();
+
+
+        /// <summary>
+        /// Vote 'no' or 'deny'.
+        /// </summary>
+        void    No();
+
+        /// <summary>
+        /// Vote 'no' or 'deny'.
+        /// </summary>
+        void    Deny();
+
 
         /// <summary>
         /// The current number of votes.

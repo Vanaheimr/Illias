@@ -18,7 +18,6 @@
 #region Usings
 
 using System;
-using System.Threading;
 
 #endregion
 
@@ -33,8 +32,6 @@ namespace de.ahzf.Illias.Commons.Votes
     public class MajorityVote : AVote<Boolean>
     {
 
-        #region Constructor(s)
-
         #region MajorityVote()
 
         /// <summary>
@@ -45,34 +42,6 @@ namespace de.ahzf.Illias.Commons.Votes
         public MajorityVote()
             : base((number, vote) => { if (vote > 0) return true; else return false; })
         { }
-
-        #endregion
-
-        #endregion
-
-        #region Yes()
-
-        /// <summary>
-        /// Yes!
-        /// </summary>
-        public void Yes()
-        {
-            Interlocked.Increment(ref _NumberOfVotes);
-            Interlocked.Increment(ref _Vote);
-        }
-
-        #endregion
-
-        #region No()
-
-        /// <summary>
-        /// No!
-        /// </summary>
-        public void No()
-        {
-            Interlocked.Increment(ref _NumberOfVotes);
-            Interlocked.Decrement(ref _Vote);
-        }
 
         #endregion
 

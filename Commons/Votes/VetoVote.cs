@@ -50,18 +50,6 @@ namespace de.ahzf.Illias.Commons.Votes
 
         #endregion
 
-        #region OK()
-
-        /// <summary>
-        /// OK
-        /// </summary>
-        public void OK()
-        {
-            Interlocked.Increment(ref _NumberOfVotes);
-        }
-
-        #endregion
-
         #region Veto()
 
         /// <summary>
@@ -69,8 +57,8 @@ namespace de.ahzf.Illias.Commons.Votes
         /// </summary>
         public void Veto()
         {
-            Interlocked.Increment(ref _NumberOfVotes);
-            Interlocked.Increment(ref _Vote);
+            Interlocked.Increment(ref _TotalNumberOfVotes);
+            Interlocked.Increment(ref _NumberOfPositiveVotes);
         }
 
         #endregion
