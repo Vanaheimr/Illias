@@ -27,7 +27,7 @@ namespace de.ahzf.Illias.Commons
     /// <summary>
     /// This class represents a timestamp value pair of a measurement.
     /// </summary>
-    public class Measurement<TValue>
+    public struct Measurement<TValue>
     {
 
         #region Data
