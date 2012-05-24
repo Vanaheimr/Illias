@@ -355,7 +355,7 @@ namespace de.ahzf.Illias.Commons.Collections
         /// <param name="IProperties">An object implementing IProperties.</param>
         /// <param name="Key">The property key.</param>
         /// <param name="PropertyType">The expected type of the property.</param>
-        public static TValue GetProperty<TKey, TValue>(this IProperties<TKey, TValue> IProperties, TKey Key, Type PropertyType)
+        public static TValue GetProperty<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IProperties, TKey Key, Type PropertyType)
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
         {
 
@@ -387,7 +387,7 @@ namespace de.ahzf.Illias.Commons.Collections
         /// <typeparam name="TValue">The type of the property value.</typeparam>
         /// <param name="IProperties">An object implementing IProperties.</param>
         /// <param name="Key">The property key.</param>
-        public static String GetString<TKey, TValue>(this IProperties<TKey, TValue> IProperties, TKey Key)
+        public static String GetString<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IProperties, TKey Key)
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
         {
 
@@ -418,7 +418,7 @@ namespace de.ahzf.Illias.Commons.Collections
         /// <typeparam name="TValue">The type of the property value.</typeparam>
         /// <param name="IProperties">An object implementing IProperties.</param>
         /// <param name="Key">The property key.</param>
-        public static Double GetDouble<TKey, TValue>(this IProperties<TKey, TValue> IProperties, TKey Key)
+        public static Double GetDouble<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IProperties, TKey Key)
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
         {
 
