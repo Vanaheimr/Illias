@@ -206,6 +206,34 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
+        #region RemoveAllBefore(this String, Substring)
+
+        /// <summary>
+        /// Removes everything from the string before the given substring.
+        /// </summary>
+        /// <param name="String">A string.</param>
+        /// <param name="Substring">A substring.</param>
+        public static String RemoveAllBefore(this String String, String Substring)
+        {
+            return String.Remove(0, String.IndexOf(Substring) + Substring.Length);
+        }
+
+        #endregion
+
+        #region RemoveAllAfter(this String, Substring)
+
+        /// <summary>
+        /// Removes everything from the string after the given substring.
+        /// </summary>
+        /// <param name="String">A string.</param>
+        /// <param name="Substring">A substring.</param>
+        public static String RemoveAllAfter(this String String, String Substring)
+        {
+            return String.Remove(String.IndexOf(Substring));
+        }
+
+        #endregion
+
     }
 
 }
