@@ -30,13 +30,86 @@ namespace de.ahzf.Illias.Commons.Votes
 
     /// <summary>
     /// A delegate for evaluating a vote based on the
-    /// overall number of votes and a shared integer.
+    /// number of yes and no votes.
     /// </summary>
     /// <typeparam name="TResult">The type of the voting result.</typeparam>
-    /// <param name="NumberOfVotes">The current number of votes.</param>
-    /// <param name="Vote">The vote to evaluate.</param>
-    /// <returns>True if the the result of the vote is yes; False otherwise.</returns>
-    public delegate TResult VoteEvaluator<TResult>(Int32 NumberOfVotes, Int32 Vote);
+    /// <param name="NumberOfYesVotes">The current number of yes votes.</param>
+    /// <param name="NumberOfNoVotes">The current number of no votes.</param>
+    public delegate TResult VoteEvaluator<TResult>(Int32 NumberOfYesVotes, Int32 NumberOfNoVotes);
+
+    #endregion
+
+
+    #region IVoteExtentions
+
+    /// <summary>
+    /// Extentions methods for the IVote interface.
+    /// </summary>
+    public static class IVoteExtentions
+    {
+
+        #region Yes(this IVote<Boolean>)
+
+        /// <summary>
+        /// Vote 'yes' or 'ok' or 'allow'.
+        /// </summary>
+        public static void Yes(this IVote<Boolean> Vote)
+        {
+            Vote.VoteFor(true);
+        }
+
+        #endregion
+
+        #region Ok(this IVote<Boolean>)
+
+        /// <summary>
+        /// Vote 'yes' or 'ok' or 'allow'.
+        /// </summary>
+        public static void Ok(this IVote<Boolean> Vote)
+        {
+            Vote.VoteFor(true);
+        }
+
+        #endregion
+
+        #region Allow(this IVote<Boolean>)
+
+        /// <summary>
+        /// Vote 'yes' or 'ok' or 'allow'.
+        /// </summary>
+        public static void Allow(this IVote<Boolean> Vote)
+        {
+            Vote.VoteFor(true);
+        }
+
+        #endregion
+
+
+        #region No(this IVote<Boolean>)
+
+        /// <summary>
+        /// Vote 'no' or 'deny'.
+        /// </summary>
+        public static void No(this IVote<Boolean> Vote)
+        {
+            Vote.VoteFor(false);
+        }
+
+        #endregion
+
+        #region Deny(this IVote<Boolean>)
+
+        /// <summary>
+        /// Vote 'no' or 'deny'.
+        /// </summary>
+        public static void Deny(this IVote<Boolean> Vote)
+        {
+            Vote.VoteFor(false);
+        }
+
+        #endregion
+
+    }
 
     #endregion
 
@@ -53,36 +126,9 @@ namespace de.ahzf.Illias.Commons.Votes
     {
 
         /// <summary>
-        /// Vote 'yes' or 'ok' or 'allow'.
-        /// </summary>
-        void    Yes();
-
-        /// <summary>
-        /// Vote 'yes' or 'ok' or 'allow'.
-        /// </summary>
-        void    Ok();
-
-        /// <summary>
-        /// Vote 'yes' or 'ok' or 'allow'.
-        /// </summary>
-        void    Allow();
-
-
-        /// <summary>
-        /// Vote 'no' or 'deny'.
-        /// </summary>
-        void    No();
-
-        /// <summary>
-        /// Vote 'no' or 'deny'.
-        /// </summary>
-        void    Deny();
-
-
-        /// <summary>
         /// The current number of votes.
         /// </summary>
-        UInt32  NumberOfVotes { get; }
+        UInt32  TotalNumberOfVotes { get; }
 
     }
 
@@ -97,6 +143,12 @@ namespace de.ahzf.Illias.Commons.Votes
     /// <typeparam name="TResult">The type of the voting result.</typeparam>
     public interface IVote<TResult> : IVote
     {
+
+        /// <summary>
+        /// Give your vote.
+        /// </summary>
+        /// <param name="VotingValue">The value of the vote.</param>
+        void VoteFor(TResult VotingValue);
 
         /// <summary>
         /// The result of the voting.

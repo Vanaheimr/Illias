@@ -30,12 +30,10 @@ namespace de.ahzf.Illias.Commons.Votes
     /// if an action, e.g. AddVertex(...) should be processed or suspended.
     /// If anyone is unhappy with it, the result of the vote will be false.
     /// </summary>
-    public class VetoVote : AVote<Boolean>
+    public class VetoVote : ABooleanVote
     {
 
-        #region Constructor(s)
-
-        #region Veto()
+        #region VetoVote()
 
         /// <summary>
         /// A veto vote is a simple way to ask multiple event subscribers
@@ -43,12 +41,11 @@ namespace de.ahzf.Illias.Commons.Votes
         /// If anyone is unhappy with it, the result of the vote will be false.
         /// </summary>
         public VetoVote()
-            : base((number, vote) => { if (vote > 0) return false; else return true; })
+            : base((yes, no) => no == 0)
         { }
 
         #endregion
 
-        #endregion
 
         #region Veto()
 
@@ -57,8 +54,7 @@ namespace de.ahzf.Illias.Commons.Votes
         /// </summary>
         public void Veto()
         {
-            Interlocked.Increment(ref _TotalNumberOfVotes);
-            Interlocked.Increment(ref _NumberOfPositiveVotes);
+            VoteFor(false);
         }
 
         #endregion

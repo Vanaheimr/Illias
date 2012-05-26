@@ -80,7 +80,7 @@
     <Compile Include="Transactions\TransactionState.cs" />
     <Compile Include="Time\UniqueTimestamp.cs" />
     <Compile Include="TypeHelpers.cs" />
-    <Compile Include="Votes\AVote.cs" />
+    <Compile Include="Votes\ABooleanVote.cs" />
     <Compile Include="Votes\IVote.cs" />
     <Compile Include="Votes\MajorityVote.cs" />
     <Compile Include="Votes\VetoVote.cs" />

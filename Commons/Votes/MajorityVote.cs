@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.Threading;
 
 #endregion
 
@@ -27,9 +28,9 @@ namespace de.ahzf.Illias.Commons.Votes
     /// <summary>
     /// A majority vote is a simple way to ask multiple event subscribers
     /// if an action, e.g. AddVertex(...) should be processed or suspended.
-    /// If >50% are okay with it, the result of the vote will be true.
+    /// If a majority of >50% is okay with it, the result of the vote will be true.
     /// </summary>
-    public class MajorityVote : AVote<Boolean>
+    public class MajorityVote : ABooleanVote
     {
 
         #region MajorityVote()
@@ -37,10 +38,10 @@ namespace de.ahzf.Illias.Commons.Votes
         /// <summary>
         /// A majority vote is a simple way to ask multiple event subscribers
         /// if an action, e.g. AddVertex(...) should be processed or suspended.
-        /// If >50% are okay with it, the result of the vote will be true.
+        /// If a majority of >50% is okay with it, the result of the vote will be true.
         /// </summary>
         public MajorityVote()
-            : base((number, vote) => { if (vote > 0) return true; else return false; })
+            : base((yes, no) => yes > no)
         { }
 
         #endregion
