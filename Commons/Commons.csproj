@@ -55,6 +55,7 @@
     <Compile Include="Collections\Mutable\IGroupedCollection.cs" />
     <Compile Include="Collections\Mutable\IMap.cs" />
     <Compile Include="Description\IDescription.cs" />
+    <Compile Include="EndiannessHell\EndiannessHell.cs" />
     <Compile Include="Ids\IdGenerator.cs" />
     <Compile Include="Ids\IIdGenerator.cs" />
     <Compile Include="Label\ILabel.cs" />

@@ -20,6 +20,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 
 #endregion
 
@@ -251,6 +252,57 @@ namespace de.ahzf.Illias.Commons
         }
 
         #endregion
+
+
+
+
+        public static String ToBitString(this UInt64 value, UInt16 NumberOfBits = 64)
+        {
+
+            var sb = new StringBuilder(NumberOfBits);
+            UInt64 lastBit = 1UL << (NumberOfBits - 1);
+
+            for (int i = 0; i < NumberOfBits; i++)
+            {
+                if ((value & lastBit) == 0)
+                    sb.Append('0');
+                else
+                    sb.Append('1');
+                value <<= 1;
+            }
+
+            return sb.ToString();
+
+        }
+
+
+        public static String ToBitString(this Byte[] ByteArray, UInt16 NumberOfBits = 64)
+        {
+
+            var StringBuilder = new StringBuilder(NumberOfBits);
+
+            foreach (var _byte in ByteArray)
+            {
+
+                var bitmask = 128;
+
+                do
+                {
+
+                    if ((_byte & bitmask) == 0)
+                        StringBuilder.Append('0');
+                    else
+                        StringBuilder.Append('1');
+
+                    bitmask >>= 1;
+
+                } while (bitmask != 0);
+
+            }
+
+            return StringBuilder.ToString();
+
+        }
 
     }
 
