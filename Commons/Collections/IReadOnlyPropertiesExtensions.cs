@@ -33,109 +33,13 @@ namespace de.ahzf.Illias.Commons.Collections
     /// <summary>
     /// Extensions to the IProperties interface.
     /// </summary>
-    public static class IPropertiesExtensions
+    public static class IReadOnlyPropertiesExtensions
     {
-
-        // SetProperty(...)
-
-        #region SetProperty(this IProperties, KeyValuePair)
-
-        /// <summary>
-        /// Assign a KeyValuePair to the given IProperties object.
-        /// If a value already exists for this key, then the previous key/value is overwritten.
-        /// </summary>
-        /// <typeparam name="TKey">The type of the property key.</typeparam>
-        /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
-        /// <param name="KeyValuePair">A KeyValuePair of type string and object</param>
-        public static IProperties<TKey, TValue> SetProperty<TKey, TValue>(this IProperties<TKey, TValue> IProperties, KeyValuePair<TKey, TValue> KeyValuePair)
-            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
-        {
-
-            #region Initial checks
-
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
-
-            #endregion
-
-            return IProperties.SetProperty(KeyValuePair.Key, KeyValuePair.Value);
-
-        }
-
-        #endregion
-
-        #region SetProperties(this IProperties, KeyValuePairs)
-
-        /// <summary>
-        /// Assign the given enumeration of KeyValuePairs to the IProperties object.
-        /// If a value already exists for a key, then the previous key/value is overwritten.
-        /// </summary>
-        /// <typeparam name="TKey">The type of the property key.</typeparam>
-        /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
-        /// <param name="KeyValuePairs">A enumeration of KeyValuePairs of type string and object</param>
-        public static IProperties<TKey, TValue> SetProperties<TKey, TValue>(this IProperties<TKey, TValue> IProperties, IEnumerable<KeyValuePair<TKey, TValue>> KeyValuePairs)
-            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
-        {
-
-            #region Initial checks
-
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
-
-            if (KeyValuePairs == null)
-                throw new ArgumentNullException("The given KeyValuePair enumeration must not be null!");
-
-            #endregion
-
-            foreach (var _KeyValuePair in KeyValuePairs)
-                IProperties.SetProperty(_KeyValuePair.Key, _KeyValuePair.Value);
-
-            return IProperties;
-
-        }
-
-        #endregion
-
-        #region SetProperties(this IProperties, IDictionary)
-
-        /// <summary>
-        /// Assign the given IDictionary to the IProperties object.
-        /// If a value already exists for a key, then the previous key/value is overwritten.
-        /// </summary>
-        /// <typeparam name="TKey">The type of the property key.</typeparam>
-        /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
-        /// <param name="IDictionary">A IDictionary of type TKey and TValue</param>
-        public static IProperties<TKey, TValue> SetProperties<TKey, TValue>(this IProperties<TKey, TValue> IProperties, IDictionary<TKey, TValue> IDictionary)
-            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
-        {
-
-            #region Initial checks
-
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
-
-            if (IDictionary == null)
-                throw new ArgumentNullException("The given dictionary must not be null!");
-
-            #endregion
-
-            foreach (var _KeyValuePair in IDictionary)
-                IProperties.SetProperty(_KeyValuePair.Key, _KeyValuePair.Value);
-
-            return IProperties;
-
-        }
-
-        #endregion
-
 
 
         // GetProperty(Key, ...)
 
-        #region GetProperty<TKey, TValue>(this IProperties, Key)
+        #region GetProperty<TKey, TValue>(this IReadOnlyProperties, Key)
         // Just an alternative syntax!
 
         /// <summary>
@@ -143,22 +47,22 @@ namespace de.ahzf.Illias.Commons.Collections
         /// </summary>
         /// <typeparam name="TKey">The type of the property key.</typeparam>
         /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IReadOnlyProperties">An object implementing IReadOnlyProperties.</param>
         /// <param name="Key">The property key.</param>
-        public static TValue GetProperty<TKey, TValue>(this IProperties<TKey, TValue> IProperties, TKey Key)
+        public static TValue GetProperty<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IReadOnlyProperties, TKey Key)
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
         {
 
             #region Initial checks
 
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
+            if (IReadOnlyProperties == null)
+                throw new ArgumentNullException("The given IReadOnlyProperties must not be null!");
 
             #endregion
 
             TValue _Value;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
                 return _Value;
 
             else
@@ -168,21 +72,21 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region UseProperty<TKey, TValue>(this IProperties, Key, OnSuccess [Action<TValue>], OnError = null)
+        #region UseProperty<TKey, TValue>(this IReadOnlyProperties, Key, OnSuccess [Action<TValue>], OnError = null)
 
         /// <summary>
         /// Call the given delegate if the given property key is assigned.
         /// </summary>
         /// <typeparam name="TKey">The type of the property key.</typeparam>
         /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IReadOnlyProperties">An object implementing IReadOnlyProperties.</param>
         /// <param name="Key">The property key.</param>
         /// <param name="OnSuccess">A delegate to call for the associated value of the given property key and its value.</param>
         /// <param name="OnError">A delegate to call for the associated value of the given property key when an error occurs.</param>
-        public static void UseProperty<TKey, TValue>(this IProperties<TKey, TValue> IProperties,
-                                                     TKey                           Key,
-                                                     Action<TValue>                 OnSuccess,
-                                                     Action<TKey>                   OnError = null)
+        public static void UseProperty<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IReadOnlyProperties,
+                                                     TKey                                   Key,
+                                                     Action<TValue>                         OnSuccess,
+                                                     Action<TKey>                           OnError = null)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
@@ -190,8 +94,8 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #region Initial checks
 
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
+            if (IReadOnlyProperties == null)
+                throw new ArgumentNullException("The given IReadOnlyProperties must not be null!");
 
             if (OnSuccess == null)
                 throw new ArgumentNullException("The given delegate must not be null!");
@@ -200,7 +104,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             TValue _Value;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
                 OnSuccess(_Value);
 
             else if (OnError != null)
@@ -210,21 +114,21 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region UseProperty<TKey, TValue>(this IProperties, Key, OnSuccess [Action<TKey, TValue>], OnError = null)
+        #region UseProperty<TKey, TValue>(this IReadOnlyProperties, Key, OnSuccess [Action<TKey, TValue>], OnError = null)
 
         /// <summary>
         /// Call the given delegate if the given property key is assigned.
         /// </summary>
         /// <typeparam name="TKey">The type of the property key.</typeparam>
         /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IReadOnlyProperties">An object implementing IReadOnlyProperties.</param>
         /// <param name="Key">The property key.</param>
         /// <param name="OnSuccess">A delegate to call for the associated value of the given property key and its value.</param>
         /// <param name="OnError">A delegate to call for the associated value of the given property key when an error occurs.</param>
-        public static void UseProperty<TKey, TValue>(this IProperties<TKey, TValue> IProperties,
-                                                     TKey                           Key,
-                                                     Action<TKey, TValue>           OnSuccess,
-                                                     Action<TKey>                   OnError = null)
+        public static void UseProperty<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IReadOnlyProperties,
+                                                     TKey                                   Key,
+                                                     Action<TKey, TValue>                   OnSuccess,
+                                                     Action<TKey>                           OnError = null)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
@@ -232,8 +136,8 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #region Initial checks
 
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
+            if (IReadOnlyProperties == null)
+                throw new ArgumentNullException("The given IReadOnlyProperties must not be null!");
 
             if (OnSuccess == null)
                 throw new ArgumentNullException("The given delegate must not be null!");
@@ -242,7 +146,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             TValue _Value;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
                 OnSuccess(Key, _Value);
 
             else if (OnError != null)
@@ -252,7 +156,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region PropertyFunc<TKey, TValue, TResult>(this IProperties, Key, OnSuccessFunc [Func<TValue, TResult>], OnErrorFunc = null)
+        #region PropertyFunc<TKey, TValue, TResult>(this IReadOnlyProperties, Key, OnSuccessFunc [Func<TValue, TResult>], OnErrorFunc = null)
 
         /// <summary>
         /// Call the given delegate if the given property key is assigned.
@@ -260,14 +164,14 @@ namespace de.ahzf.Illias.Commons.Collections
         /// <typeparam name="TKey">The type of the property key.</typeparam>
         /// <typeparam name="TValue">The type of the property value.</typeparam>
         /// <typeparam name="TResult">The type of the return value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IReadOnlyProperties">An object implementing IReadOnlyProperties.</param>
         /// <param name="Key">The property key.</param>
         /// <param name="OnSuccessFunc">A delegate to call for the associated property value of the given property key.</param>
         /// <param name="OnErrorFunc">A delegate to call for the associated property key when the key was not found.</param>
-        public static TResult PropertyFunc<TKey, TValue, TResult>(this IProperties<TKey, TValue> IProperties,
-                                                                  TKey                           Key,
-                                                                  Func<TValue, TResult>          OnSuccessFunc,
-                                                                  Func<TKey, TResult>            OnErrorFunc = null)
+        public static TResult PropertyFunc<TKey, TValue, TResult>(this IReadOnlyProperties<TKey, TValue> IReadOnlyProperties,
+                                                                  TKey                                   Key,
+                                                                  Func<TValue, TResult>                  OnSuccessFunc,
+                                                                  Func<TKey, TResult>                    OnErrorFunc = null)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
@@ -275,8 +179,8 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #region Initial checks
 
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
+            if (IReadOnlyProperties == null)
+                throw new ArgumentNullException("The given IReadOnlyProperties must not be null!");
 
             if (OnSuccessFunc == null)
                 throw new ArgumentNullException("The given delegate must not be null!");
@@ -285,7 +189,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             TValue _Value;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
                 return OnSuccessFunc(_Value);
 
             if (OnErrorFunc != null)
@@ -297,7 +201,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region PropertyFunc<TKey, TValue, TResult>(this IProperties, Key, OnSuccessFunc [Func<TKey, TValue, TResult>], OnErrorFunc = null)
+        #region PropertyFunc<TKey, TValue, TResult>(this IReadOnlyProperties, Key, OnSuccessFunc [Func<TKey, TValue, TResult>], OnErrorFunc = null)
 
         /// <summary>
         /// Call the given delegate if the given property key is assigned.
@@ -305,13 +209,13 @@ namespace de.ahzf.Illias.Commons.Collections
         /// <typeparam name="TKey">The type of the property key.</typeparam>
         /// <typeparam name="TValue">The type of the property value.</typeparam>
         /// <typeparam name="TResult">The type of the return value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IReadOnlyProperties">An object implementing IReadOnlyProperties.</param>
         /// <param name="Key">The property key.</param>
         /// <param name="OnSuccessFunc">A delegate to call for the key and associated value of the given property key.</param>
-        public static TResult PropertyFunc<TKey, TValue, TResult>(this IProperties<TKey, TValue> IProperties,
-                                                                  TKey                           Key,
-                                                                  Func<TKey, TValue, TResult>    OnSuccessFunc,
-                                                                  Func<TKey, TResult>            OnErrorFunc = null)
+        public static TResult PropertyFunc<TKey, TValue, TResult>(this IReadOnlyProperties<TKey, TValue> IReadOnlyProperties,
+                                                                  TKey                                   Key,
+                                                                  Func<TKey, TValue, TResult>            OnSuccessFunc,
+                                                                  Func<TKey, TResult>                    OnErrorFunc = null)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
@@ -319,8 +223,8 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #region Initial checks
 
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
+            if (IReadOnlyProperties == null)
+                throw new ArgumentNullException("The given IReadOnlyProperties must not be null!");
 
             if (OnSuccessFunc == null)
                 throw new ArgumentNullException("The given delegate must not be null!");
@@ -329,7 +233,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             TValue _Value;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
                 return OnSuccessFunc(Key, _Value);
 
             if (OnErrorFunc != null)
@@ -344,7 +248,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
         // GetProperty(Key, PropertyType...)
 
-        #region GetProperty<TKey, TValue>(this IProperties, Key, PropertyType)
+        #region GetProperty<TKey, TValue>(this IReadOnlyProperties, Key, PropertyType)
         // Just an alternative syntax!
 
         /// <summary>
@@ -352,23 +256,23 @@ namespace de.ahzf.Illias.Commons.Collections
         /// </summary>
         /// <typeparam name="TKey">The type of the property key.</typeparam>
         /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IReadOnlyProperties">An object implementing IReadOnlyProperties.</param>
         /// <param name="Key">The property key.</param>
         /// <param name="PropertyType">The expected type of the property.</param>
-        public static TValue GetProperty<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IProperties, TKey Key, Type PropertyType)
+        public static TValue GetProperty<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IReadOnlyProperties, TKey Key, Type PropertyType)
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
         {
 
             #region Initial checks
 
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
+            if (IReadOnlyProperties == null)
+                throw new ArgumentNullException("The given IReadOnlyProperties must not be null!");
 
             #endregion
 
             TValue _Value;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
                 if (_Value.GetType().Equals(PropertyType))
                     return _Value;
 
@@ -378,29 +282,29 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region GetString<TKey, TValue>(this IProperties, Key)
+        #region GetString<TKey, TValue>(this IReadOnlyProperties, Key)
 
         /// <summary>
         /// Return the object value of type TValue associated with the provided property key.
         /// </summary>
         /// <typeparam name="TKey">The type of the property key.</typeparam>
         /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IReadOnlyProperties">An object implementing IReadOnlyProperties.</param>
         /// <param name="Key">The property key.</param>
-        public static String GetString<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IProperties, TKey Key)
+        public static String GetString<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IReadOnlyProperties, TKey Key)
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
         {
 
             #region Initial checks
 
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
+            if (IReadOnlyProperties == null)
+                throw new ArgumentNullException("The given IReadOnlyProperties must not be null!");
 
             #endregion
 
             TValue _Value;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
                 return (String) (Object) _Value;
 
             throw new Exception("404!");
@@ -409,29 +313,29 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region GetDouble<TKey, TValue>(this IProperties, Key)
+        #region GetDouble<TKey, TValue>(this IReadOnlyProperties, Key)
 
         /// <summary>
         /// Return the object value of type TValue associated with the provided property key.
         /// </summary>
         /// <typeparam name="TKey">The type of the property key.</typeparam>
         /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IReadOnlyProperties">An object implementing IReadOnlyProperties.</param>
         /// <param name="Key">The property key.</param>
-        public static Double GetDouble<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IProperties, TKey Key)
+        public static Double GetDouble<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IReadOnlyProperties, TKey Key)
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
         {
 
             #region Initial checks
 
-            if (IProperties == null)
+            if (IReadOnlyProperties == null)
                 throw new ArgumentNullException("The given IProperties must not be null!");
 
             #endregion
 
             TValue _Value;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
             {
                 if (_Value is Double)
                     return (Double) (Object) _Value;
@@ -445,7 +349,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region UseProperty<TKey, TValue>(this IProperties, Key, PropertyType, OnSuccess [Action<TValue>], OnError = null)
+        #region UseProperty<TKey, TValue>(this IReadOnlyProperties, Key, PropertyType, OnSuccess [Action<TValue>], OnError = null)
 
         /// <summary>
         /// Call the given delegate if the given property key is assigned
@@ -453,15 +357,15 @@ namespace de.ahzf.Illias.Commons.Collections
         /// </summary>
         /// <typeparam name="TKey">The type of the property key.</typeparam>
         /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IReadOnlyProperties">An object implementing IReadOnlyProperties.</param>
         /// <param name="Key">The property key.</param>
         /// <param name="PropertyType">The expected type of the property value.</param>
         /// <param name="OnSuccess">A delegate to call for the associated value of the given property key.</param>
-        public static void UseProperty<TKey, TValue>(this IProperties<TKey, TValue> IProperties,
-                                                     TKey                           Key,
-                                                     Type                           PropertyType,
-                                                     Action<TValue>                 OnSuccess,
-                                                     Action<TKey>                   OnError = null)
+        public static void UseProperty<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IReadOnlyProperties,
+                                                     TKey                                   Key,
+                                                     Type                                   PropertyType,
+                                                     Action<TValue>                         OnSuccess,
+                                                     Action<TKey>                           OnError = null)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
@@ -469,8 +373,8 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #region Initial checks
 
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
+            if (IReadOnlyProperties == null)
+                throw new ArgumentNullException("The given IReadOnlyProperties must not be null!");
 
             if (OnSuccess == null)
                 throw new ArgumentNullException("The given delegate must not be null!");
@@ -479,7 +383,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             TValue _Value;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
             {
                 if (_Value.GetType().Equals(PropertyType))
                     OnSuccess(_Value);
@@ -491,7 +395,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region UseProperty<TKey, TValue>(this IProperties, Key, PropertyType, OnSuccess [Action<TKey, TValue>], OnError = null)
+        #region UseProperty<TKey, TValue>(this IReadOnlyProperties, Key, PropertyType, OnSuccess [Action<TKey, TValue>], OnError = null)
 
         /// <summary>
         /// Call the given delegate if the given property key is assigned
@@ -499,15 +403,15 @@ namespace de.ahzf.Illias.Commons.Collections
         /// </summary>
         /// <typeparam name="TKey">The type of the property key.</typeparam>
         /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IReadOnlyProperties">An object implementing IReadOnlyProperties.</param>
         /// <param name="Key">The property key.</param>
         /// <param name="PropertyType">The expected type of the property value.</param>
         /// <param name="OnSuccess">A delegate to call for the key and associated value of the given property key.</param>
-        public static void UseProperty<TKey, TValue>(this IProperties<TKey, TValue> IProperties,
-                                                     TKey                           Key,
-                                                     Type                           PropertyType,
-                                                     Action<TKey, TValue>           OnSuccess,
-                                                     Action<TKey>                   OnError = null)
+        public static void UseProperty<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IReadOnlyProperties,
+                                                     TKey                                   Key,
+                                                     Type                                   PropertyType,
+                                                     Action<TKey, TValue>                   OnSuccess,
+                                                     Action<TKey>                           OnError = null)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
@@ -515,8 +419,8 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #region Initial checks
 
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
+            if (IReadOnlyProperties == null)
+                throw new ArgumentNullException("The given IReadOnlyProperties must not be null!");
 
             if (OnSuccess == null)
                 throw new ArgumentNullException("The given delegate must not be null!");
@@ -525,7 +429,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             TValue _Value;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
             {
                 if (_Value.GetType().Equals(PropertyType))
                     OnSuccess(Key, _Value);
@@ -579,7 +483,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region PropertyFunc<TKey, TValue>(this IProperties, Key, PropertyType, OnSuccessFunc [Func<TKey, TValue, Object>] )
+        #region PropertyFunc<TKey, TValue>(this IReadOnlyProperties, Key, PropertyType, OnSuccessFunc [Func<TKey, TValue, Object>] )
 
         /// <summary>
         /// Call the given delegate if the given property key is assigned
@@ -587,14 +491,14 @@ namespace de.ahzf.Illias.Commons.Collections
         /// </summary>
         /// <typeparam name="TKey">The type of the property key.</typeparam>
         /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IReadOnlyProperties">An object implementing IReadOnlyProperties.</param>
         /// <param name="Key">The property key.</param>
         /// <param name="PropertyType">The expected type of the property value.</param>
         /// <param name="OnSuccessFunc">A delegate to call for the key and associated value of the given property key.</param>
-        public static Object PropertyFunc<TKey, TValue>(this IProperties<TKey, TValue> IProperties,
-                                                        TKey                             Key,
-                                                        Type                             PropertyType,
-                                                        Func<TKey, TValue, Object>       OnSuccessFunc)
+        public static Object PropertyFunc<TKey, TValue>(this IReadOnlyProperties<TKey, TValue> IReadOnlyProperties,
+                                                        TKey                                   Key,
+                                                        Type                                   PropertyType,
+                                                        Func<TKey, TValue, Object>             OnSuccessFunc)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
@@ -602,8 +506,8 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #region Initial checks
 
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
+            if (IReadOnlyProperties == null)
+                throw new ArgumentNullException("The given IReadOnlyProperties must not be null!");
 
             if (OnSuccessFunc == null)
                 throw new ArgumentNullException("The given delegate must not be null!");
@@ -612,7 +516,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             TValue _Value;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
                 if (_Value.GetType().Equals(PropertyType))
                     return OnSuccessFunc(Key, _Value);
 
@@ -621,6 +525,11 @@ namespace de.ahzf.Illias.Commons.Collections
         }
 
         #endregion
+
+
+
+
+
 
 
         // Get(Casted/Dynamic)Property(Key, ...)
@@ -720,14 +629,6 @@ namespace de.ahzf.Illias.Commons.Collections
         #endregion
 
         // InvokeProperty???
-
-
-
-
-
-
-
-
 
 
         // GetKeyValuePair
@@ -1237,88 +1138,13 @@ namespace de.ahzf.Illias.Commons.Collections
 
 
 
-        #region Remove(KeyValuePair)
-
-        /// <summary>
-        /// Remove the given KeyValuePair.
-        /// </summary>
-        /// <param name="KeyValuePair">A KeyValuePair.</param>
-        /// <returns>The value associated with that key prior to the removal.</returns>
-        public static TValue Remove<TKey, TValue>(this IProperties<TKey, TValue> IProperties, KeyValuePair<TKey, TValue> KeyValuePair)
-            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
-        {
-            return IProperties.Remove(KeyValuePair.Key, KeyValuePair.Value);
-        }
-
-        #endregion
-
-
-
 
         // TKey, Object
 
-        #region ListAdd<TKey>(this IProperties, Key, FirstValue, params Values)
 
-        public static IProperties<TKey, Object> ListAdd<TKey>(this IProperties<TKey, Object> IProperties, TKey Key, Object FirstValue, params Object[] Values)
+        #region ListGet<TKey>(this IReadOnlyProperties, Key)
 
-            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
-
-        {
-
-            #region Initial checks
-
-            if (IProperties == null)
-                throw new ArgumentNullException();
-
-            if (Key == null)
-                throw new ArgumentNullException();
-
-            if (FirstValue == null)
-                throw new ArgumentNullException();
-
-            #endregion
-
-            List<Object> _List = null;
-            Object _Value = null;
-
-            if (IProperties.TryGetProperty(Key, out _Value))
-            {
-                
-                _List = _Value as List<Object>;
-
-                if (_List == null)
-                    throw new Exception("The value is not a list!");
-
-                else
-                {
-
-                    _List.Add(FirstValue);
-
-                    if (Values != null && Values.Any())
-                        _List.AddRange(Values);
-
-                    return IProperties;
-
-                }
-
-            }
-
-            _List = new List<Object>() { FirstValue };
-
-            if (Values != null && Values.Any())
-                _List.AddRange(Values);
-
-            IProperties.SetProperty(Key, _List);
-
-            return IProperties;
-
-        }
-
-        #endregion
-
-        #region ListGet<TKey>(this IProperties, Key)
-
-        public static List<Object> ListGet<TKey>(this IProperties<TKey, Object> IProperties, TKey Key)
+        public static List<Object> ListGet<TKey>(this IReadOnlyProperties<TKey, Object> IReadOnlyProperties, TKey Key)
             
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
@@ -1326,7 +1152,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #region Initial checks
 
-            if (IProperties == null)
+            if (IReadOnlyProperties == null)
                 throw new ArgumentNullException();
 
             if (Key == null)
@@ -1336,7 +1162,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             Object _Value = null;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
                 return _Value as List<Object>;
 
             return null;
@@ -1345,9 +1171,9 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region ListTryGet<TKey>(this IProperties, Key, out List)
+        #region ListTryGet<TKey>(this IReadOnlyProperties, Key, out List)
 
-        public static Boolean ListTryGet<TKey>(this IProperties<TKey, Object> IProperties, TKey Key, out List<Object> List)
+        public static Boolean ListTryGet<TKey>(this IProperties<TKey, Object> IReadOnlyProperties, TKey Key, out List<Object> List)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
@@ -1355,7 +1181,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #region Initial checks
 
-            if (IProperties == null)
+            if (IReadOnlyProperties == null)
                 throw new ArgumentNullException();
 
             if (Key == null)
@@ -1365,7 +1191,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             Object _Value = null;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
             {
                 
                 List = _Value as List<Object>;
@@ -1383,68 +1209,9 @@ namespace de.ahzf.Illias.Commons.Collections
         #endregion
 
 
-        #region SetAdd<TKey>(this IProperties, Key, FirstValue, params Values)
+        #region SetGet<TKey>(this IReadOnlyProperties, Key)
 
-        public static IProperties<TKey, Object> SetAdd<TKey>(this IProperties<TKey, Object> IProperties, TKey Key, Object FirstValue, params Object[] Values)
-
-            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
-
-        {
-
-            #region Initial checks
-
-            if (IProperties == null)
-                throw new ArgumentNullException();
-
-            if (Key == null)
-                throw new ArgumentNullException();
-
-            if (FirstValue == null)
-                throw new ArgumentNullException();
-
-            #endregion
-
-            HashSet<Object> _Set = null;
-            Object _Value = null;
-
-            if (IProperties.TryGetProperty(Key, out _Value))
-            {
-
-                _Set = _Value as HashSet<Object>;
-
-                if (_Set == null)
-                    throw new Exception("The value is not a list!");
-
-                else
-                {
-
-                    _Set.Add(FirstValue);
-
-                    if (Values != null && Values.Any())
-                        Values.ForEach(value => _Set.Add(value));
-
-                    return IProperties;
-
-                }
-
-            }
-
-            _Set = new HashSet<Object>() { FirstValue };
-
-            if (Values != null && Values.Any())
-                Values.ForEach(value => _Set.Add(value));
-
-            IProperties.SetProperty(Key, _Set);
-
-            return IProperties;
-
-        }
-
-        #endregion
-
-        #region SetGet<TKey>(this IProperties, Key)
-
-        public static HashSet<Object> SetGet<TKey>(this IProperties<TKey, Object> IProperties, TKey Key)
+        public static HashSet<Object> SetGet<TKey>(this IReadOnlyProperties<TKey, Object> IReadOnlyProperties, TKey Key)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
@@ -1452,7 +1219,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #region Initial checks
 
-            if (IProperties == null)
+            if (IReadOnlyProperties == null)
                 throw new ArgumentNullException();
 
             if (Key == null)
@@ -1462,7 +1229,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             Object _Value = null;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
                 return _Value as HashSet<Object>;
 
             return null;
@@ -1471,9 +1238,9 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region SetTryGet<TKey>(this IProperties, Key, out Set)
+        #region SetTryGet<TKey>(this IReadOnlyProperties, Key, out Set)
 
-        public static Boolean SetTryGet<TKey>(this IProperties<TKey, Object> IProperties, TKey Key, out HashSet<Object> Set)
+        public static Boolean SetTryGet<TKey>(this IReadOnlyProperties<TKey, Object> IReadOnlyProperties, TKey Key, out HashSet<Object> Set)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 
@@ -1481,7 +1248,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #region Initial checks
 
-            if (IProperties == null)
+            if (IReadOnlyProperties == null)
                 throw new ArgumentNullException();
 
             if (Key == null)
@@ -1491,7 +1258,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             Object _Value = null;
 
-            if (IProperties.TryGetProperty(Key, out _Value))
+            if (IReadOnlyProperties.TryGetProperty(Key, out _Value))
             {
 
                 Set = _Value as HashSet<Object>;

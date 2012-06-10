@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using de.ahzf.Illias.Commons.Votes;
@@ -26,6 +27,248 @@ using de.ahzf.Illias.Commons.Votes;
 
 namespace de.ahzf.Illias.Commons.Collections
 {
+
+    #region IPropertiesExtensions
+
+    /// <summary>
+    /// Extensions to the IProperties interface.
+    /// </summary>
+    public static class IPropertiesExtensions
+    {
+
+        // SetProperty(...)
+
+        #region SetProperty(this IProperties, KeyValuePair)
+
+        /// <summary>
+        /// Assign a KeyValuePair to the given IProperties object.
+        /// If a value already exists for this key, then the previous key/value is overwritten.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the property key.</typeparam>
+        /// <typeparam name="TValue">The type of the property value.</typeparam>
+        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="KeyValuePair">A KeyValuePair of type string and object</param>
+        public static IProperties<TKey, TValue> SetProperty<TKey, TValue>(this IProperties<TKey, TValue> IProperties, KeyValuePair<TKey, TValue> KeyValuePair)
+            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
+        {
+
+            #region Initial checks
+
+            if (IProperties == null)
+                throw new ArgumentNullException("The given IProperties must not be null!");
+
+            #endregion
+
+            return IProperties.SetProperty(KeyValuePair.Key, KeyValuePair.Value);
+
+        }
+
+        #endregion
+
+        #region SetProperties(this IProperties, KeyValuePairs)
+
+        /// <summary>
+        /// Assign the given enumeration of KeyValuePairs to the IProperties object.
+        /// If a value already exists for a key, then the previous key/value is overwritten.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the property key.</typeparam>
+        /// <typeparam name="TValue">The type of the property value.</typeparam>
+        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="KeyValuePairs">A enumeration of KeyValuePairs of type string and object</param>
+        public static IProperties<TKey, TValue> SetProperties<TKey, TValue>(this IProperties<TKey, TValue> IProperties, IEnumerable<KeyValuePair<TKey, TValue>> KeyValuePairs)
+            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
+        {
+
+            #region Initial checks
+
+            if (IProperties == null)
+                throw new ArgumentNullException("The given IProperties must not be null!");
+
+            if (KeyValuePairs == null)
+                throw new ArgumentNullException("The given KeyValuePair enumeration must not be null!");
+
+            #endregion
+
+            foreach (var _KeyValuePair in KeyValuePairs)
+                IProperties.SetProperty(_KeyValuePair.Key, _KeyValuePair.Value);
+
+            return IProperties;
+
+        }
+
+        #endregion
+
+        #region SetProperties(this IProperties, IDictionary)
+
+        /// <summary>
+        /// Assign the given IDictionary to the IProperties object.
+        /// If a value already exists for a key, then the previous key/value is overwritten.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the property key.</typeparam>
+        /// <typeparam name="TValue">The type of the property value.</typeparam>
+        /// <param name="IProperties">An object implementing IProperties.</param>
+        /// <param name="IDictionary">A IDictionary of type TKey and TValue</param>
+        public static IProperties<TKey, TValue> SetProperties<TKey, TValue>(this IProperties<TKey, TValue> IProperties, IDictionary<TKey, TValue> IDictionary)
+            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
+        {
+
+            #region Initial checks
+
+            if (IProperties == null)
+                throw new ArgumentNullException("The given IProperties must not be null!");
+
+            if (IDictionary == null)
+                throw new ArgumentNullException("The given dictionary must not be null!");
+
+            #endregion
+
+            foreach (var _KeyValuePair in IDictionary)
+                IProperties.SetProperty(_KeyValuePair.Key, _KeyValuePair.Value);
+
+            return IProperties;
+
+        }
+
+        #endregion
+
+
+        #region ListAdd<TKey>(this IProperties, Key, FirstValue, params Values)
+
+        public static IProperties<TKey, Object> ListAdd<TKey>(this IProperties<TKey, Object> IProperties, TKey Key, Object FirstValue, params Object[] Values)
+
+            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
+
+        {
+
+            #region Initial checks
+
+            if (IProperties == null)
+                throw new ArgumentNullException();
+
+            if (Key == null)
+                throw new ArgumentNullException();
+
+            if (FirstValue == null)
+                throw new ArgumentNullException();
+
+            #endregion
+
+            List<Object> _List = null;
+            Object _Value = null;
+
+            if (IProperties.TryGetProperty(Key, out _Value))
+            {
+                
+                _List = _Value as List<Object>;
+
+                if (_List == null)
+                    throw new Exception("The value is not a list!");
+
+                else
+                {
+
+                    _List.Add(FirstValue);
+
+                    if (Values != null && Values.Any())
+                        _List.AddRange(Values);
+
+                    return IProperties;
+
+                }
+
+            }
+
+            _List = new List<Object>() { FirstValue };
+
+            if (Values != null && Values.Any())
+                _List.AddRange(Values);
+
+            IProperties.SetProperty(Key, _List);
+
+            return IProperties;
+
+        }
+
+        #endregion
+
+        #region SetAdd<TKey>(this IProperties, Key, FirstValue, params Values)
+
+        public static IProperties<TKey, Object> SetAdd<TKey>(this IProperties<TKey, Object> IProperties, TKey Key, Object FirstValue, params Object[] Values)
+
+            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
+
+        {
+
+            #region Initial checks
+
+            if (IProperties == null)
+                throw new ArgumentNullException();
+
+            if (Key == null)
+                throw new ArgumentNullException();
+
+            if (FirstValue == null)
+                throw new ArgumentNullException();
+
+            #endregion
+
+            HashSet<Object> _Set = null;
+            Object _Value = null;
+
+            if (IProperties.TryGetProperty(Key, out _Value))
+            {
+
+                _Set = _Value as HashSet<Object>;
+
+                if (_Set == null)
+                    throw new Exception("The value is not a list!");
+
+                else
+                {
+
+                    _Set.Add(FirstValue);
+
+                    if (Values != null && Values.Any())
+                        Values.ForEach(value => _Set.Add(value));
+
+                    return IProperties;
+
+                }
+
+            }
+
+            _Set = new HashSet<Object>() { FirstValue };
+
+            if (Values != null && Values.Any())
+                Values.ForEach(value => _Set.Add(value));
+
+            IProperties.SetProperty(Key, _Set);
+
+            return IProperties;
+
+        }
+
+        #endregion
+
+
+        #region Remove(KeyValuePair)
+
+        /// <summary>
+        /// Remove the given KeyValuePair.
+        /// </summary>
+        /// <param name="KeyValuePair">A KeyValuePair.</param>
+        /// <returns>The value associated with that key prior to the removal.</returns>
+        public static TValue Remove<TKey, TValue>(this IProperties<TKey, TValue> IProperties, KeyValuePair<TKey, TValue> KeyValuePair)
+            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
+        {
+            return IProperties.Remove(KeyValuePair.Key, KeyValuePair.Value);
+        }
+
+        #endregion
+
+    }
+
+    #endregion
 
     // Delegates
 

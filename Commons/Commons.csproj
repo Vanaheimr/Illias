@@ -49,8 +49,9 @@
     <Compile Include="Collections\Imutable\IBinarySearchTree.cs" />
     <Compile Include="Collections\Imutable\IImmutableMap.cs" />
     <Compile Include="Collections\IProperties.cs" />
-    <Compile Include="Collections\IPropertiesExtensions.cs" />
+    <Compile Include="Collections\IReadOnlyPropertiesExtensions.cs" />
     <Compile Include="Collections\IReadOnlyProperties.cs" />
+    <Compile Include="Collections\PropertiesExceptions.cs" />
     <Compile Include="Collections\TSQueue.cs" />
     <Compile Include="Collections\Mutable\IGroupedCollection.cs" />
     <Compile Include="Collections\Mutable\IMap.cs" />
