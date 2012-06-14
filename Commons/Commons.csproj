@@ -52,6 +52,8 @@
     <Compile Include="Collections\IReadOnlyPropertiesExtensions.cs" />
     <Compile Include="Collections\IReadOnlyProperties.cs" />
     <Compile Include="Collections\PropertiesExceptions.cs" />
+    <Compile Include="Collections\PropertiesMap.cs" />
+    <Compile Include="Collections\PropertiesTable.cs" />
     <Compile Include="Collections\TSQueue.cs" />
     <Compile Include="Collections\Mutable\IGroupedCollection.cs" />
     <Compile Include="Collections\Mutable\IMap.cs" />
