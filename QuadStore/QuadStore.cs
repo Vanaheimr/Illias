@@ -72,7 +72,7 @@ namespace de.ahzf.Illias
 
         #region Transactions
 
-        private static ThreadLocal<Transaction<TTransactionId, TSystemId>> _ThreadLocalTransaction;
+        private static ThreadLocal<Transaction<TTransactionId, TSystemId, IQuadStore<TSystemId, TQuadId, TTransactionId, TSPOC>>> _ThreadLocalTransaction;
 
         #endregion
 
@@ -144,7 +144,7 @@ namespace de.ahzf.Illias
         /// <param name="CreationTime">The timestamp when this transaction started.</param>
         /// <param name="InvalidationTime">The timestamp when this transaction will be invalid.</param>
         /// <returns>A new transaction object.</returns>
-        public Transaction<TTransactionId, TSystemId>
+        public Transaction<TTransactionId, TSystemId, IQuadStore<TSystemId, TQuadId, TTransactionId, TSPOC>>
             BeginTransaction(String         Name             = "", 
                              Boolean        Distributed      = false,
                              Boolean        LongRunning      = false,
@@ -161,13 +161,22 @@ namespace de.ahzf.Illias
                         _ThreadLocalTransaction.Value.State == TransactionState.Committing ||
                         _ThreadLocalTransaction.Value.State == TransactionState.RollingBack)
                     {
-                        throw new CouldNotBeginTransactionException<TTransactionId, TSystemId>(_ThreadLocalTransaction.Value,
+                        throw new CouldNotBeginTransactionException<TTransactionId, TSystemId, IQuadStore<TSystemId, TQuadId, TTransactionId, TSPOC>>(_ThreadLocalTransaction.Value,
                                                                                                Message: "Transaction still in state '" + _ThreadLocalTransaction.Value.State.ToString() +
                                                                                                         "' on Thread " + Thread.CurrentThread.ManagedThreadId + "!");
                     }
                 }
 
-            _ThreadLocalTransaction = new ThreadLocal<Transaction<TTransactionId, TSystemId>>(() => new Transaction<TTransactionId, TSystemId>(default(TTransactionId), SystemId, Name, Distributed, LongRunning, IsolationLevel, CreationTime, InvalidationTime));
+            _ThreadLocalTransaction = new ThreadLocal<Transaction<TTransactionId, TSystemId, IQuadStore<TSystemId, TQuadId, TTransactionId, TSPOC>>>(
+                () => new Transaction<TTransactionId, TSystemId, IQuadStore<TSystemId, TQuadId, TTransactionId, TSPOC>>(
+                    default(TTransactionId),
+                    SystemId,
+                    Name,
+                    Distributed,
+                    LongRunning,
+                    IsolationLevel,
+                    CreationTime,
+                    InvalidationTime));
 
             return _ThreadLocalTransaction.Value;
 

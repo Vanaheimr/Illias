@@ -62,7 +62,7 @@ namespace de.ahzf.Illias
         /// <param name="CreationTime">The timestamp when this transaction started.</param>
         /// <param name="InvalidationTime">The timestamp when this transaction will be invalid.</param>
         /// <returns>A new transaction object.</returns>
-        Transaction<TTransactionId, TSystemId>
+        Transaction<TTransactionId, TSystemId, IQuadStore<TSystemId, TQuadId, TTransactionId, TSPOC>>
             BeginTransaction(String         Name             = "",
                              Boolean        Distributed      = false,
                              Boolean        LongRunning      = false,
