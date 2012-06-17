@@ -88,9 +88,9 @@ namespace de.ahzf.Illias.Commons.Transactions
         public DateTime InvalidationTime { get; private set; }
 
         /// <summary>
-        /// The transaction Object.
+        /// The transaction object.
         /// </summary>
-        public TTransactionObject TransactionObject { get; private set; }
+        public TTransactionObject TXObject { get; private set; }
 
         internal readonly List<Transaction<TTransactionId, TSystemId, TTransactionObject>> _NestedTransactions;
 
@@ -227,7 +227,7 @@ namespace de.ahzf.Illias.Commons.Transactions
 
             this.LongRunning          = LongRunning;
             this.Name                 = Name;
-            this.TransactionObject    = TransactionObjectCreator();
+            this.TXObject    = TransactionObjectCreator();
 
         }
 
