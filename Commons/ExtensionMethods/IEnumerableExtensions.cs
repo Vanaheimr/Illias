@@ -381,6 +381,9 @@ namespace de.ahzf.Illias.Commons
             if (ConditionDelegate == null)
                 throw new ArgumentNullException("ConditionDelegate", "The ConditionDelegate must not be null!");
 
+            if (Object == null)
+                return default(T);
+
             if (ConditionDelegate(Object))
                 return Object;
 
