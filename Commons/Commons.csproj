@@ -57,6 +57,7 @@
     <Compile Include="Collections\TSQueue.cs" />
     <Compile Include="Collections\Mutable\IGroupedCollection.cs" />
     <Compile Include="Collections\Mutable\IMap.cs" />
+    <Compile Include="CommandLineParser.cs" />
     <Compile Include="Description\IDescription.cs" />
     <Compile Include="EndiannessHell\EndiannessHell.cs" />
     <Compile Include="Ids\IdGenerator.cs" />
