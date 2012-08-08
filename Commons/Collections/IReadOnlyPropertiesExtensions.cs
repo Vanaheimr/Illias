@@ -340,7 +340,7 @@ namespace de.ahzf.Illias.Commons.Collections
                 if (_Value is Double)
                     return (Double) (Object) _Value;
                 else
-                    return Double.Parse(_Value.ToString(), NumberStyles.Float, CultureInfo.InvariantCulture);
+                    return Double.Parse(_Value.ToString().Replace(",","."), NumberStyles.Float, CultureInfo.InvariantCulture);
             }
 
             throw new Exception("404!");
