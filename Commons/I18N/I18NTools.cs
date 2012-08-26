@@ -70,6 +70,32 @@ namespace de.ahzf.Illias.Commons
 
         }
 
+        #region AppendI18N(this StringBuilder, I18NValue)
+
+        public static StringBuilder AppendI18N(this StringBuilder StringBuilder,
+                                               I18N I18NValue)
+        {
+            return StringBuilder.Append(I18NValue.ToHTML());
+        }
+
+        #endregion
+
+        #region AppendI18N(this StringBuilder, Prefix, I18NValue, Postfix)
+
+        public static StringBuilder AppendI18N(this StringBuilder StringBuilder,
+                                               String Prefix,
+                                               I18N   I18NValue,
+                                               String Postfix)
+        {
+
+            return StringBuilder.Append(Prefix).
+                                 Append(I18NValue.ToHTML()).
+                                 Append(Postfix);
+
+        }
+
+        #endregion
+
     }
 
 }
