@@ -40,7 +40,13 @@ namespace de.ahzf.Illias.Commons
 
     }
 
-    public struct I18N
+
+    public interface JSONString
+    {
+        String JSONString { get; }
+    }
+
+    public struct I18N : JSONString
     {
 
         public readonly English English;
@@ -60,7 +66,16 @@ namespace de.ahzf.Illias.Commons
 
         public override String ToString()
         {
-            return String.Concat(@"{ ""en"": """, English, @""", ""de"": """, German, @""" }");
+            return String.Concat("en: ", English, ", de:", German);
+        }
+
+
+        public String JSONString
+        {
+            get
+            {
+                return String.Concat(@"{ ""en"": """, English, @""", ""de"": """, German, @""" }");
+            }
         }
 
     }
