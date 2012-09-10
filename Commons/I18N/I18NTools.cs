@@ -92,6 +92,14 @@ namespace de.ahzf.Illias.Commons
 
         }
 
+        public static String ToLink(this I18N I18NValue, String Link)
+        {
+
+            return "<span class=\"english\"><a href = \"" + Link + "?language=en\">" + I18NValue.English.Text + "</a></span>" +
+                   "<span class=\"german\" ><a href = \"" + Link + "?language=de\">" + I18NValue.German.Text  + "</a></span>";
+
+        }
+
         public static String ToHTML(this I18N I18NValue, String Prefix, String Postfix)
         {
 
