@@ -16,6 +16,11 @@ namespace de.ahzf.Illias.Commons
             Text = myText;
         }
 
+        public override String ToString()
+        {
+            return Text;
+        }
+
     }
 
     public struct English
@@ -28,24 +33,34 @@ namespace de.ahzf.Illias.Commons
             Text = myText;
         }
 
+        public override String ToString()
+        {
+            return Text;
+        }
+
     }
 
     public struct I18N
     {
 
         public readonly English English;
-        public readonly German German;
+        public readonly German  German;
 
         public I18N(English myEnglish)
         {
             English = myEnglish;
-            German = new German(myEnglish.Text);
+            German  = new German(myEnglish.Text);
         }
 
         public I18N(English myEnglish, German myGerman)
         {
             English = myEnglish;
-            German = myGerman;
+            German  = myGerman;
+        }
+
+        public override String ToString()
+        {
+            return String.Concat(@"{ ""en"": """, English, @""", ""de"": """, German, @""" }");
         }
 
     }
