@@ -60,6 +60,16 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #region Well-known properties
 
+        //ToDo: Solve ambiguity!
+        //#region Id
+
+        ///// <summary>
+        ///// The identification.
+        ///// </summary>
+        //TValue Id { get; }
+
+        //#endregion
+
         #region IdKey
 
         /// <summary>
@@ -68,6 +78,16 @@ namespace de.ahzf.Illias.Commons.Collections
         TKey IdKey { get; }
 
         #endregion
+
+        //ToDo: Solve ambiguity!
+        //#region RevId
+
+        ///// <summary>
+        ///// The revision identification.
+        ///// </summary>
+        //TValue RevId { get; }
+
+        //#endregion
 
         #region RevIdKey
 
