@@ -39,18 +39,25 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region NewId
+        #region NewId(UniquenessCheckDelegate)
 
         /// <summary>
         /// Generate and return a new Id.
         /// </summary>
-        public UInt64 NewId
+        /// <param name="UniquenessCheckDelegate">A delegate to check the uniqueness of the generated identification.</param>
+        public UInt64 NewId(Func<UInt64, Boolean> UniquenessCheckDelegate)
         {
-            get
+
+            UInt64 _NewLocalId;
+
+            do
             {
-                var _NewLocalId = Interlocked.Increment(ref _NewId);
-                return (UInt64) _NewLocalId - 1;
+                _NewLocalId = (UInt64) (Interlocked.Increment(ref _NewId) - 1);
             }
+            while (!UniquenessCheckDelegate(_NewLocalId));
+
+            return _NewLocalId;
+
         }
 
         #endregion
@@ -73,18 +80,25 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region NewId
+        #region NewId(UniquenessCheck)
 
         /// <summary>
         /// Generate and return a new Id.
         /// </summary>
-        public String NewId
+        /// <param name="UniquenessCheckDelegate">A delegate to check the uniqueness of the generated identification.</param>
+        public String NewId(Func<String, Boolean> UniquenessCheckDelegate)
         {
-            get
+
+            String _NewLocalId;
+
+            do
             {
-                var _NewLocalId = Interlocked.Increment(ref _NewId);
-                return ((UInt64) _NewLocalId - 1).ToString();
+                _NewLocalId = ((UInt64) Interlocked.Increment(ref _NewId) - 1).ToString();
             }
+            while (!UniquenessCheckDelegate(_NewLocalId));
+
+            return  _NewLocalId;
+
         }
 
         #endregion

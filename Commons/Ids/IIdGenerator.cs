@@ -35,7 +35,8 @@ namespace de.ahzf.Illias.Commons
         /// <summary>
         /// Generate a new Id.
         /// </summary>
-        TId NewId { get; }
+        /// <param name="UniquenessCheckDelegate">A delegate to check the uniqueness of the generated identification.</param>
+        TId NewId(Func<TId, Boolean> UniquenessCheckDelegate);
 
     }
 
