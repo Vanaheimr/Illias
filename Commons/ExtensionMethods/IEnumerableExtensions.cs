@@ -411,6 +411,35 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
+        #region CSVAggregate(this IEnumerable)
+
+        public static String CSVAggregate(this IEnumerable<String> IEnumerable)
+        {
+
+            if (IEnumerable == null || !IEnumerable.Any())
+                return String.Empty;
+
+            return IEnumerable.Aggregate((a, b) => a + ", " + b);
+
+        }
+
+        #endregion
+
+        #region CSVAggregate(this IEnumerable, Prefix, Suffix)
+
+        public static String CSVAggregate(this IEnumerable<String> IEnumerable, String Prefix, String Suffix)
+        {
+
+            if (IEnumerable == null || !IEnumerable.Any())
+                return Prefix + Suffix;
+
+            return String.Concat(Prefix, IEnumerable.Aggregate((a, b) => a + ", " + b), Suffix);
+
+        }
+
+        #endregion
+
+        #region ToPartitions(this IEnumerable, Take)
 
         public static IEnumerable<IEnumerable<T>> ToPartitions<T>(this IEnumerable<T> IEnumerable, UInt64 Take)
         {
@@ -440,6 +469,8 @@ namespace de.ahzf.Illias.Commons
             }
 
         }
+
+        #endregion
 
     }
 
