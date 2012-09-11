@@ -111,6 +111,24 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
+        #region TryForEach<T>(this IEnumerable, Action)
+
+        /// <summary>
+        /// Calls the given delegate for each element of the enumeration,
+        /// but does not fail if any parameter is null.
+        /// </summary>
+        /// <typeparam name="T">The type of the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration of type T.</param>
+        /// <param name="Action">An action to call for each element of the enumeration.</param>
+        public static void TryForEach<T>(this IEnumerable<T> IEnumerable, Action<T> Action)
+        {
+            if (IEnumerable != null && Action != null)
+                foreach (var Element in IEnumerable)
+                    Action(Element);
+        }
+
+        #endregion
+
         #region ForEach<S, T>(this IEnumerable, Seed, Action)
 
         /// <summary>
