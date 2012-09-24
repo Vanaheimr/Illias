@@ -28,16 +28,16 @@ namespace de.ahzf.Illias.Commons
     /// <summary>
     /// Provides a generic revision identifier.
     /// </summary>
-    /// <typeparam name="TRevisionId">The type of the revision identifier.</typeparam>
-    public interface IRevisionId<TRevisionId>
-        where TRevisionId : IEquatable<TRevisionId>, IComparable<TRevisionId>, IComparable
+    /// <typeparam name="TRevId">The type of the revision identifier.</typeparam>
+    public interface IRevisionId<TRevId>
+        where TRevId : IEquatable<TRevId>, IComparable<TRevId>, IComparable
     {
 
         /// <summary>
         /// A generic revision identifier.
         /// All vertices, edges and hyper edges of a graph must have unique identifiers.
         /// </summary>
-        TRevisionId RevId { get; }
+        TRevId RevId { get; }
 
     }
 
