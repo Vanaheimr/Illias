@@ -20,6 +20,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections;
 
 #endregion
 
@@ -467,6 +468,28 @@ namespace de.ahzf.Illias.Commons
                 yield return Partitions;
 
             }
+
+        }
+
+        #endregion
+
+        #region ConsumeAll<T>(this IEnumerator)
+
+        /// <summary>
+        /// Consume all elements of the given enumerator.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements.</typeparam>
+        /// <param name="Enumerator">An IEnumerator.</param>
+        /// <returns>An enumerable of T.</returns>
+        public static IEnumerable<T> ConsumeAll<T>(this IEnumerator Enumerator)
+        {
+
+            var List = new List<T>();
+
+            while (Enumerator.MoveNext())
+                List.Add((T)Enumerator.Current);
+
+            return List;
 
         }
 
