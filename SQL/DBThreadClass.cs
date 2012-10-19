@@ -24,7 +24,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Windows.Threading;
 
-using MySql.Data.MySqlClient;
+//using MySql.Data.MySqlClient;
 
 #endregion
 
@@ -46,6 +46,7 @@ namespace de.ahzf.Illias.SQL
         private Dispatcher                              Dispatcher;
         private Boolean                                 EndDatabaseThread;
         private readonly Object                         LockObject;
+        private readonly Func<String, IDbConnection>    DBConnectionDelegate;
 
         #endregion
 
@@ -99,12 +100,13 @@ namespace de.ahzf.Illias.SQL
         /// within its own thread (mySQL wants it this way).
         /// </summary>
         /// <param name="Dispatcher">The WPF dispatcher.</param>
-        public DBThreadClass(Dispatcher Dispatcher)
+        public DBThreadClass(Func<String, IDbConnection> DBConnectionDelegate, Dispatcher Dispatcher)
         {
 
-            this.Dispatcher  = Dispatcher;
-            this.TaskQueue   = new ConcurrentQueue<Action<IDbConnection>>();
-            this.LockObject  = new Object();
+            this.Dispatcher            = Dispatcher;
+            this.TaskQueue             = new ConcurrentQueue<Action<IDbConnection>>();
+            this.LockObject            = new Object();
+            this.DBConnectionDelegate  = DBConnectionDelegate;
 
             DBThread = new Thread(() =>
             {
@@ -144,7 +146,7 @@ namespace de.ahzf.Illias.SQL
             if (CurrentDBConnection == null || CurrentDBConnection.State == ConnectionState.Closed)
                 if (DBAccessString != null)
                 {
-                    CurrentDBConnection = new MySqlConnection(DBAccessString);
+                    CurrentDBConnection = DBConnectionDelegate(DBAccessString);
                     CurrentDBConnection.Open();
                 }
 
