@@ -52,7 +52,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Geometry\Geometry.csproj">
       <Project>{9F38DCC9-CD80-4B71-8A9C-B3F37E471CAB}</Project>
-      <Name>Geometry</Name>
+      <Name>Geometry %28Geometry\Geometry%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
