@@ -39,6 +39,11 @@ namespace de.ahzf.Illias.SQL
         public String Description  { get; private set; }
 
         /// <summary>
+        /// The driver name for this database config, e.g. mySQL or postgresql.
+        /// </summary>
+        public String Driver       { get; private set; }
+
+        /// <summary>
         /// The server name/ip address for this database config.
         /// </summary>
         public String Server       { get; private set; }
@@ -78,12 +83,14 @@ namespace de.ahzf.Illias.SQL
         /// <param name="Password">The password for this database config.</param>
         /// <param name="InverterMapping"></param>
         public DBAccessConfiguration(String Description,
+                                     String Driver,
                                      String Server,
                                      String Database,
                                      String Username,
                                      String Password)
         {
             this.Description      = Description;
+            this.Driver           = Driver;
             this.Server           = Server;
             this.Database         = Database;
             this.Username         = Username;
