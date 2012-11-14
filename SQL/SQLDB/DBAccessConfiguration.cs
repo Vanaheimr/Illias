@@ -81,13 +81,12 @@ namespace de.ahzf.Illias.SQL
         /// Create a new database access configuration.
         /// </summary>
         /// <param name="Description">The description of this database config.</param>
+        /// <param name="Driver">The driver name for this database config, e.g. mySQL or postgresql.</param>
         /// <param name="Server">The server name/ip address for this database config.</param>
         /// <param name="Port">The port address for this database config.</param>
         /// <param name="Database">The database name for this database config.</param>
-        /// <param name="Table">The table name for this database config.</param>
         /// <param name="Username">The username for this database config.</param>
         /// <param name="Password">The password for this database config.</param>
-        /// <param name="InverterMapping"></param>
         public DBAccessConfiguration(String Description,
                                      String Driver,
                                      String Server,
@@ -96,13 +95,16 @@ namespace de.ahzf.Illias.SQL
                                      String Username,
                                      String Password)
         {
+
             this.Description      = Description;
             this.Driver           = Driver;
             this.Server           = Server;
+            this.Port             = Port;
             this.Database         = Database;
             this.Username         = Username;
             this.Password         = Password;
             this.Channels         = Channels;
+
         }
 
         #endregion
@@ -119,6 +121,7 @@ namespace de.ahzf.Illias.SQL
             {
 
                 return String.Concat("Server=",    Server,
+                                     ";Port=",     Port,
                                      ";Database=", Database,
                                      ";User ID=",  Username,
                                      ";Password=", Password,
