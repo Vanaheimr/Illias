@@ -44,6 +44,11 @@ namespace de.ahzf.Illias.SQL
         public String Server       { get; private set; }
 
         /// <summary>
+        /// The port address for this database config.
+        /// </summary>
+        public String Port         { get; private set; }
+
+        /// <summary>
         /// The database name for this database config.
         /// </summary>
         public String Database     { get; private set; }
@@ -72,6 +77,7 @@ namespace de.ahzf.Illias.SQL
         /// </summary>
         /// <param name="Description">The description of this database config.</param>
         /// <param name="Server">The server name/ip address for this database config.</param>
+        /// <param name="Port">The port address for this database config.</param>
         /// <param name="Database">The database name for this database config.</param>
         /// <param name="Table">The table name for this database config.</param>
         /// <param name="Username">The username for this database config.</param>
@@ -79,6 +85,7 @@ namespace de.ahzf.Illias.SQL
         /// <param name="InverterMapping"></param>
         public DBAccessConfiguration(String Description,
                                      String Server,
+                                     String Port,
                                      String Database,
                                      String Username,
                                      String Password)
