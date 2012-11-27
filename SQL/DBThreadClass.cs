@@ -93,6 +93,14 @@ namespace de.ahzf.Illias.SQL
 
         #endregion
 
+        #region Events
+
+        public delegate void ConnectionErrorDelegate(String DBAccessString);
+
+        public event ConnectionErrorDelegate OnConnectionError;
+
+        #endregion
+
         #region Constructor(s)
 
         /// <summary>
@@ -118,7 +126,52 @@ namespace de.ahzf.Illias.SQL
                 {
 
                     if (TaskQueue.TryDequeue(out ToDo))
-                        ToDo(CurrentDBConnection);
+                    {
+
+                        if (CurrentDBConnection == null)
+                        {
+                            Reset();
+                            Connect();
+                        }
+                        else
+                        {
+                            try
+                            {
+                                CurrentDBConnection.ShowTables();
+                            }
+                            catch (Exception e)
+                            {
+                                Reset();
+                                Connect();
+                            }
+                        }
+
+                        if (CurrentDBConnection.State != ConnectionState.Open)
+                        {
+                            Reset();
+                            Connect();
+                        }
+
+                        var Retry = false;
+
+                        do
+                        {
+
+                            try
+                            {
+                                ToDo(CurrentDBConnection);
+                            }
+                            catch (Exception)
+                            {
+                                Retry = true;
+                                Reset();
+                                Connect();
+                            }
+
+                        }
+                        while (Retry == true);
+
+                    }
 
                     else
                         lock (LockObject) {
@@ -135,7 +188,7 @@ namespace de.ahzf.Illias.SQL
 
         }
 
-        #endregion
+        #endregion<<<<<
 
 
         #region (private) Connect()
@@ -146,8 +199,16 @@ namespace de.ahzf.Illias.SQL
             if (CurrentDBConnection == null || CurrentDBConnection.State == ConnectionState.Closed)
                 if (DBAccessString != null)
                 {
-                    CurrentDBConnection = DBConnectionDelegate(DBAccessString);
-                    CurrentDBConnection.Open();
+                    try
+                    {
+                        CurrentDBConnection = DBConnectionDelegate(DBAccessString);
+                        CurrentDBConnection.Open();
+                    }
+                    catch (Exception e)
+                    {
+                        if (OnConnectionError != null)
+                            OnConnectionError(DBAccessString);
+                    }
                 }
 
             return CurrentDBConnection;
@@ -181,7 +242,7 @@ namespace de.ahzf.Illias.SQL
                 }
 
                 CurrentDBConnection = null;
-                DBAccessString      = null;
+                //DBAccessString      = null;
 
                 return true;
 
