@@ -247,6 +247,28 @@ namespace de.ahzf.Illias.SQL
 
         #endregion
 
+        #region Query<T>(this DbConnection, Query)
+
+        public static IEnumerable<IDataReader> Query2(this IDbConnection    DbConnection,
+                                                      String                Query)
+        {
+
+            var DBCommand = DbConnection.CreateCommand();
+            DBCommand.CommandText    = Query;
+            DBCommand.CommandTimeout = Int32.MaxValue;
+
+            var DBRow = DBCommand.ExecuteReader();
+
+            while (DBRow.Read())
+                yield return DBRow;
+
+            DBRow.Close();
+            DBCommand.Dispose();
+
+        }
+
+        #endregion
+
     }
 
 }
