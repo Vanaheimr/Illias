@@ -27,7 +27,7 @@ namespace de.ahzf.Illias.Commons
     /// <summary>
     /// Provides a label of something.
     /// </summary>
-    public interface ILabel<T>
+    public interface ILabel<T> //: IComparable, IComparable<T>, IEquatable<T>
     {
 
         /// <summary>

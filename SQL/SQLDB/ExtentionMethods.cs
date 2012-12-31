@@ -249,7 +249,7 @@ namespace de.ahzf.Illias.SQL
 
         #region Query<T>(this DbConnection, Query)
 
-        public static IEnumerable<IDataReader> Query2(this IDbConnection    DbConnection,
+        public static IEnumerable<IDataReader> EnumerateRows(this IDbConnection    DbConnection,
                                                       String                Query)
         {
 
