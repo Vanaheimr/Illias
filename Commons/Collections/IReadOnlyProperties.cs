@@ -98,6 +98,15 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
+        #region LabelKey
+
+        /// <summary>
+        /// The property key of the label.
+        /// </summary>
+        TKey LabelKey { get; }
+
+        #endregion
+
         #region DescriptionKey
 
         /// <summary>
