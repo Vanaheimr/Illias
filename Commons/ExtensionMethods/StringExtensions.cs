@@ -31,11 +31,28 @@ namespace de.ahzf.Illias.Commons
     public static class StringExtensions
     {
 
-        #region IsNullOrEmpty
+        #region IsNullOrEmpty(myString)
 
+        /// <summary>
+        /// Indicates whether the specified string is null or an System.String.Empty string.
+        /// </summary>
+        /// <param name="myString">The string.</param>
         public static Boolean IsNullOrEmpty(this String myString)
         {
             return String.IsNullOrEmpty(myString);
+        }
+
+        #endregion
+
+        #region IsNotNullOrEmpty(myString)
+
+        /// <summary>
+        /// Indicates whether the specified string is not null or an System.String.Empty string.
+        /// </summary>
+        /// <param name="myString">The string.</param>
+        public static Boolean IsNotNullOrEmpty(this String myString)
+        {
+            return !String.IsNullOrEmpty(myString);
         }
 
         #endregion
