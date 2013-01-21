@@ -30,12 +30,13 @@ namespace de.ahzf.Illias.Commons
     /// </summary>
     /// <typeparam name="TRevId">The type of the revision identifier.</typeparam>
     public interface IRevisionId<TRevId>
+        //ToDo: Error 326: cannot implement both 'System.IComparable<TId>' and 'System.IComparable<TRevId>' because they may unify for some type parameter substitutions
+        //: IEquatable<TRevId>, IComparable<TRevId>, IComparable  
         where TRevId : IEquatable<TRevId>, IComparable<TRevId>, IComparable
     {
 
         /// <summary>
         /// A generic revision identifier.
-        /// All vertices, edges and hyper edges of a graph must have unique identifiers.
         /// </summary>
         TRevId RevId { get; }
 

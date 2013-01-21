@@ -25,15 +25,19 @@ namespace de.ahzf.Illias.Commons
 {
 
     /// <summary>
-    /// Provides a label of something.
+    /// Provides a generic label.
     /// </summary>
-    public interface ILabel<T> //: IComparable, IComparable<T>, IEquatable<T>
+    /// <typeparam name="TLabel">The type of the label.</typeparam>
+    public interface ILabel<TLabel>
+        //ToDo: Error 326: cannot implement both 'System.IComparable<TId>' and 'System.IComparable<TLabel>' because they may unify for some type parameter substitutions
+        //: IEquatable<TLabel>, IComparable<TLabel>, IComparable
+        where TLabel : IEquatable<TLabel>, IComparable<TLabel>, IComparable
     {
 
         /// <summary>
-        /// Provides a label of something.
+        /// A generic label.
         /// </summary>
-        T Label { get; }
+        TLabel Label { get; }
 
     }
 
