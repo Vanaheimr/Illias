@@ -59,7 +59,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
             #endregion
 
-            return IProperties.SetProperty(KeyValuePair.Key, KeyValuePair.Value);
+            return IProperties.Set(KeyValuePair.Key, KeyValuePair.Value);
 
         }
 
@@ -90,7 +90,7 @@ namespace de.ahzf.Illias.Commons.Collections
             #endregion
 
             foreach (var _KeyValuePair in KeyValuePairs)
-                IProperties.SetProperty(_KeyValuePair.Key, _KeyValuePair.Value);
+                IProperties.Set(_KeyValuePair.Key, _KeyValuePair.Value);
 
             return IProperties;
 
@@ -123,7 +123,7 @@ namespace de.ahzf.Illias.Commons.Collections
             #endregion
 
             foreach (var _KeyValuePair in IDictionary)
-                IProperties.SetProperty(_KeyValuePair.Key, _KeyValuePair.Value);
+                IProperties.Set(_KeyValuePair.Key, _KeyValuePair.Value);
 
             return IProperties;
 
@@ -183,7 +183,7 @@ namespace de.ahzf.Illias.Commons.Collections
             if (Values != null && Values.Any())
                 _List.AddRange(Values);
 
-            IProperties.SetProperty(Key, _List);
+            IProperties.Set(Key, _List);
 
             return IProperties;
 
@@ -221,7 +221,7 @@ namespace de.ahzf.Illias.Commons.Collections
                 _Set = _Value as HashSet<Object>;
 
                 if (_Set == null)
-                    throw new Exception("The value is not a list!");
+                    throw new Exception("The value is not a set!");
 
                 else
                 {
@@ -242,7 +242,114 @@ namespace de.ahzf.Illias.Commons.Collections
             if (Values != null && Values.Any())
                 Values.ForEach(value => _Set.Add(value));
 
-            IProperties.SetProperty(Key, _Set);
+            IProperties.Set(Key, _Set);
+
+            return IProperties;
+
+        }
+
+        #endregion
+
+        #region ZSetAdd<TKey>(this IProperties, Key, FirstValue, params Values)
+
+        public static IProperties<TKey, Object> ZSetAdd<TKey>(this IProperties<TKey, Object> IProperties, TKey Key, Object FirstValue, params Object[] Values)
+
+            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
+
+        {
+
+            #region Initial checks
+
+            if (IProperties == null)
+                throw new ArgumentNullException();
+
+            if (Key == null)
+                throw new ArgumentNullException();
+
+            if (FirstValue == null)
+                throw new ArgumentNullException();
+
+            #endregion
+
+            Dictionary<Object, UInt64> _ZSet          = null;
+            Object                     _CountedValue  = null;
+            UInt64                     _Counter;
+
+            if (IProperties.TryGetProperty(Key, out _CountedValue))
+            {
+
+                _ZSet = _CountedValue as Dictionary<Object, UInt64>;
+
+                if (_ZSet == null)
+                    throw new Exception("The value is not a counted set!");
+
+                else
+                {
+
+                    if (_ZSet.TryGetValue(FirstValue, out _Counter))
+                        _ZSet[FirstValue] = _Counter + 1;
+                    else
+                        _ZSet.Add(FirstValue, 1);
+
+                    if (Values != null && Values.Any())
+                        Values.ForEach(value => {
+                            if (_ZSet.TryGetValue(value, out _Counter))
+                                _ZSet[value] = _Counter + 1;
+                            else
+                                _ZSet.Add(value, 1);
+                        });
+
+                    return IProperties;
+
+                }
+
+            }
+
+            _ZSet = new Dictionary<Object, UInt64>();
+            _ZSet.Add(FirstValue, 1);
+
+            if (Values != null && Values.Any())
+                Values.ForEach(value =>
+                {
+                    if (_ZSet.TryGetValue(value, out _Counter))
+                        _ZSet[value] = _Counter + 1;
+                    else
+                        _ZSet.Add(value, 1);
+                });
+
+            IProperties.Set(Key, _ZSet);
+
+            return IProperties;
+
+        }
+
+        #endregion
+
+        #region Increment<TKey>(this IProperties, Key)
+
+        public static IProperties<TKey, Object> IncPropertis<TKey>(this IProperties<TKey, Object> IProperties, TKey Key)
+
+            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
+
+        {
+
+            #region Initial checks
+
+            if (IProperties == null)
+                throw new ArgumentNullException();
+
+            if (Key == null)
+                throw new ArgumentNullException();
+
+            #endregion
+
+            UInt64 _Counter;
+
+            if (IProperties.TryGetProperty(Key, out _Counter))
+                IProperties.Set(Key, _Counter + 1UL);
+
+            else
+                IProperties.Set(Key, 1UL);
 
             return IProperties;
 
@@ -431,7 +538,7 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region SetProperty(Key, Value)
+        #region Set(Key, Value)
 
         /// <summary>
         /// Add a KeyValuePair to the graph element.
@@ -439,7 +546,7 @@ namespace de.ahzf.Illias.Commons.Collections
         /// </summary>
         /// <param name="Key">A key.</param>
         /// <param name="Value">A value.</param>
-        IProperties<TKey, TValue> SetProperty(TKey Key, TValue Value);
+        IProperties<TKey, TValue> Set(TKey Key, TValue Value);
 
         #endregion
 
