@@ -107,15 +107,6 @@ namespace de.ahzf.Illias.Commons.Collections
 
         #endregion
 
-        #region DescriptionKey
-
-        /// <summary>
-        /// The property key of the description.
-        /// </summary>
-        TKey DescriptionKey { get; }
-
-        #endregion
-
         #endregion
 
         #region Keys/Values
