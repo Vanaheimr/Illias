@@ -120,13 +120,18 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region ToUTF8String(this myByteArray, NumberOfBytes = 0)
+        #region ToUTF8String(this myByteArray, NumberOfBytes = 0, ThrowException = true)
 
-        public static String ToUTF8String(this Byte[] myByteArray, Int32 NumberOfBytes = 0)
+        public static String ToUTF8String(this Byte[] myByteArray, Int32 NumberOfBytes = 0, Boolean ThrowException = true)
         {
 
             if (myByteArray == null)
-                throw new ArgumentNullException("myString must not be null!");
+            {
+                if (ThrowException)
+                    throw new ArgumentNullException("myString must not be null!");
+                else
+                    return String.Empty;
+            }
 
             if (myByteArray.Length == 0)
                 return String.Empty;
