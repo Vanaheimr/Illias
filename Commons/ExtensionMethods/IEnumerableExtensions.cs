@@ -440,9 +440,9 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region ToPartitions(this IEnumerable, Take)
+        #region ToPartitions(this IEnumerable, SizeOfPartition)
 
-        public static IEnumerable<IEnumerable<T>> ToPartitions<T>(this IEnumerable<T> IEnumerable, UInt64 Take)
+        public static IEnumerable<IEnumerable<T>> ToPartitions<T>(this IEnumerable<T> IEnumerable, UInt64 SizeOfPartition)
         {
 
             UInt64 i;
@@ -452,17 +452,17 @@ namespace de.ahzf.Illias.Commons
             while (IEnumerator.MoveNext())
             {
 
-                Partitions    = new T[Take];
+                Partitions    = new T[SizeOfPartition];
                 Partitions[0] = IEnumerator.Current;
                 i             = 1UL;
 
-                while (i < Take && IEnumerator.MoveNext())
+                while (i < SizeOfPartition && IEnumerator.MoveNext())
                 {
                     Partitions[i] = IEnumerator.Current;
                     i = i + 1;
                 }
 
-                if (i < Take)
+                if (i < SizeOfPartition)
                     Partitions = Partitions.Take(i).ToArray();
 
                 yield return Partitions;
@@ -490,6 +490,61 @@ namespace de.ahzf.Illias.Commons
                 List.Add((T)Enumerator.Current);
 
             return List;
+
+        }
+
+        #endregion
+
+        #region Swap<T>(this IEnumerator)
+
+        public static IEnumerable<T> Swap<T>(this IEnumerable<T> IEnumerable)
+        {
+
+            var Enumerator = IEnumerable.GetEnumerator();
+
+            T a = default(T);
+            T b = default(T);
+            Byte Emit = 0;
+
+            while (Enumerator.MoveNext())
+            {
+
+                if (Emit == 0)
+                {
+                    a = Enumerator.Current;
+                    Emit++;
+                }
+
+                else
+                {
+                    b = Enumerator.Current;
+                    yield return b;
+                    yield return a;
+                    Emit = 0;
+                }
+
+            }
+
+            if (Emit == 1)
+                yield return a;
+
+        }
+
+        #endregion
+
+
+        #region ToSingles<T>(this IEnumerator)
+
+        public static IEnumerable<Single> ToSingles(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
+        {
+
+            if (Endian)
+                foreach (var Value in IEnumerable)
+                    yield return BitConverter.ToSingle(Value.ToArray(), 0);
+
+            else
+                foreach (var Value in IEnumerable)
+                    yield return BitConverter.ToSingle(Value.Reverse().ToArray(), 0);
 
         }
 
