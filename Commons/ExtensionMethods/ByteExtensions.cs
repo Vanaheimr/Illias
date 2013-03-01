@@ -20,7 +20,6 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Collections;
 
 #endregion
 
@@ -35,6 +34,10 @@ namespace de.ahzf.Illias.Commons
 
         #region Reverse(this ByteArray)
 
+        /// <summary>
+        /// Reverse the given byte array.
+        /// </summary>
+        /// <param name="ByteArray">An array of bytes.</param>
         public static Byte[] Reverse(this Byte[] ByteArray)
         {
 
@@ -48,10 +51,16 @@ namespace de.ahzf.Illias.Commons
 
         #region Reverse(this ByteArray, Start, Count)
 
-        public static Byte[] Reverse(this Byte[] ByteArray, UInt32 Start, UInt32 Count)
+        /// <summary>
+        /// Reverse the given byte array.
+        /// </summary>
+        /// <param name="ByteArray">An array of bytes.</param>
+        /// <param name="Skip">Skip the given number of bytes in the beginning.</param>
+        /// <param name="Take">Take the given number of bytes.</param>
+        public static Byte[] Reverse(this Byte[] ByteArray, UInt32 Skip, UInt32 Take)
         {
 
-            Array.Reverse(ByteArray, (Int32) Start, (Int32) Count);
+            Array.Reverse(ByteArray, (Int32) Skip, (Int32) Take);
 
             return ByteArray;
 
@@ -60,12 +69,17 @@ namespace de.ahzf.Illias.Commons
         #endregion
 
 
-        #region ToInt16s<T>(this IEnumerable, Endian = true)
+        #region ToInt16s<T>(this IEnumerable, NetworkByteOrder = true)
 
-        public static IEnumerable<Int16> ToInt16s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
+        /// <summary>
+        /// Converts the given enumeration of enumerated bytes into an enumeration of Int16s.
+        /// </summary>
+        /// <param name="IEnumerable">An enumeration of enumerated bytes.</param>
+        /// <param name="NetworkByteOrder">Whether the bytes are enumerated in network byte order (default) or not.</param>
+        public static IEnumerable<Int16> ToInt16s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean NetworkByteOrder = true)
         {
 
-            if (Endian)
+            if (NetworkByteOrder)
                 foreach (var Value in IEnumerable)
                     yield return BitConverter.ToInt16(Value.ToArray(), 0);
 
@@ -77,12 +91,17 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region ToUInt16s<T>(this IEnumerable, Endian = true)
+        #region ToUInt16s<T>(this IEnumerable, NetworkByteOrder = true)
 
-        public static IEnumerable<UInt16> ToUInt16s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
+        /// <summary>
+        /// Converts the given enumeration of enumerated bytes into an enumeration of UInt16s.
+        /// </summary>
+        /// <param name="IEnumerable">An enumeration of enumerated bytes.</param>
+        /// <param name="NetworkByteOrder">Whether the bytes are enumerated in network byte order (default) or not.</param>
+        public static IEnumerable<UInt16> ToUInt16s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean NetworkByteOrder = true)
         {
 
-            if (Endian)
+            if (NetworkByteOrder)
                 foreach (var Value in IEnumerable)
                     yield return BitConverter.ToUInt16(Value.ToArray(), 0);
 
@@ -95,12 +114,17 @@ namespace de.ahzf.Illias.Commons
         #endregion
 
 
-        #region ToInt32s<T>(this IEnumerable, Endian = true)
+        #region ToInt32s<T>(this IEnumerable, NetworkByteOrder = true)
 
-        public static IEnumerable<Int32> ToInt32s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
+        /// <summary>
+        /// Converts the given enumeration of enumerated bytes into an enumeration of Int32s.
+        /// </summary>
+        /// <param name="IEnumerable">An enumeration of enumerated bytes.</param>
+        /// <param name="NetworkByteOrder">Whether the bytes are enumerated in network byte order (default) or not.</param>
+        public static IEnumerable<Int32> ToInt32s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean NetworkByteOrder = true)
         {
 
-            if (Endian)
+            if (NetworkByteOrder)
                 foreach (var Value in IEnumerable)
                     yield return BitConverter.ToInt32(Value.ToArray(), 0);
 
@@ -112,12 +136,17 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region ToUInt32s<T>(this IEnumerable, Endian = true)
+        #region ToUInt32s<T>(this IEnumerable, NetworkByteOrder = true)
 
-        public static IEnumerable<UInt32> ToUInt32s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
+        /// <summary>
+        /// Converts the given enumeration of enumerated bytes into an enumeration of UInt32s.
+        /// </summary>
+        /// <param name="IEnumerable">An enumeration of enumerated bytes.</param>
+        /// <param name="NetworkByteOrder">Whether the bytes are enumerated in network byte order (default) or not.</param>
+        public static IEnumerable<UInt32> ToUInt32s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean NetworkByteOrder = true)
         {
 
-            if (Endian)
+            if (NetworkByteOrder)
                 foreach (var Value in IEnumerable)
                     yield return BitConverter.ToUInt32(Value.ToArray(), 0);
 
@@ -130,12 +159,17 @@ namespace de.ahzf.Illias.Commons
         #endregion
 
 
-        #region ToInt64s<T>(this IEnumerable, Endian = true)
+        #region ToInt64s<T>(this IEnumerable, NetworkByteOrder = true)
 
-        public static IEnumerable<Int64> ToInt64s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
+        /// <summary>
+        /// Converts the given enumeration of enumerated bytes into an enumeration of Int64s.
+        /// </summary>
+        /// <param name="IEnumerable">An enumeration of enumerated bytes.</param>
+        /// <param name="NetworkByteOrder">Whether the bytes are enumerated in network byte order (default) or not.</param>
+        public static IEnumerable<Int64> ToInt64s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean NetworkByteOrder = true)
         {
 
-            if (Endian)
+            if (NetworkByteOrder)
                 foreach (var Value in IEnumerable)
                     yield return BitConverter.ToInt64(Value.ToArray(), 0);
 
@@ -147,12 +181,17 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region ToUInt64s<T>(this IEnumerable, Endian = true)
+        #region ToUInt64s<T>(this IEnumerable, NetworkByteOrder = true)
 
-        public static IEnumerable<UInt64> ToUInt64s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
+        /// <summary>
+        /// Converts the given enumeration of enumerated bytes into an enumeration of UInt64s.
+        /// </summary>
+        /// <param name="IEnumerable">An enumeration of enumerated bytes.</param>
+        /// <param name="NetworkByteOrder">Whether the bytes are enumerated in network byte order (default) or not.</param>
+        public static IEnumerable<UInt64> ToUInt64s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean NetworkByteOrder = true)
         {
 
-            if (Endian)
+            if (NetworkByteOrder)
                 foreach (var Value in IEnumerable)
                     yield return BitConverter.ToUInt64(Value.ToArray(), 0);
 
@@ -165,12 +204,17 @@ namespace de.ahzf.Illias.Commons
         #endregion
 
 
-        #region ToSingles<T>(this IEnumerable, Endian = true)
+        #region ToSingles<T>(this IEnumerable, NetworkByteOrder = true)
 
-        public static IEnumerable<Single> ToSingles(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
+        /// <summary>
+        /// Converts the given enumeration of enumerated bytes into an enumeration of Singles.
+        /// </summary>
+        /// <param name="IEnumerable">An enumeration of enumerated bytes.</param>
+        /// <param name="NetworkByteOrder">Whether the bytes are enumerated in network byte order (default) or not.</param>
+        public static IEnumerable<Single> ToSingles(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean NetworkByteOrder = true)
         {
 
-            if (Endian)
+            if (NetworkByteOrder)
                 foreach (var Value in IEnumerable)
                     yield return BitConverter.ToSingle(Value.ToArray(), 0);
 
@@ -182,12 +226,17 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region ToDoubles<T>(this IEnumerable, Endian = true)
+        #region ToDoubles<T>(this IEnumerable, NetworkByteOrder = true)
 
-        public static IEnumerable<Double> ToDoubles(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
+        /// <summary>
+        /// Converts the given enumeration of enumerated bytes into an enumeration of Doubles.
+        /// </summary>
+        /// <param name="IEnumerable">An enumeration of enumerated bytes.</param>
+        /// <param name="NetworkByteOrder">Whether the bytes are enumerated in network byte order (default) or not.</param>
+        public static IEnumerable<Double> ToDoubles(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean NetworkByteOrder = true)
         {
 
-            if (Endian)
+            if (NetworkByteOrder)
                 foreach (var Value in IEnumerable)
                     yield return BitConverter.ToDouble(Value.ToArray(), 0);
 
@@ -200,14 +249,22 @@ namespace de.ahzf.Illias.Commons
         #endregion
 
 
+        /// <summary>
+        /// The beginning of the UNIX universe.
+        /// </summary>
         public static DateTime UNIXTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
-        #region ToDateTime32s<T>(this IEnumerable, Endian = true)
+        #region ToDateTime32s<T>(this IEnumerable, NetworkByteOrder = true)
 
-        public static IEnumerable<DateTime> ToDateTime32s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
+        /// <summary>
+        /// Converts the given enumeration of four enumerated bytes into an enumeration of DateTimes.
+        /// </summary>
+        /// <param name="IEnumerable">An enumeration of enumerated bytes.</param>
+        /// <param name="NetworkByteOrder">Whether the bytes are enumerated in network byte order (default) or not.</param>
+        public static IEnumerable<DateTime> ToDateTime32s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean NetworkByteOrder = true)
         {
 
-            if (Endian)
+            if (NetworkByteOrder)
                 foreach (var Value in IEnumerable)
                     yield return UNIXTime.AddSeconds(BitConverter.ToInt32(Value.ToArray(), 0));
 
@@ -219,12 +276,17 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
-        #region ToDateTime64s<T>(this IEnumerable, Endian = true)
+        #region ToDateTime64s<T>(this IEnumerable, NetworkByteOrder = true)
 
-        public static IEnumerable<DateTime> ToDateTime64s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
+        /// <summary>
+        /// Converts the given enumeration of eight enumerated bytes into an enumeration of DateTimes.
+        /// </summary>
+        /// <param name="IEnumerable">An enumeration of enumerated bytes.</param>
+        /// <param name="NetworkByteOrder">Whether the bytes are enumerated in network byte order (default) or not.</param>
+        public static IEnumerable<DateTime> ToDateTime64s(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean NetworkByteOrder = true)
         {
 
-            if (Endian)
+            if (NetworkByteOrder)
                 foreach (var Value in IEnumerable)
                     yield return UNIXTime.AddSeconds(BitConverter.ToInt64(Value.ToArray(), 0));
 
