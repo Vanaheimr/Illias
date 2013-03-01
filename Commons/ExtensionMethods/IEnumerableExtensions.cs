@@ -162,6 +162,30 @@ namespace de.ahzf.Illias.Commons
 
         #endregion
 
+        #region ForEachCounted<T>(this IEnumerable, Action, Counter = 1UL)
+
+        /// <summary>
+        /// Calls the given delegate for each element of the enumeration
+        /// and count the number of elements.
+        /// </summary>
+        /// <typeparam name="T">The type of the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration of type T.</param>
+        /// <param name="Action">An action to call for a counter and each element of the enumeration.</param>
+        /// <param name="Counter">The initial value of the counter.</param>
+        public static void ForEachCounted<T>(this IEnumerable<T> IEnumerable, Action<UInt64, T> Action, UInt64 Counter = 1UL)
+        {
+
+            if (IEnumerable == null || Action == null)
+                return;
+
+            foreach (var Element in IEnumerable)
+                Action(Counter++, Element);
+
+        }
+
+        #endregion
+
+
         #region Skip<T>(this IEnumerable, Count)
 
         /// <summary>
@@ -527,24 +551,6 @@ namespace de.ahzf.Illias.Commons
 
             if (Emit == 1)
                 yield return a;
-
-        }
-
-        #endregion
-
-
-        #region ToSingles<T>(this IEnumerator)
-
-        public static IEnumerable<Single> ToSingles(this IEnumerable<IEnumerable<Byte>> IEnumerable, Boolean Endian = true)
-        {
-
-            if (Endian)
-                foreach (var Value in IEnumerable)
-                    yield return BitConverter.ToSingle(Value.ToArray(), 0);
-
-            else
-                foreach (var Value in IEnumerable)
-                    yield return BitConverter.ToSingle(Value.Reverse().ToArray(), 0);
 
         }
 

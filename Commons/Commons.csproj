@@ -60,6 +60,7 @@
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="Description\IDescription.cs" />
     <Compile Include="EndiannessHell\EndiannessHell.cs" />
+    <Compile Include="ExtensionMethods\ByteExtensions.cs" />
     <Compile Include="ExtensionMethods\StringBuilderExtentions.cs" />
     <Compile Include="I18N\I18NTools.cs" />
     <Compile Include="Ids\IdGenerator.cs" />
