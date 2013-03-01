@@ -40,16 +40,13 @@ namespace de.ahzf.Illias.Commons
         /// <param name="ByteArray">An array of bytes.</param>
         public static Byte[] Reverse(this Byte[] ByteArray)
         {
-
             Array.Reverse(ByteArray, 0, ByteArray.Length);
-
             return ByteArray;
-
         }
 
         #endregion
 
-        #region Reverse(this ByteArray, Start, Count)
+        #region Reverse(this ByteArray, Skip, Take)
 
         /// <summary>
         /// Reverse the given byte array.
@@ -59,11 +56,7 @@ namespace de.ahzf.Illias.Commons
         /// <param name="Take">Take the given number of bytes.</param>
         public static Byte[] Reverse(this Byte[] ByteArray, UInt32 Skip, UInt32 Take)
         {
-
-            Array.Reverse(ByteArray, (Int32) Skip, (Int32) Take);
-
-            return ByteArray;
-
+            return ByteArray.Skip(Skip).Take(Take).Reverse().ToArray();
         }
 
         #endregion
