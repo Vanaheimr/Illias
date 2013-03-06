@@ -51,7 +51,7 @@ namespace de.ahzf.Illias.Commons.Votes
         #region Yes(this IVote<Boolean>)
 
         /// <summary>
-        /// Vote 'yes' or 'ok' or 'allow'.
+        /// Vote 'yes' or 'ok' or 'allow' or 'accept'.
         /// </summary>
         public static void Yes(this IVote<Boolean> Vote)
         {
@@ -63,7 +63,7 @@ namespace de.ahzf.Illias.Commons.Votes
         #region Ok(this IVote<Boolean>)
 
         /// <summary>
-        /// Vote 'yes' or 'ok' or 'allow'.
+        /// Vote 'yes' or 'ok' or 'allow' or 'accept'.
         /// </summary>
         public static void Ok(this IVote<Boolean> Vote)
         {
@@ -75,9 +75,21 @@ namespace de.ahzf.Illias.Commons.Votes
         #region Allow(this IVote<Boolean>)
 
         /// <summary>
-        /// Vote 'yes' or 'ok' or 'allow'.
+        /// Vote 'yes' or 'ok' or 'allow' or 'accept'.
         /// </summary>
         public static void Allow(this IVote<Boolean> Vote)
+        {
+            Vote.VoteFor(true);
+        }
+
+        #endregion
+
+        #region Accept(this IVote<Boolean>)
+
+        /// <summary>
+        /// Vote 'yes' or 'ok' or 'allow' or 'accept'.
+        /// </summary>
+        public static void Accept(this IVote<Boolean> Vote)
         {
             Vote.VoteFor(true);
         }
