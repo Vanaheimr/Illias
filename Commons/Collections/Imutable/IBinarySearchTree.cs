@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons
+namespace eu.Vanaheimr.Illias.Commons
 {
     public interface IBinarySearchTree<TKey, TValue> : IImmutableMap<TKey, TValue>
         where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable

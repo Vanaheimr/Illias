@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace de.ahzf.Illias.SQL
+namespace eu.Vanaheimr.Illias.SQL
 {
 
     public class DBColumnInfo : IEnumerable<String>

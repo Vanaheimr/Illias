@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons
+namespace eu.Vanaheimr.Illias.Commons
 {
 
     public static class Silverlight5Extensions

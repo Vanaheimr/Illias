@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons.Collections
+namespace eu.Vanaheimr.Illias.Commons.Collections
 {
 
     /// <summary>

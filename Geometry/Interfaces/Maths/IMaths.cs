@@ -21,7 +21,7 @@ using System;
 
 #endregion
 
-namespace de.ahzf.Illias.Geometry.Maths
+namespace eu.Vanaheimr.Illias.Geometry.Maths
 {
 
     /// <summary>

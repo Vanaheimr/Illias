@@ -21,7 +21,7 @@ using System;
 
 #endregion
 
-namespace de.ahzf.Illias.Geometry
+namespace eu.Vanaheimr.Illias.Geometry
 {
 
     #region BintreeException(Bintree, Element = default(T), Message = null, InnerException = null)

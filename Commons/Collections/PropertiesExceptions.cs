@@ -21,7 +21,7 @@ using System;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons.Collections
+namespace eu.Vanaheimr.Illias.Commons.Collections
 {
 
     #region PropertiesException

@@ -21,11 +21,11 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-using de.ahzf.Illias.Commons.Votes;
+using eu.Vanaheimr.Illias.Commons.Votes;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons.Collections
+namespace eu.Vanaheimr.Illias.Commons.Collections
 {
 
     #region IPropertiesExtensions

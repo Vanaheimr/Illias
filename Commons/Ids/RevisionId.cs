@@ -19,11 +19,11 @@
 
 using System;
 
-using de.ahzf.Illias.Commons;
+using eu.Vanaheimr.Illias.Commons;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons
+namespace eu.Vanaheimr.Illias.Commons
 {
 
     /// <summary>

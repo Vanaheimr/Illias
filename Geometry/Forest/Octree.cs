@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace de.ahzf.Illias.Geometry
+namespace eu.Vanaheimr.Illias.Geometry
 {
 
     #region OctreeSplitEventHandler<T>(Octree, Voxel)

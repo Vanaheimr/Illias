@@ -21,7 +21,7 @@ using System;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons.Votes
+namespace eu.Vanaheimr.Illias.Commons.Votes
 {
 
     // Delegates

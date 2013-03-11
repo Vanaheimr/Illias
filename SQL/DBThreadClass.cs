@@ -28,7 +28,7 @@ using System.Windows.Threading;
 
 #endregion
 
-namespace de.ahzf.Illias.SQL
+namespace eu.Vanaheimr.Illias.SQL
 {
 
     /// <summary>

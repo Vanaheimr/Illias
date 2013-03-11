@@ -27,7 +27,7 @@ using NUnit.Framework;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons.UnitTests
+namespace eu.Vanaheimr.Illias.Commons.UnitTests
 {
 
     /// <summary>

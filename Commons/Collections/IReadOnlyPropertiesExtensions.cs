@@ -22,12 +22,12 @@ using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
 
-using de.ahzf.Illias.Commons;
-using de.ahzf.Illias.Commons.Collections;
+using eu.Vanaheimr.Illias.Commons;
+using eu.Vanaheimr.Illias.Commons.Collections;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons.Collections
+namespace eu.Vanaheimr.Illias.Commons.Collections
 {
 
     /// <summary>

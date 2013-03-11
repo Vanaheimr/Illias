@@ -26,7 +26,7 @@ using System.Threading;
 
 #endregion
 
-namespace de.ahzf.Illias.Geometry.UnitTests.Forest
+namespace eu.Vanaheimr.Illias.Geometry.UnitTests.Forest
 {
 
     /// <summary>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace de.ahzf.Illias.Commons
+namespace eu.Vanaheimr.Illias.Commons
 {
 
     public struct German

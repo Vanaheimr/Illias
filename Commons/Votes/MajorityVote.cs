@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace de.ahzf.Illias.Commons.Votes
+namespace eu.Vanaheimr.Illias.Commons.Votes
 {
 
     /// <summary>

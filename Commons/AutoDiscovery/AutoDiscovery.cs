@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons
+namespace eu.Vanaheimr.Illias.Commons
 {
 
     /// <summary>

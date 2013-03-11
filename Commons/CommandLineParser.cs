@@ -24,7 +24,7 @@ using System.Text.RegularExpressions;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons
+namespace eu.Vanaheimr.Illias.Commons
 {
 
     #region CommandLineParserOption

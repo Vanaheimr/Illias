@@ -22,7 +22,7 @@
 
 //#endregion
 
-//namespace de.ahzf.Illias.Geometry.Indices
+//namespace eu.Vanaheimr.Illias.Geometry.Indices
 //{
 
 //    #region IIndex<TKey, TValue>

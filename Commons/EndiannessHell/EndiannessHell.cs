@@ -21,7 +21,7 @@ using System;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons.Endianness
+namespace eu.Vanaheimr.Illias.Commons.Endianness
 {
 
     /// <summary>

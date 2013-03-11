@@ -22,7 +22,7 @@ using System.Threading;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons
+namespace eu.Vanaheimr.Illias.Commons
 {
 
     /// <summary>

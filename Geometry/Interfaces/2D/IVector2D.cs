@@ -18,11 +18,11 @@
 #region Usings
 
 using System;
-using de.ahzf.Illias.Geometry.Maths;
+using eu.Vanaheimr.Illias.Geometry.Maths;
 
 #endregion
 
-namespace de.ahzf.Illias.Geometry
+namespace eu.Vanaheimr.Illias.Geometry
 {
 
     /// <summary>

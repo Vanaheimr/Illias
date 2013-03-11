@@ -21,7 +21,7 @@ using System;
 
 #endregion
 
-namespace de.ahzf.Illias.Commons.Transactions
+namespace eu.Vanaheimr.Illias.Commons.Transactions
 {
 
     #region TransactionException<TTransactionId, TSystemId>
