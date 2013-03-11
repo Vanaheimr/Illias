@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-#region Usings
-
-using System;
-using System.Threading;
-
-#endregion
-
 namespace de.ahzf.Illias.Commons.Votes
 {
 

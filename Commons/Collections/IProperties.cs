@@ -388,10 +388,10 @@ namespace de.ahzf.Illias.Commons.Collections
     /// <param name="Key">The key of the property to be added.</param>
     /// <param name="Value">The value of the property to be added.</param>
     /// <param name="Vote">A veto vote is a simple way to ask multiple event subscribers if the edge should be added or not.</param>
-    public delegate void PropertyAddingEventHandler<TKey, TValue>(IReadOnlyProperties<TKey, TValue> Sender,
-                                                                  TKey                              Key,
-                                                                  TValue                            Value,
-                                                                  IVote<Boolean>                    Vote)
+    public delegate void PropertyAddingEventHandler<TKey, TValue>(IReadOnlyProperties<TKey, TValue>  Sender,
+                                                                  TKey                               Key,
+                                                                  TValue                             Value,
+                                                                  IVote<Boolean>                     Vote)
 
         where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable;
 
