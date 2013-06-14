@@ -148,7 +148,7 @@ namespace eu.Vanaheimr.Illias.Commons
 
             _TypeLookup     = new ConcurrentDictionary<String, Type>();
             _InstanceLookup = new ConcurrentDictionary<String, TClass>();
-            
+
             if (Autostart)
                 FindAndRegister(IdentificatorFunc: IdentificatorFunc);
 
@@ -231,6 +231,8 @@ namespace eu.Vanaheimr.Illias.Commons
 
                                         foreach (var _Interface in _ActualTypeGetInterfaces)
                                         {
+
+                                            // The following check is not valid for Bifrost HTTPService interfaces and must be fixed!
 
                                             if (_Interface == typeof(TClass))
                                             {

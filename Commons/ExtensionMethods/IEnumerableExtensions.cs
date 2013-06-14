@@ -436,6 +436,20 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
+        #region SaveAggregate(this IEnumerable, AggreationDelegate, DefaultT)
+
+        public static T SaveAggregate<T>(this IEnumerable<T> IEnumerable, Func<T, T, T> AggreationDelegate, T DefaultT)
+        {
+
+            if (IEnumerable == null || !IEnumerable.Any())
+                return DefaultT;
+
+            return IEnumerable.Aggregate(AggreationDelegate);
+
+        }
+
+        #endregion
+
         #region CSVAggregate(this IEnumerable)
 
         public static String CSVAggregate(this IEnumerable<String> IEnumerable)
