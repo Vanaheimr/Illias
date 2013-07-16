@@ -185,6 +185,43 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
+        #region ForEach<T>(this IEnumerable, First, Remaining)
+
+        /// <summary>
+        /// Calls the given delegate for each element of the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type of the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration of type T.</param>
+        /// <param name="First">An action to call for the first element of the enumeration.</param>
+        /// <param name="Remaining">An action to call for each element except the first element of the enumeration.</param>
+        public static void ForEach<T>(this IEnumerable<T> IEnumerable, Action<T> First, Action<T> Remaining)
+        {
+
+            #region Initial checks
+
+            if (IEnumerable == null)
+                throw new ArgumentNullException("The given IEnumerable must not be null!");
+
+            if (First == null)
+                throw new ArgumentNullException("The given Action must not be null!");
+
+            if (Remaining == null)
+                throw new ArgumentNullException("The given Action must not be null!");
+
+            #endregion
+
+            if (!IEnumerable.Any())
+                return;
+
+            First(IEnumerable.First());
+
+            foreach (var Element in IEnumerable.Skip(1))
+                Remaining(Element);
+
+        }
+
+        #endregion
+
 
         #region Skip<T>(this IEnumerable, Count)
 

@@ -21,6 +21,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 #endregion
 
@@ -332,7 +333,7 @@ namespace eu.Vanaheimr.Illias.Commons.Transactions
                     //        //    OnDispose(this, new TransactionDisposedEventArgs(this, _SessionTokenReference));
                     FinishingTime = UniqueTimestamp.Now;
                     _State = TransactionState.RolledBack;
-                    Console.WriteLine("Transaction rolledback on Thread " + Thread.CurrentThread.ManagedThreadId + "!");
+                    Debug.WriteLine("Transaction rolledback on Thread " + Thread.CurrentThread.ManagedThreadId + "!");
                     return true;
 
 

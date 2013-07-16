@@ -293,7 +293,9 @@ namespace eu.Vanaheimr.Illias.Commons
         /// </summary>
         public Boolean TryGetInstance(String Identificator, out TClass Instance)
         {
-            
+
+            Instance = default(TClass);
+
             if (_InstanceLookup.TryGetValue(Identificator, out Instance))
                 return true;
 

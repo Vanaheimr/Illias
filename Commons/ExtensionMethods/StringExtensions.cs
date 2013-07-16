@@ -138,7 +138,7 @@ namespace eu.Vanaheimr.Illias.Commons
 
 #if !SILVERLIGHT
             if (NumberOfBytes == 0)
-                return Encoding.UTF8.GetString(myByteArray);
+                return Encoding.UTF8.GetString(myByteArray, 0, NumberOfBytes);
             else
 #endif
                 return Encoding.UTF8.GetString(myByteArray, 0, NumberOfBytes);

@@ -545,7 +545,7 @@ namespace eu.Vanaheimr.Illias.Commons.Collections
         /// <typeparam name="TCast">The casted type of the properety values.</typeparam>
         /// <param name="IProperties">An object implementing IProperties.</param>
         /// <param name="Key">The property key.</param>
-        public static TCast GetCastedProperty<TKey, TValue, TCast>(this IProperties<TKey, TValue> IProperties, TKey Key)
+        public static TCast GetCastedProperty<TKey, TValue, TCast>(this IReadOnlyProperties<TKey, TValue> IProperties, TKey Key)
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
         {
 

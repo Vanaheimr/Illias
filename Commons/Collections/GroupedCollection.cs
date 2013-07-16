@@ -91,7 +91,7 @@ namespace eu.Vanaheimr.Illias.Commons
             if (Keys.TryAdd(Key, Value))
             {
 
-                LinkedList<TValue> _Group;
+                LinkedList<TValue> _Group = null;
 
                 lock (Groups)
                 {
@@ -200,7 +200,11 @@ namespace eu.Vanaheimr.Illias.Commons
         /// <returns>True, if the key was found in the grouped collection; False otherwise.</returns>
         public Boolean TryGetByKey(TKey Key, out TValue Value)
         {
+
+            Value = default(TValue);
+
             return Keys.TryGetValue(Key, out Value);
+
         }
 
         #endregion
