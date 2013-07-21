@@ -58,6 +58,7 @@
     <Compile Include="Collections\Mutable\IGroupedCollection.cs" />
     <Compile Include="Collections\Mutable\IMap.cs" />
     <Compile Include="CommandLineParser.cs" />
+    <Compile Include="Range.cs" />
     <Compile Include="Trinary.cs" />
     <Compile Include="Description\IDescription.cs" />
     <Compile Include="EndiannessHell\EndiannessHell.cs" />
