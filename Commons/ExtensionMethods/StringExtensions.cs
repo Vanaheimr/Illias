@@ -120,28 +120,25 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
-        #region ToUTF8String(this myByteArray, NumberOfBytes = 0, ThrowException = true)
+        #region ToUTF8String(this myByteArray, NumberOfBytes = -1, ThrowException = true)
 
-        public static String ToUTF8String(this Byte[] myByteArray, Int32 NumberOfBytes = 0, Boolean ThrowException = true)
+        public static String ToUTF8String(this Byte[] ArrayOfBytes, Int32 NumberOfBytes = -1, Boolean ThrowException = true)
         {
 
-            if (myByteArray == null)
+            if (ArrayOfBytes == null)
             {
                 if (ThrowException)
-                    throw new ArgumentNullException("myString must not be null!");
+                    throw new ArgumentNullException("ArrayOfBytes must not be null!");
                 else
                     return String.Empty;
             }
 
-            if (myByteArray.Length == 0)
+            if (ArrayOfBytes.Length == 0)
                 return String.Empty;
 
-#if !SILVERLIGHT
-            if (NumberOfBytes == 0)
-                return Encoding.UTF8.GetString(myByteArray, 0, NumberOfBytes);
-            else
-#endif
-                return Encoding.UTF8.GetString(myByteArray, 0, NumberOfBytes);
+            NumberOfBytes = (NumberOfBytes > -1) ? NumberOfBytes : ArrayOfBytes.Length;
+
+            return Encoding.UTF8.GetString(ArrayOfBytes, 0, NumberOfBytes);
 
         }
 
