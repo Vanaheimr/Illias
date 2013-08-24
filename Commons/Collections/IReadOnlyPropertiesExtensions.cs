@@ -33,9 +33,8 @@ namespace eu.Vanaheimr.Illias.Commons.Collections
     /// <summary>
     /// Extensions to the IProperties interface.
     /// </summary>
-    public static class IReadOnlyPropertiesExtensions
+    public static partial class IReadOnlyPropertiesExtensions
     {
-
 
         // GetProperty(Key, ...)
 
@@ -562,71 +561,8 @@ namespace eu.Vanaheimr.Illias.Commons.Collections
 
         #endregion
 
-        #region GetDynamicProperty<TKey, TValue>(this IProperties, Key)
-        // Just an alternative syntax!
 
-        /// <summary>
-        /// Return the object value associated with the provided property key as dynamic.
-        /// </summary>
-        /// <typeparam name="TKey">The type of the property key.</typeparam>
-        /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
-        /// <param name="Key">The property key.</param>
-        public static dynamic GetDynamicProperty<TKey, TValue>(this IProperties<TKey, TValue> IProperties, TKey Key)
-            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
-        {
 
-            #region Initial checks
-
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
-
-            #endregion
-
-            TValue _Value;
-
-            if (IProperties.TryGetProperty(Key, out _Value))
-                return (dynamic) _Value;
-
-            return default(TValue);
-
-        }
-
-        #endregion
-
-        #region GetDynamicProperty<TKey, TValue>(this IProperties, Key, PropertyType)
-        // Just an alternative syntax!
-
-        /// <summary>
-        /// Return the object value of type TValue associated with the provided property key as dynamic.
-        /// </summary>
-        /// <typeparam name="TKey">The type of the property key.</typeparam>
-        /// <typeparam name="TValue">The type of the property value.</typeparam>
-        /// <param name="IProperties">An object implementing IProperties.</param>
-        /// <param name="Key">The property key.</param>
-        /// <param name="PropertyType">The expected type of the property.</param>
-        public static dynamic GetDynamicProperty<TKey, TValue>(this IProperties<TKey, TValue> IProperties, TKey Key, Type PropertyType)
-            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
-        {
-
-            #region Initial checks
-
-            if (IProperties == null)
-                throw new ArgumentNullException("The given IProperties must not be null!");
-
-            #endregion
-
-            TValue _Value;
-
-            if (IProperties.TryGetProperty(Key, out _Value))
-                if (_Value.GetType().Equals(PropertyType))
-                    return (dynamic) _Value;
-
-            return default(TValue);
-
-        }
-
-        #endregion
 
         // InvokeProperty???
 
@@ -1214,7 +1150,6 @@ namespace eu.Vanaheimr.Illias.Commons.Collections
         public static HashSet<Object> SetGet<TKey>(this IReadOnlyProperties<TKey, Object> IReadOnlyProperties, TKey Key)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
-
         {
 
             #region Initial checks
@@ -1243,7 +1178,6 @@ namespace eu.Vanaheimr.Illias.Commons.Collections
         public static Boolean SetTryGet<TKey>(this IReadOnlyProperties<TKey, Object> IReadOnlyProperties, TKey Key, out HashSet<Object> Set)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
-
         {
 
             #region Initial checks

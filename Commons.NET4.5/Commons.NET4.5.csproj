@@ -1,30 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4E8C4411-9B26-4EFE-9FCC-77866F871E90}</ProjectGuid>
+    <ProjectGuid>{CCC826D7-9AC7-4CE6-82F8-B835168EBA35}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>eu.Vanaheimr.Illias.SQL</RootNamespace>
-    <AssemblyName>Illias.SQL</AssemblyName>
+    <RootNamespace>eu.Vanaheimr.Illias.Commons</RootNamespace>
+    <AssemblyName>Illias.Commons.NET4.5</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Illias.SQL.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Illias.Commons.NET4.5.xml</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,7 +30,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,19 +39,21 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBThreadClass.cs" />
-    <Compile Include="DataChannel.cs" />
+    <Compile Include="AutoDiscovery\AutoDiscovery.cs" />
+    <Compile Include="AutoDiscovery\AutoDiscoveryException.cs" />
+    <Compile Include="Concurrent\GroupedCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DLR\IReadOnlyPropertiesExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLDB\DBAccessConfiguration.cs" />
-    <Compile Include="SQLDB\DBColumnInfo.cs" />
-    <Compile Include="SQLDB\DBIndexesInfo.cs" />
-    <Compile Include="SQLDB\DBStatement.cs" />
-    <Compile Include="SQLDB\DBTable.cs" />
-    <Compile Include="SQLDB\DBTableStatus.cs" />
-    <Compile Include="SQLDB\ExtentionMethods.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Commons\Commons.csproj">
+      <Project>{d3b1af79-161f-4299-8b14-133286d635b8}</Project>
+      <Name>Commons</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

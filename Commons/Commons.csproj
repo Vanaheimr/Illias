@@ -1,27 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{16C85DF8-5DE6-4A9F-9FC7-7CA5B0440DF3}</ProjectGuid>
+    <ProjectGuid>{D3B1AF79-161F-4299-8B14-133286D635B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>de.ahzf.Illias.Commons</RootNamespace>
-    <AssemblyName>Commons</AssemblyName>
+    <RootNamespace>eu.Vanaheimr.Illias.Commons</RootNamespace>
+    <AssemblyName>Illias.Commons</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile131</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Commons.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Illias.Commons.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,70 +35,61 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AutoDiscovery\AutoDiscovery.cs" />
-    <Compile Include="AutoDiscovery\AutoDiscoveryException.cs" />
-    <Compile Include="Collections\GroupedCollection.cs" />
+    <Compile Include="Collections\HashSet.cs" />
     <Compile Include="Collections\IDictionaryInitializer.cs" />
     <Compile Include="Collections\ImmutableMap.cs" />
     <Compile Include="Collections\Imutable\IBinarySearchTree.cs" />
     <Compile Include="Collections\Imutable\IImmutableMap.cs" />
     <Compile Include="Collections\IProperties.cs" />
-    <Compile Include="Collections\IReadOnlyPropertiesExtensions.cs" />
     <Compile Include="Collections\IReadOnlyProperties.cs" />
+    <Compile Include="Collections\IReadOnlyPropertiesExtensions.cs" />
+    <Compile Include="Collections\Mutable\IGroupedCollection.cs" />
+    <Compile Include="Collections\Mutable\IMap.cs" />
     <Compile Include="Collections\PropertiesExceptions.cs" />
     <Compile Include="Collections\PropertiesMap.cs" />
     <Compile Include="Collections\PropertiesTable.cs" />
     <Compile Include="Collections\TSQueue.cs" />
-    <Compile Include="Collections\Mutable\IGroupedCollection.cs" />
-    <Compile Include="Collections\Mutable\IMap.cs" />
+    <Compile Include="Collections\Tuple.cs" />
     <Compile Include="CommandLineParser.cs" />
-    <Compile Include="Range.cs" />
-    <Compile Include="Trinary.cs" />
+    <Compile Include="Delegates\ItemFilter.cs" />
+    <Compile Include="Delegates\KeyValueFilter.cs" />
     <Compile Include="Description\IDescription.cs" />
     <Compile Include="EndiannessHell\EndiannessHell.cs" />
     <Compile Include="ExtensionMethods\ByteExtensions.cs" />
-    <Compile Include="ExtensionMethods\StringBuilderExtentions.cs" />
-    <Compile Include="I18N\I18NTools.cs" />
-    <Compile Include="Ids\IdGenerator.cs" />
-    <Compile Include="Ids\IIdGenerator.cs" />
-    <Compile Include="Label\ILabel.cs" />
-    <Compile Include="Delegates\ItemFilter.cs" />
-    <Compile Include="Delegates\KeyValueFilter.cs" />
-    <Compile Include="ExtensionMethods\IntegerExtensions.cs" />
-    <Compile Include="ExtensionMethods\TypeExtensions.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
-    <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ExtensionMethods\IComparableExtensions.cs" />
     <Compile Include="ExtensionMethods\IEnumerableExtensions.cs" />
+    <Compile Include="ExtensionMethods\IntegerExtensions.cs" />
     <Compile Include="ExtensionMethods\SilverlightExtensions.cs" />
+    <Compile Include="ExtensionMethods\StringBuilderExtentions.cs" />
+    <Compile Include="ExtensionMethods\StringExtensions.cs" />
+    <Compile Include="ExtensionMethods\TypeExtensions.cs" />
+    <Compile Include="I18N\I18NTools.cs" />
+    <Compile Include="Ids\IdGenerator.cs" />
     <Compile Include="Ids\IIdentifier.cs" />
+    <Compile Include="Ids\IIdGenerator.cs" />
     <Compile Include="Ids\IRevisionId.cs" />
     <Compile Include="Ids\RevisionId.cs" />
     <Compile Include="Ids\SystemId.cs" />
+    <Compile Include="Label\ILabel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Range.cs" />
     <Compile Include="StaticClasses\Loops.cs" />
     <Compile Include="Time\Measurement.cs" />
+    <Compile Include="Time\UniqueTimestamp.cs" />
     <Compile Include="Transactions\IsolationLevel.cs" />
     <Compile Include="Transactions\Transaction.cs" />
     <Compile Include="Transactions\TransactionExceptions.cs" />
     <Compile Include="Transactions\TransactionState.cs" />
-    <Compile Include="Time\UniqueTimestamp.cs" />
+    <Compile Include="Trinary.cs" />
     <Compile Include="TypeHelpers.cs" />
     <Compile Include="Votes\ABooleanVote.cs" />
     <Compile Include="Votes\IVote.cs" />
     <Compile Include="Votes\MajorityVote.cs" />
     <Compile Include="Votes\VetoVote.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

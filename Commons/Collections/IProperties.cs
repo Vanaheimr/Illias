@@ -33,8 +33,67 @@ namespace eu.Vanaheimr.Illias.Commons.Collections
     /// <summary>
     /// Extensions to the IProperties interface.
     /// </summary>
-    public static class IPropertiesExtensions
+    public static partial class IPropertiesExtensions
     {
+
+        #region SetAdd<TKey>(this IProperties, Key, FirstValue, params Values)
+
+        public static IProperties<TKey, Object> SetAdd<TKey>(this IProperties<TKey, Object> IProperties, TKey Key, Object FirstValue, params Object[] Values)
+
+            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
+        {
+
+            #region Initial checks
+
+            if (IProperties == null)
+                throw new ArgumentNullException();
+
+            if (Key == null)
+                throw new ArgumentNullException();
+
+            if (FirstValue == null)
+                throw new ArgumentNullException();
+
+            #endregion
+
+            HashSet<Object> _Set = null;
+            Object _Value = null;
+
+            if (IProperties.TryGetProperty(Key, out _Value))
+            {
+
+                _Set = _Value as HashSet<Object>;
+
+                if (_Set == null)
+                    throw new Exception("The value is not a set!");
+
+                else
+                {
+
+                    _Set.Add(FirstValue);
+
+                    if (Values != null && Values.Any())
+                        Values.ForEach(value => _Set.Add(value));
+
+                    return IProperties;
+
+                }
+
+            }
+
+            _Set = new HashSet<Object>() { FirstValue };
+
+            if (Values != null && Values.Any())
+                Values.ForEach(value => _Set.Add(value));
+
+            IProperties.Set(Key, _Set);
+
+            return IProperties;
+
+        }
+
+        #endregion
+
 
         // SetProperty(...)
 
@@ -191,64 +250,6 @@ namespace eu.Vanaheimr.Illias.Commons.Collections
 
         #endregion
 
-        #region SetAdd<TKey>(this IProperties, Key, FirstValue, params Values)
-
-        public static IProperties<TKey, Object> SetAdd<TKey>(this IProperties<TKey, Object> IProperties, TKey Key, Object FirstValue, params Object[] Values)
-
-            where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
-
-        {
-
-            #region Initial checks
-
-            if (IProperties == null)
-                throw new ArgumentNullException();
-
-            if (Key == null)
-                throw new ArgumentNullException();
-
-            if (FirstValue == null)
-                throw new ArgumentNullException();
-
-            #endregion
-
-            HashSet<Object> _Set = null;
-            Object _Value = null;
-
-            if (IProperties.TryGetProperty(Key, out _Value))
-            {
-
-                _Set = _Value as HashSet<Object>;
-
-                if (_Set == null)
-                    throw new Exception("The value is not a set!");
-
-                else
-                {
-
-                    _Set.Add(FirstValue);
-
-                    if (Values != null && Values.Any())
-                        Values.ForEach(value => _Set.Add(value));
-
-                    return IProperties;
-
-                }
-
-            }
-
-            _Set = new HashSet<Object>() { FirstValue };
-
-            if (Values != null && Values.Any())
-                Values.ForEach(value => _Set.Add(value));
-
-            IProperties.Set(Key, _Set);
-
-            return IProperties;
-
-        }
-
-        #endregion
 
         #region ZSetAdd<TKey>(this IProperties, Key, FirstValue, params Values)
 

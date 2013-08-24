@@ -21,6 +21,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+using eu.Vanaheimr.Illias.Commons.Collections;
 
 #endregion
 
@@ -73,7 +74,7 @@ namespace eu.Vanaheimr.Illias.Commons
             #endregion
 
             var average = IEnumerable.Average();
-            var sum     = 0.0;
+            var sum = 0.0;
 
             foreach (var value in IEnumerable)
                 sum += (value - average) * (value - average);
@@ -83,6 +84,7 @@ namespace eu.Vanaheimr.Illias.Commons
         }
 
         #endregion
+
 
         #region ForEach<T>(this IEnumerable, Action)
 
