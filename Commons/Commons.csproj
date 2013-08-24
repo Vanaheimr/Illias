@@ -5,7 +5,7 @@
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D3B1AF79-161F-4299-8B14-133286D635B8}</ProjectGuid>
+    <ProjectGuid>{16C85DF8-5DE6-4A9F-9FC7-7CA5B0440DF3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>eu.Vanaheimr.Illias.Commons</RootNamespace>
@@ -43,7 +43,6 @@
     <Compile Include="Collections\IProperties.cs" />
     <Compile Include="Collections\IReadOnlyProperties.cs" />
     <Compile Include="Collections\IReadOnlyPropertiesExtensions.cs" />
-    <Compile Include="Collections\Mutable\IGroupedCollection.cs" />
     <Compile Include="Collections\Mutable\IMap.cs" />
     <Compile Include="Collections\PropertiesExceptions.cs" />
     <Compile Include="Collections\PropertiesMap.cs" />

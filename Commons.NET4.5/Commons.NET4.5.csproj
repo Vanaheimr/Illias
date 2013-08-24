@@ -46,6 +46,7 @@
     <Compile Include="Concurrent\GroupedCollection.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Concurrent\IGroupedCollection.cs" />
     <Compile Include="DLR\IReadOnlyPropertiesExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
