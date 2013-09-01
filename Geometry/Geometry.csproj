@@ -5,7 +5,7 @@
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9F38DCC9-CD80-4B71-8A9C-B3F37E471CAB}</ProjectGuid>
+    <ProjectGuid>{224D26A2-4B11-4BB5-9548-561B65570123}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>eu.Vanaheimr.Illias.Geometry</RootNamespace>
