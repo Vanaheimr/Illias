@@ -55,8 +55,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Commons\Commons.csproj">
+      <Project>{d3b1af79-161f-4299-8b14-133286d635b8}</Project>
+      <Name>Commons</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Geometry\Geometry.csproj">
-      <Project>{9F38DCC9-CD80-4B71-8A9C-B3F37E471CAB}</Project>
+      <Project>{224d26a2-4b11-4bb5-9548-561b65570123}</Project>
       <Name>Geometry</Name>
     </ProjectReference>
   </ItemGroup>
