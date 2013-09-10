@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -290,6 +291,13 @@ namespace eu.Vanaheimr.Illias.Commons
         }
 
         #endregion
+
+
+
+        public static void Write(this Stream Stream, Byte[] ByteArray)
+        {
+            Stream.Write(ByteArray, 0, ByteArray.Length);
+        }
 
     }
 
