@@ -215,13 +215,13 @@ namespace eu.Vanaheimr.Illias.Geometry
                 Pixel2.Equals(Pixel3))
                 throw new ArgumentException("All distances between the pixels must be larger than zero!");
 
-            if (Pixel1.X.Equals(Pixel2.X) &&
-                Pixel2.X.Equals(Pixel3.X))
-                throw new ArgumentException("All three pixels must not be on a single line!");
+            //if (Pixel1.X.Equals(Pixel2.X) &&
+            //    Pixel2.X.Equals(Pixel3.X))
+            //    throw new ArgumentException("All three pixels must not be on a single line!");
 
-            if (Pixel1.Y.Equals(Pixel2.Y) &&
-                Pixel2.Y.Equals(Pixel3.Y))
-                throw new ArgumentException("All three pixels must not be on a single line!");
+            //if (Pixel1.Y.Equals(Pixel2.Y) &&
+            //    Pixel2.Y.Equals(Pixel3.Y))
+            //    throw new ArgumentException("All three pixels must not be on a single line!");
 
             #endregion
 
@@ -235,9 +235,18 @@ namespace eu.Vanaheimr.Illias.Geometry
                                   Intersection(
                               new Line2D<T>(_Line23.Center, _Normale23.X, _Normale23.Y));
 
-            X               = Center.X;
-            Y               = Center.Y;
-            Radius          = Pixel1.DistanceTo(X, Y);
+            if (Center != null)
+            {
+                X               = Center.X;
+                Y               = Center.Y;
+                Radius          = Pixel1.DistanceTo(X, Y);
+            }
+            else
+            {
+                X      = default(T);
+                Y      = default(T);
+                Radius = default(T);
+            }
 
         }
 

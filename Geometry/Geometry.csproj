@@ -87,6 +87,7 @@
     <Compile Include="Interfaces\IOctree.cs" />
     <Compile Include="Interfaces\IQuadtree.cs" />
     <Compile Include="Interfaces\Maths\IMaths.cs" />
+    <Compile Include="Maths\MathsInt64.cs" />
     <Compile Include="Maths\MathsDouble.cs" />
     <Compile Include="Maths\MathsFactory.cs" />
     <Compile Include="Maths\MathsInt32.cs" />

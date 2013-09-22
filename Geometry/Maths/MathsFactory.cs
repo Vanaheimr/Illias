@@ -49,6 +49,9 @@ namespace eu.Vanaheimr.Illias.Geometry.Maths
                 else if (typeof(T) == typeof(Int32))
                     return MathsInt32. Instance as IMaths<T>;
 
+                else if (typeof(T) == typeof(Int64))
+                    return MathsInt64.Instance as IMaths<T>;
+
                 else if (typeof(T) == typeof(UInt32))
                     return MathsUInt32.Instance as IMaths<T>;
 
