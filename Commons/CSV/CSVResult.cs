@@ -28,6 +28,7 @@ namespace eu.Vanaheimr.Illias.Commons
     {
         OK,
         warning,
+        FILTERED,
         ERROR
     }
 
