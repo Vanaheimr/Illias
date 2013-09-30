@@ -50,6 +50,7 @@
     <Compile Include="Collections\TSQueue.cs" />
     <Compile Include="Collections\Tuple.cs" />
     <Compile Include="CommandLineParser.cs" />
+    <Compile Include="BooleanComment.cs" />
     <Compile Include="CSV\CSVResult.cs" />
     <Compile Include="Delegates\ItemFilter.cs" />
     <Compile Include="Delegates\KeyValueFilter.cs" />
