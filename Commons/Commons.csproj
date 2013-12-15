@@ -57,6 +57,7 @@
     <Compile Include="Description\IDescription.cs" />
     <Compile Include="EndiannessHell\EndiannessHell.cs" />
     <Compile Include="ExtensionMethods\ByteExtensions.cs" />
+    <Compile Include="ExtensionMethods\DelegateExtensions.cs" />
     <Compile Include="ExtensionMethods\IListExtensions.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="ExtensionMethods\IComparableExtensions.cs" />
