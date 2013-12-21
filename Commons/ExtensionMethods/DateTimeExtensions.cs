@@ -31,18 +31,53 @@ namespace eu.Vanaheimr.Illias.Commons
     public static class DateTimeExtensions
     {
 
-        #region UNIXTime conversion
+        #region UnixEpoch
 
-        private static DateTime _UNIXEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
+        /// <summary>
+        /// The UNIX epoch.
+        /// </summary>
+        public static DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
 
-        public static Int64 ToUnixTimeStamp(this DateTime myDateTime)
+        #endregion
+
+        #region ToUnixTimeStamp(this DateTime)
+
+        /// <summary>
+        /// Convert the given DateTime object to UNIX timestamp.
+        /// </summary>
+        /// <param name="Date">A DateTime object.</param>
+        /// <returns>The seconds since 1. January 1970</returns>
+        public static Int64 ToUnixTimeStamp(this DateTime DateTime)
         {
-            return myDateTime.Subtract(_UNIXEpoch).Ticks;
+            return (Int64) Math.Round(DateTime.Subtract(UnixEpoch).TotalSeconds);
         }
 
-        public static DateTime FromUnixTimeStamp(this Int64 myTimestamp)
+        #endregion
+
+        #region FromUnixTimeStamp(this UnixTimestamp)
+
+        /// <summary>
+        /// Convert the given UNIX timestamp to a .NET DateTime object.
+        /// </summary>
+        /// <param name="UnixTimestamp">A UNIX timestamp (seconds since 1. January 1970)</param>
+        public static DateTime FromUnixTimeStamp(this Int64 UnixTimestamp)
         {
-            return _UNIXEpoch.AddTicks(myTimestamp);
+            return UnixEpoch.AddTicks(UnixTimestamp);
+        }
+
+        #endregion
+
+
+        #region ToIso8601(this DateTime)
+
+        /// <summary>
+        /// Convert the given DateTime object to an ISO 8601 datetime string.
+        /// </summary>
+        /// <param name="DateTime">A DateTime object.</param>
+        /// <returns>The DateTime formated as "yyyy-MM-ddTHH:mm:ss.fff" + "Z"</returns>
+        public static String ToIso8601(this DateTime DateTime)
+        {
+            return DateTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fff") + "Z";
         }
 
         #endregion
