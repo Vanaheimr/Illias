@@ -30,7 +30,7 @@ namespace eu.Vanaheimr.Illias.Commons
     public static class DelegateExtensions
     {
 
-        #region FailSafeRun<T>(this Action, Argument)
+        #region FailSafeInvoke<T>(this Action, Argument)
 
         /// <summary>
         /// Run the given delegate without worrying about multi-threading side-effects.
@@ -38,7 +38,7 @@ namespace eu.Vanaheimr.Illias.Commons
         /// <typeparam name="T">The type of the delegate to run.</typeparam>
         /// <param name="Action">A delegate of type T.</param>
         /// <param name="Argument">The parameter of the delegate.</param>
-        public static void FailSafeRun<T>(this Action<T> Action, T Argument)
+        public static void FailSafeInvoke<T>(this Action<T> Action, T Argument)
         {
 
             var ActionCopy = Action;
