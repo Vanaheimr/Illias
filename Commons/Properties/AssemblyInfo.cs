@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Vanaheimr")]
 [assembly: AssemblyProduct("Illias Commons")]
-[assembly: AssemblyCopyright("Copyright © Achim 'ahzf' Friedland 2010-2013")]
+[assembly: AssemblyCopyright("Copyright © Achim 'ahzf' Friedland 2010-2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
