@@ -53,6 +53,10 @@
     <Compile Include="UniqueTimestampTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Commons.NET4.5\Commons.NET4.5.csproj">
+      <Project>{ccc826d7-9ac7-4ce6-82f8-b835168eba35}</Project>
+      <Name>Commons.NET4.5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Commons\Commons.csproj">
       <Project>{d3b1af79-161f-4299-8b14-133286d635b8}</Project>
       <Name>Commons</Name>

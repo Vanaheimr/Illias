@@ -477,7 +477,17 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #region SaveAggregate(this IEnumerable, AggreationDelegate, DefaultT)
 
-        public static T SaveAggregate<T>(this IEnumerable<T> IEnumerable, Func<T, T, T> AggreationDelegate, T DefaultT)
+        /// <summary>
+        /// Savely aggregates the given enumeration. If the enumeration is null
+        /// or has no elements the default value will be returned.
+        /// </summary>
+        /// <typeparam name="T">The type of the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="AggreationDelegate">The delegate to aggregate the given enumeration.</param>
+        /// <param name="DefaultT">The default value to return for an empty enumeration.</param>
+        public static T SaveAggregate<T>(this IEnumerable<T> IEnumerable,
+                                         Func<T, T, T> AggreationDelegate,
+                                         T DefaultT)
         {
 
             if (IEnumerable == null || !IEnumerable.Any())

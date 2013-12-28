@@ -52,6 +52,7 @@
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="BooleanComment.cs" />
     <Compile Include="CSV\CSVResult.cs" />
+    <Compile Include="Delegates\KeyValueMapper.cs" />
     <Compile Include="Delegates\ItemFilter.cs" />
     <Compile Include="Delegates\KeyValueFilter.cs" />
     <Compile Include="Description\IDescription.cs" />
