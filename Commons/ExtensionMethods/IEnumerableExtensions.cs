@@ -475,25 +475,94 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
-        #region SaveAggregate(this IEnumerable, AggreationDelegate, DefaultT)
+        #region SafeSelect(this IEnumerable, SelectionDelegate)
 
         /// <summary>
-        /// Savely aggregates the given enumeration. If the enumeration is null
+        /// Safely selects the given enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type of the enumeration.</typeparam>
+        /// <typeparam name="TResult">The type of the resulting enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="SelectionDelegate">The delegate to select the given enumeration.</param>
+        public static IEnumerable<TResult> SafeSelect<T, TResult>(this IEnumerable<T>  IEnumerable,
+                                                                  Func<T, TResult>     SelectionDelegate)
+        {
+
+            if (IEnumerable == null)
+                return null;
+
+            return IEnumerable.Select(SelectionDelegate);
+
+        }
+
+        #endregion
+
+        #region AggregateOrDefault(this IEnumerable, AggreationDelegate, DefaultT)
+
+        /// <summary>
+        /// Safely aggregates the given enumeration. If the enumeration is null
         /// or has no elements the default value will be returned.
         /// </summary>
         /// <typeparam name="T">The type of the enumeration.</typeparam>
         /// <param name="IEnumerable">An enumeration.</param>
         /// <param name="AggreationDelegate">The delegate to aggregate the given enumeration.</param>
         /// <param name="DefaultT">The default value to return for an empty enumeration.</param>
-        public static T SaveAggregate<T>(this IEnumerable<T> IEnumerable,
-                                         Func<T, T, T> AggreationDelegate,
-                                         T DefaultT)
+        public static T AggregateOrDefault<T>(this IEnumerable<T>  IEnumerable,
+                                              Func<T, T, T>        AggreationDelegate,
+                                              T                    DefaultT)
         {
 
-            if (IEnumerable == null || !IEnumerable.Any())
+            if (IEnumerable == null)
                 return DefaultT;
 
-            return IEnumerable.Aggregate(AggreationDelegate);
+            //if (!IEnumerable.Any())
+            //    return DefaultT;
+            try
+            {
+                return IEnumerable.Aggregate(AggreationDelegate);
+            }
+            catch (Exception e)
+            {
+                return DefaultT;
+            }
+
+        }
+
+        #endregion
+
+        #region AggregateOrDefault(this IEnumerable, AggreationDelegate, DefaultT)
+
+        /// <summary>
+        /// Safely aggregates the given enumeration. If the enumeration is null
+        /// or has no elements the default value will be returned.
+        /// </summary>
+        /// <typeparam name="T">The type of the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="AggreationDelegate">The delegate to aggregate the given enumeration.</param>
+        /// <param name="DefaultT">The default value to return for an empty enumeration.</param>
+        public static T AggregateOrDefault<T>(this IEnumerable<T>  IEnumerable,
+                                              T                    Prefix,
+                                              Func<T, T>           Map,
+                                              Func<T, T, T>        Reduce,
+                                              T                    Suffix,
+                                              T                    DefaultValue)
+        {
+
+            if (IEnumerable == null)
+                return DefaultValue;
+
+            var Array = IEnumerable.Select(i => Map(i)).ToArray();
+
+            //if (!IEnumerable.Any())
+            //    return DefaultT;
+            try
+            {
+                return Reduce(Reduce(Prefix, Array.Aggregate(Reduce)), Suffix);
+            }
+            catch (Exception e)
+            {
+                return DefaultValue;
+            }
 
         }
 
