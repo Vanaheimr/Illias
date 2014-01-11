@@ -32,6 +32,16 @@ namespace eu.Vanaheimr.Illias.Commons.Collections
         {
         }
 
+        //ToDo: Implement me!
+        public HashSet(IEqualityComparer<T> Comparer)
+        {
+        }
+
+        //ToDo: Implement me!
+        public HashSet(IEnumerable<T> collection, IEqualityComparer<T> Comparer)
+        {
+        }
+
         public Boolean Add(T Item)
         {
 

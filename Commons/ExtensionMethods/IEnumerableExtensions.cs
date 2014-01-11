@@ -497,7 +497,7 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
-        #region AggregateOrDefault(this IEnumerable, AggreationDelegate, DefaultT)
+        #region AggregateOrDefault(this IEnumerable, AggreationDelegate, DefaultT = default(T))
 
         /// <summary>
         /// Safely aggregates the given enumeration. If the enumeration is null
@@ -509,7 +509,7 @@ namespace eu.Vanaheimr.Illias.Commons
         /// <param name="DefaultT">The default value to return for an empty enumeration.</param>
         public static T AggregateOrDefault<T>(this IEnumerable<T>  IEnumerable,
                                               Func<T, T, T>        AggreationDelegate,
-                                              T                    DefaultT)
+                                              T                    DefaultT = default(T))
         {
 
             if (IEnumerable == null)
@@ -530,7 +530,7 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
-        #region AggregateOrDefault(this IEnumerable, AggreationDelegate, DefaultT)
+        #region AggregateOrDefault(this IEnumerable, AggreationDelegate, DefaultT = default(T))
 
         /// <summary>
         /// Safely aggregates the given enumeration. If the enumeration is null
@@ -545,7 +545,7 @@ namespace eu.Vanaheimr.Illias.Commons
                                               Func<T, T>           Map,
                                               Func<T, T, T>        Reduce,
                                               T                    Suffix,
-                                              T                    DefaultValue)
+                                              T                    DefaultValue = default(T))
         {
 
             if (IEnumerable == null)
