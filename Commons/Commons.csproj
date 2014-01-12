@@ -51,6 +51,7 @@
     <Compile Include="Collections\Tuple.cs" />
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="BooleanComment.cs" />
+    <Compile Include="Delegates\CountedPredicate.cs" />
     <Compile Include="Exceptions\ExceptionHelpers.cs" />
     <Compile Include="WebLink.cs" />
     <Compile Include="CSV\CSVResult.cs" />
