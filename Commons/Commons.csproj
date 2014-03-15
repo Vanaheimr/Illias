@@ -53,6 +53,7 @@
     <Compile Include="BooleanComment.cs" />
     <Compile Include="Delegates\CountedPredicate.cs" />
     <Compile Include="Exceptions\ExceptionHelpers.cs" />
+    <Compile Include="ExtensionMethods\XElementExtensions.cs" />
     <Compile Include="WebLink.cs" />
     <Compile Include="CSV\CSVResult.cs" />
     <Compile Include="Delegates\KeyValueMapper.cs" />

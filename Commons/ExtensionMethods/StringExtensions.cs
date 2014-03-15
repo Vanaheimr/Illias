@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 #endregion
@@ -249,6 +250,64 @@ namespace eu.Vanaheimr.Illias.Commons
         public static String RemoveAllAfter(this String String, String Substring)
         {
             return String.Remove(String.IndexOf(Substring));
+        }
+
+        #endregion
+
+        #region LastIndexOfOrMax(this Text, Pattern)
+
+        public static Int32 LastIndexOfOrMax(this String Text, String Pattern)
+        {
+
+            var Index = Text.LastIndexOf(Pattern);
+
+            if (Index < 0)
+                return Text.Length;
+
+            else
+                return Index;
+
+        }
+
+        #endregion
+
+        #region SubstringMax(this Text, Length)
+
+        public static String SubstringMax(this String Text, Int32 Length)
+        {
+            try
+            {
+                return Text.Substring(0, Math.Min(Text.Length, Length));
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+        }
+
+        #endregion
+
+        #region SubTokens(this Text, Length)
+
+        public static IEnumerable<String> SubTokens(this String Text, UInt16 Length)
+        {
+
+            var TextCharacterEnumerator  = Text.ToCharArray().GetEnumerator();
+            var Characters               = new List<Char>();
+
+            while (TextCharacterEnumerator.MoveNext())
+            {
+
+                Characters.Add((Char) TextCharacterEnumerator.Current);
+
+                if (Characters.Count == Length)
+                {
+                    yield return new String(Characters.ToArray());
+                    Characters.Clear();
+                }
+
+            }
+
         }
 
         #endregion
