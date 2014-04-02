@@ -30,6 +30,24 @@ namespace eu.Vanaheimr.Illias.Commons
     public static class DelegateExtensions
     {
 
+        #region FailSafeInvoke(this Action)
+
+        /// <summary>
+        /// Run the given delegate without worrying about multi-threading side-effects.
+        /// </summary>
+        /// <param name="Action">A delegate.</param>
+        public static void FailSafeInvoke<T>(this Action Action)
+        {
+
+            var ActionCopy = Action;
+
+            if (ActionCopy != null)
+                ActionCopy();
+
+        }
+
+        #endregion
+
         #region FailSafeInvoke<T>(this Action, Argument)
 
         /// <summary>
