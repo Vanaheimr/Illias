@@ -271,6 +271,9 @@ namespace eu.Vanaheimr.Illias.Commons
 
                     }
 
+                    catch (BadImageFormatException e)
+                    { }
+
                     catch (Exception e)
                     {
                         throw new AutoDiscoveryException("Autodiscovering implementations of interface '" + typeof(TClass).Name + "' within file '" + _File + "' failed!", e);
