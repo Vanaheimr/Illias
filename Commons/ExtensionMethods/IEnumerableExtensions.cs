@@ -224,6 +224,30 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
+        #region SelectCounted<T1, T2>(this IEnumerable, Func, Counter = 1UL)
+
+        /// <summary>
+        /// Calls the given delegate for each element of the enumeration
+        /// and count the number of elements.
+        /// </summary>
+        /// <typeparam name="T1">The type of the enumeration.</typeparam>
+        /// <typeparam name="T2">The type of the result enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration of type T.</param>
+        /// <param name="Func">A delegate to call for a counter and each element of the enumeration.</param>
+        /// <param name="Counter">The initial value of the counter.</param>
+        public static IEnumerable<T2> SelectCounted<T1, T2>(this IEnumerable<T1> IEnumerable, Func<UInt64, T1, T2> Func, UInt64 Counter = 1UL)
+        {
+
+            if (IEnumerable == null || Func == null)
+                yield break;
+
+            foreach (var Element in IEnumerable)
+                yield return Func(Counter++, Element);
+
+        }
+
+        #endregion
+
 
         #region Skip<T>(this IEnumerable, Count)
 
