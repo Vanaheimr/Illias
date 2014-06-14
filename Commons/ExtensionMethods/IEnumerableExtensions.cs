@@ -712,6 +712,15 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
+        #region ToHashSet<T>(this Enumeration)
+
+        public static HashSet<T> ToHashSet<T>(this IEnumerable<T> Enumeration)
+        {
+            return new HashSet<T>(Enumeration);
+        }
+
+        #endregion
+
     }
 
 }

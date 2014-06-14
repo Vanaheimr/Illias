@@ -25,11 +25,16 @@ namespace eu.Vanaheimr.Illias.Commons.Collections
 
         public HashSet()
         {
+
             this.InternalDictionary = new Dictionary<T, Boolean>();
+
         }
 
-        public HashSet(IEnumerable<T> collection)
+        public HashSet(IEnumerable<T> Enumeration)
         {
+
+            this.InternalDictionary = Enumeration.ToDictionary(v => v, v => true);
+
         }
 
         //ToDo: Implement me!
