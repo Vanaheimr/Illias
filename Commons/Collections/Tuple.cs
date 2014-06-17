@@ -6,20 +6,51 @@ using System.Text;
 namespace eu.Vanaheimr.Illias.Commons.Collections
 {
 
-    public class Tuple<T1, T2> : IComparable<Tuple<T1, T2>>, IEquatable<Tuple<T1, T2>>
+    public class Tuple<T1, T2> : IComparable<Tuple<T1, T2>>,
+                                 IEquatable <Tuple<T1, T2>>
     {
 
-        public T1 Item1 { get; private set; }
-        public T2 Item2 { get; private set; }
+        #region Properties
 
+        #region Item1
+
+        private readonly T1 _Item1;
+
+        public T1 Item1
+        {
+            get
+            {
+                return _Item1;
+            }
+        }
+
+        #endregion
+
+        #region Item2
+
+        private readonly T2 _Item2;
+
+        public T2 Item2
+        {
+            get
+            {
+                return _Item2;
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Constructor(s)
 
         public Tuple(T1 Item1, T2 Item2)
         {
-            this.Item1 = Item1;
-            this.Item2 = Item2;
+            this._Item1  = Item1;
+            this._Item2  = Item2;
         }
 
-
+        #endregion
 
 
         public int CompareTo(Tuple<T1, T2> other)

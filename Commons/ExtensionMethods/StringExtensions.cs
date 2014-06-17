@@ -32,28 +32,28 @@ namespace eu.Vanaheimr.Illias.Commons
     public static class StringExtensions
     {
 
-        #region IsNullOrEmpty(myString)
+        #region IsNullOrEmpty(GivenString)
 
         /// <summary>
-        /// Indicates whether the specified string is null or an System.String.Empty string.
+        /// Indicates whether the specified string is null or empty.
         /// </summary>
-        /// <param name="myString">The string.</param>
-        public static Boolean IsNullOrEmpty(this String myString)
+        /// <param name="GivenString">The string.</param>
+        public static Boolean IsNullOrEmpty(this String GivenString)
         {
-            return String.IsNullOrEmpty(myString);
+            return String.IsNullOrEmpty(GivenString);
         }
 
         #endregion
 
-        #region IsNotNullOrEmpty(myString)
+        #region IsNotNullOrEmpty(GivenString)
 
         /// <summary>
-        /// Indicates whether the specified string is not null or an System.String.Empty string.
+        /// Indicates whether the specified string is not null or empty.
         /// </summary>
-        /// <param name="myString">The string.</param>
-        public static Boolean IsNotNullOrEmpty(this String myString)
+        /// <param name="GivenString">The string.</param>
+        public static Boolean IsNotNullOrEmpty(this String GivenString)
         {
-            return !String.IsNullOrEmpty(myString);
+            return !String.IsNullOrEmpty(GivenString);
         }
 
         #endregion
