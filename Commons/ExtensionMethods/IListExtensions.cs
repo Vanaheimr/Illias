@@ -34,15 +34,31 @@ namespace eu.Vanaheimr.Illias.Commons
         #region Add2(this List)
 
         /// <summary>
-        /// Another way to add a value to a list.
+        /// Another way to add an element to a list.
         /// </summary>
-        /// <param name="List">A list of values.</param>
-        /// <param name="Value">The value to add to the list.</param>
+        /// <param name="List">A list of elements.</param>
+        /// <param name="Element">The element to be added to the list.</param>
         /// <returns>The changed list.</returns>
-        public static IList<T> Add2<T>(this IList<T> List, T Value)
+        public static IList<T> Add2<T>(this IList<T> List, T Element)
         {
-            List.Add(Value);
+            List.Add(Element);
             return List;
+        }
+
+        #endregion
+
+        #region Add3(this List)
+
+        /// <summary>
+        /// Another way to add an value to a list.
+        /// </summary>
+        /// <param name="List">A list of elements.</param>
+        /// <param name="Element">The element to be added to the list.</param>
+        /// <returns>The added element.</returns>
+        public static T Add3<T>(this IList<T> List, T Element)
+        {
+            List.Add(Element);
+            return Element;
         }
 
         #endregion
