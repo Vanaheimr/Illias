@@ -44,6 +44,7 @@
     <Compile Include="Collections\IReadOnlyProperties.cs" />
     <Compile Include="Collections\IReadOnlyPropertiesExtensions.cs" />
     <Compile Include="Collections\Mutable\IMap.cs" />
+    <Compile Include="Collections\Mutable\Strings.cs" />
     <Compile Include="Collections\PropertiesExceptions.cs" />
     <Compile Include="Collections\PropertiesMap.cs" />
     <Compile Include="Collections\PropertiesTable.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="BooleanComment.cs" />
     <Compile Include="Delegates\CountedPredicate.cs" />
     <Compile Include="Exceptions\ExceptionHelpers.cs" />
+    <Compile Include="ExtensionMethods\IDictionaryExtensions.cs" />
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
     <Compile Include="WebLink.cs" />
     <Compile Include="CSV\CSVResult.cs" />

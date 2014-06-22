@@ -122,7 +122,7 @@ namespace eu.Vanaheimr.Illias.Commons
             {
 
                 if (String.IsNullOrEmpty(ExceptionMessage))
-                    throw new ArgumentNullException(ParameterName, "The given parameter must not be null or zero!");
+                    throw new ArgumentNullException(ParameterName, "The given parameter must not be null or empty!");
 
                 else
                     throw new ArgumentNullException(ParameterName, ExceptionMessage);

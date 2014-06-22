@@ -26,12 +26,12 @@ namespace eu.Vanaheimr.Illias.Commons
 {
 
     /// <summary>
-    /// Extensions to the IList interface.
+    /// Extension methods for the IList interface.
     /// </summary>
     public static class IListExtensions
     {
 
-        #region Add2(this List)
+        #region AddAndReturnList(this List, Element)
 
         /// <summary>
         /// Another way to add an element to a list.
@@ -39,7 +39,7 @@ namespace eu.Vanaheimr.Illias.Commons
         /// <param name="List">A list of elements.</param>
         /// <param name="Element">The element to be added to the list.</param>
         /// <returns>The changed list.</returns>
-        public static IList<T> Add2<T>(this IList<T> List, T Element)
+        public static IList<T> AddAndReturnList<T>(this IList<T> List, T Element)
         {
             List.Add(Element);
             return List;
@@ -47,7 +47,7 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
-        #region Add3(this List)
+        #region AddAndReturnElement(this List, Element)
 
         /// <summary>
         /// Another way to add an value to a list.
@@ -55,7 +55,7 @@ namespace eu.Vanaheimr.Illias.Commons
         /// <param name="List">A list of elements.</param>
         /// <param name="Element">The element to be added to the list.</param>
         /// <returns>The added element.</returns>
-        public static T Add3<T>(this IList<T> List, T Element)
+        public static T AddAndReturnElement<T>(this IList<T> List, T Element)
         {
             List.Add(Element);
             return Element;
