@@ -26,7 +26,7 @@ namespace eu.Vanaheimr.Illias.Commons
 {
 
     /// <summary>
-    /// Extension methods for the IDictionaryExtensions interface.
+    /// Extension methods for the IDictionary interface.
     /// </summary>
     public static class IDictionaryExtensions
     {
@@ -48,6 +48,30 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
+        #region AddAndReturnDictionary(this Dictionary, KeyCreator, V)
+
+        /// <summary>
+        /// Another way to add an element to a dictionary.
+        /// </summary>
+        /// <param name="Dictionary">A dictionary.</param>
+        /// <param name="KeyCreator">A delegate providing the key.</param>
+        /// <param name="Value">The element value.</param>
+        /// <returns>The changed dictionary.</returns>
+        public static IDictionary<K, V> AddAndReturnDictionary<K, V>(this IDictionary<K, V> Dictionary, Func<V, K> KeyCreator, V Value)
+        {
+
+            if (KeyCreator != null)
+                throw new ArgumentNullException("The given delegate msut not be null!", "KeyCreator");
+
+            Dictionary.Add(KeyCreator(Value), Value);
+
+            return Dictionary;
+
+        }
+
+        #endregion
+
+
         #region AddAndReturnKeyValuePair(this Dictionary, K, V)
 
         /// <summary>
@@ -64,6 +88,32 @@ namespace eu.Vanaheimr.Illias.Commons
         }
 
         #endregion
+
+        #region AddAndReturnKeyValuePair(this Dictionary, KeyCreator, V)
+
+        /// <summary>
+        /// Another way to add an value to a dictionary.
+        /// </summary>
+        /// <param name="Dictionary">A dictionary.</param>
+        /// <param name="KeyCreator">A delegate providing the key.</param>
+        /// <param name="Value">The element value.</param>
+        /// <returns>The element as key value pair.</returns>
+        public static KeyValuePair<K, V> AddAndReturnKeyValuePair<K, V>(this IDictionary<K, V> Dictionary, Func<V, K> KeyCreator, V Value)
+        {
+
+            if (KeyCreator != null)
+                throw new ArgumentNullException("The given delegate msut not be null!", "KeyCreator");
+
+            var KeyValuePair = new KeyValuePair<K, V>(KeyCreator(Value), Value);
+
+            Dictionary.Add(KeyValuePair);
+
+            return KeyValuePair;
+
+        }
+
+        #endregion
+
 
         #region AddAndReturnKey(this Dictionary, K, V)
 
@@ -82,6 +132,32 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
+        #region AddAndReturnKey(this Dictionary, KeyCreator, V)
+
+        /// <summary>
+        /// Another way to add an value to a dictionary.
+        /// </summary>
+        /// <param name="Dictionary">A dictionary.</param>
+        /// <param name="KeyCreator">A delegate providing the key.</param>
+        /// <param name="Value">The element value.</param>
+        /// <returns>The element key.</returns>
+        public static K AddAndReturnKey<K, V>(this IDictionary<K, V> Dictionary, Func<V, K> KeyCreator, V Value)
+        {
+
+            if (KeyCreator != null)
+                throw new ArgumentNullException("The given delegate msut not be null!", "KeyCreator");
+
+            // Just call it once... as you never know what happens when you do it twice ;)!
+            var Key = KeyCreator(Value);
+            Dictionary.Add(Key, Value);
+
+            return Key;
+
+        }
+
+        #endregion
+
+
         #region AddAndReturnValue(this Dictionary, K, V)
 
         /// <summary>
@@ -95,6 +171,29 @@ namespace eu.Vanaheimr.Illias.Commons
         {
             Dictionary.Add(Key, Value);
             return Value;
+        }
+
+        #endregion
+
+        #region AddAndReturnValue(this Dictionary, KeyCreator, V)
+
+        /// <summary>
+        /// Another way to add an value to a dictionary.
+        /// </summary>
+        /// <param name="Dictionary">A dictionary.</param>
+        /// <param name="KeyCreator">A delegate providing the key.</param>
+        /// <param name="Value">The element value.</param>
+        /// <returns>The element value.</returns>
+        public static V AddAndReturnValue<K, V>(this IDictionary<K, V> Dictionary, Func<V, K> KeyCreator, V Value)
+        {
+
+            if (KeyCreator != null)
+                throw new ArgumentNullException("The given delegate msut not be null!", "KeyCreator");
+
+            Dictionary.Add(KeyCreator(Value), Value);
+
+            return Value;
+
         }
 
         #endregion

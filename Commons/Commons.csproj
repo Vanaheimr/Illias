@@ -54,6 +54,7 @@
     <Compile Include="BooleanComment.cs" />
     <Compile Include="Delegates\CountedPredicate.cs" />
     <Compile Include="Exceptions\ExceptionHelpers.cs" />
+    <Compile Include="ExtensionMethods\EnumExtensions.cs" />
     <Compile Include="ExtensionMethods\IDictionaryExtensions.cs" />
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
     <Compile Include="WebLink.cs" />

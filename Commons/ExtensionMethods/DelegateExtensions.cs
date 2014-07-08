@@ -25,7 +25,7 @@ namespace eu.Vanaheimr.Illias.Commons
 {
 
     /// <summary>
-    /// Extensions for delegates.
+    /// Extension methods for delegates.
     /// </summary>
     public static class DelegateExtensions
     {
