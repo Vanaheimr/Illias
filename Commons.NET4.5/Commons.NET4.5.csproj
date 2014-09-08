@@ -49,6 +49,7 @@
     <Compile Include="Concurrent\IGroupedCollection.cs" />
     <Compile Include="DLR\IReadOnlyPropertiesExtensions.cs" />
     <Compile Include="ExtentionMethods\StringExtentions.cs" />
+    <Compile Include="Logging\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

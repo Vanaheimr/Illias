@@ -57,6 +57,7 @@
     <Compile Include="ExtensionMethods\EnumExtensions.cs" />
     <Compile Include="ExtensionMethods\IDictionaryExtensions.cs" />
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
+    <Compile Include="Logging\Log.cs" />
     <Compile Include="WebLink.cs" />
     <Compile Include="CSV\CSVResult.cs" />
     <Compile Include="Delegates\KeyValueMapper.cs" />
