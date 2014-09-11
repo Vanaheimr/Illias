@@ -592,6 +592,30 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
+        #region AggregateWith(this IEnumerable, Seperator)
+
+        /// <summary>
+        /// Safely aggregates the given enumeration. If the enumeration is null
+        /// or has no elements an empty string will be returned.
+        /// </summary>
+        /// <typeparam name="T">The type of the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Seperator">A string as element seperator.</param>
+        public static String AggregateWith<T>(this IEnumerable<T>  IEnumerable,
+                                              String               Seperator)
+        {
+
+            if (IEnumerable == null || !IEnumerable.Any())
+                return String.Empty;
+
+            return IEnumerable.
+                       Select(v => v.ToString()).
+                       Aggregate((a, b) => a + Seperator + b);
+
+        }
+
+        #endregion
+
         #region CSVAggregate(this IEnumerable)
 
         public static String CSVAggregate(this IEnumerable<String> IEnumerable)

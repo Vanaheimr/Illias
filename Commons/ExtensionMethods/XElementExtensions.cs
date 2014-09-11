@@ -32,9 +32,9 @@ namespace eu.Vanaheimr.Illias.Commons
     public static class XElementExtensions
     {
 
-        public static String ElementOrDefault(this XElement  ParentXElement,
-                                              XName          XName,
-                                              String         Default)
+        public static String ElementValueOrDefault(this XElement  ParentXElement,
+                                                   XName          XName,
+                                                   String         Default)
         {
 
             var XElement = ParentXElement.Element(XName);
@@ -44,6 +44,36 @@ namespace eu.Vanaheimr.Illias.Commons
 
             else
                 return Default;
+
+        }
+
+        public static XElement ElementOrFail(this XElement  ParentXElement,
+                                             XName          XName,
+                                             String         Message)
+        {
+
+            var XElement = ParentXElement.Element(XName);
+
+            if (XElement != null)
+                return ParentXElement.Element(XName);
+
+            else
+                throw new Exception(Message);
+
+        }
+
+        public static String ElementValueOrFail(this XElement  ParentXElement,
+                                                XName          XName,
+                                                String         Message)
+        {
+
+            var XElement = ParentXElement.Element(XName);
+
+            if (XElement != null)
+                return ParentXElement.Element(XName).Value;
+
+            else
+                throw new Exception(Message);
 
         }
 

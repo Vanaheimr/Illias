@@ -47,6 +47,23 @@ namespace eu.Vanaheimr.Illias.Commons
 
         #endregion
 
+        #region AddAndReturnList(this List, Elements)
+
+        /// <summary>
+        /// Another way to add an element to a list.
+        /// </summary>
+        /// <param name="List">A list of elements.</param>
+        /// <param name="Elements">Another list to be added to this list.</param>
+        /// <returns>The changed list.</returns>
+        public static IList<T> AddAndReturnList<T>(this IList<T> List, IEnumerable<T> Elements)
+        {
+            var NewList = new List<T>(List);
+            NewList.AddRange(Elements);
+            return NewList;
+        }
+
+        #endregion
+
         #region AddAndReturnElement(this List, Element)
 
         /// <summary>
