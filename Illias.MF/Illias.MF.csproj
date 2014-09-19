@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AssemblyName>Vanaheimr.IlliasMF</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RootNamespace>org.GraphDefined.Vanaheimr.IlliasMF</RootNamespace>
+    <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F6ED06B7-CA8D-40CC-96F8-E3AFB80077B7}</ProjectGuid>
+    <TargetFrameworkVersion>v4.1</TargetFrameworkVersion>
+    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE,MICRO_FRAMEWORK,MF_FRAMEWORK_VERSION_V4_1</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Vanaheimr.IlliasMF.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
+  <ItemGroup>
+    <Compile Include="Delegates\Actions.cs" />
+    <Compile Include="Delegates\Predicate.cs" />
+    <Compile Include="Description\IDescription.cs" />
+    <Compile Include="ExtensionMethods\IntegerExtensions.cs" />
+    <Compile Include="Ids\IIdentifier.cs" />
+    <Compile Include="Label\ILabel.cs" />
+    <Compile Include="MicroFramework\Enumerator.cs" />
+    <Compile Include="MicroFramework\Filter.cs" />
+    <Compile Include="MicroFramework\ExtensionAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticClasses\Loops.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SPOT.Native">
+    </Reference>
+  </ItemGroup>
+</Project>

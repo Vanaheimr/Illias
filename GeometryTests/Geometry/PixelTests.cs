@@ -24,7 +24,7 @@ using NUnit.Framework;
 
 #endregion
 
-namespace eu.Vanaheimr.Illias.Geometry.UnitTests.Geometry
+namespace org.GraphDefined.Vanaheimr.Illias.Geometry.UnitTests.Geometry
 {
 
     /// <summary>

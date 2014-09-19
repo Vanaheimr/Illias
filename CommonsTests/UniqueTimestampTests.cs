@@ -1,6 +1,6 @@
 ﻿/*
  * Copyright (c) 2010-2013 Achim 'ahzf' Friedland <achim@graph-database.org>
- * This file is part of Illias Commons <http://www.github.com/ahzf/Illias>
+ * This file is part of Illias <http://www.github.com/ahzf/Illias>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ using NUnit.Framework;
 
 #endregion
 
-namespace eu.Vanaheimr.Illias.Commons.UnitTests
+namespace org.GraphDefined.Vanaheimr.Illias.UnitTests
 {
 
     /// <summary>
