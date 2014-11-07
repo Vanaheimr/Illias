@@ -524,6 +524,30 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region SafeSelect(this IEnumerable, SelectionDelegate)
+
+        /// <summary>
+        /// Safely selects the given enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type of the enumeration.</typeparam>
+        /// <typeparam name="TResult">The type of the resulting enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="MapDelegate">The delegate to select the given enumeration.</param>
+        public static String MapReduce<T>(this IEnumerable<T>  IEnumerable,
+                                          Func<T, String>      MapDelegate,
+                                          String               Seperator = ", ",
+                                          String               Default   = "")
+        {
+
+            if (IEnumerable == null)
+                return null;
+
+            return IEnumerable.Select(MapDelegate).AggregateOrDefault((a, b) => a + Seperator + b, Default);
+
+        }
+
+        #endregion
+
 
         #region Aggregate(this IEnumerable<String>)
 
