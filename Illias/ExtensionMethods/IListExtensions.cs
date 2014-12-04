@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 #endregion
@@ -76,6 +77,57 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
             List.Add(Element);
             return Element;
+        }
+
+        #endregion
+
+
+        #region ReverseAndReturn(this List)
+
+        /// <summary>
+        /// Reverse and return the given list;
+        /// </summary>
+        /// <param name="List">A list of elements.</param>
+        public static IEnumerable<T> ReverseAndReturn<T>(this IList<T> List)
+        {
+            return List.Reverse();
+        }
+
+        #endregion
+
+
+        #region RemoveAndReturnFirst(this List)
+
+        /// <summary>
+        /// Remove and return first element of the given list;
+        /// </summary>
+        /// <param name="List">A list of elements.</param>
+        public static T RemoveAndReturnFirst<T>(this IList<T> List)
+        {
+
+            var Element = List.First();
+            List.Remove(Element);
+
+            return Element;
+
+        }
+
+        #endregion
+
+        #region RemoveAndReturnLast(this List)
+
+        /// <summary>
+        /// Remove and return last element of the given list;
+        /// </summary>
+        /// <param name="List">A list of elements.</param>
+        public static T RemoveAndReturnLast<T>(this IList<T> List)
+        {
+
+            var Element = List.Last();
+            List.Remove(Element);
+
+            return Element;
+
         }
 
         #endregion
