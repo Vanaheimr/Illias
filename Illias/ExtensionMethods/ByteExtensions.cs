@@ -33,6 +33,34 @@ namespace org.GraphDefined.Vanaheimr.Illias
     public static class ByteExtensions
     {
 
+        #region ToHexString(this ByteArray)
+
+        /// <summary>
+        /// Converts an array of bytes into its hexadecimal string representation.
+        /// </summary>
+        /// <param name="ByteArray">An array of bytes.</param>
+        public static String ToHexString(this Byte[] ByteArray,
+                                         Boolean     ToLower = true)
+        {
+
+            Byte b;
+            var  c = new Char[ByteArray.Length * 2];
+
+            for(Int32 y=0, x=0; y<ByteArray.Length; ++y, ++x)
+            {
+                b      = ((byte) (ByteArray[y] >> 4));
+                c[x]   =  (char) (b>9 ? b+0x37 : b+0x30);
+                b      = ((byte) (ByteArray[y] & 0xF));
+                c[++x] =  (char) (b>9 ? b+0x37 : b+0x30);
+            }
+
+            return ToLower ? new String(c).ToLower() : new String(c);
+
+        }
+
+        #endregion
+
+
         #region Reverse(this ByteArray)
 
         /// <summary>
