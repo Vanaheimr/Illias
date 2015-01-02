@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 #endregion
@@ -140,6 +141,30 @@ namespace org.GraphDefined.Vanaheimr.Illias
             NumberOfBytes = (NumberOfBytes > -1) ? NumberOfBytes : ArrayOfBytes.Length;
 
             return Encoding.UTF8.GetString(ArrayOfBytes, 0, NumberOfBytes);
+
+        }
+
+        #endregion
+
+        #region ToUTF8String(this MemoryStream, NumberOfBytes = -1, ThrowException = true)
+
+        public static String ToUTF8String(this MemoryStream MemoryStream, Int32 NumberOfBytes = -1, Boolean ThrowException = true)
+        {
+
+            if (MemoryStream == null)
+            {
+                if (ThrowException)
+                    throw new ArgumentNullException("ArrayOfBytes must not be null!");
+                else
+                    return String.Empty;
+            }
+
+            if (MemoryStream.Length == 0)
+                return String.Empty;
+
+            NumberOfBytes = (NumberOfBytes > -1) ? NumberOfBytes : (Int32) MemoryStream.Length;
+
+            return Encoding.UTF8.GetString(MemoryStream.ToArray(), 0, NumberOfBytes);
 
         }
 

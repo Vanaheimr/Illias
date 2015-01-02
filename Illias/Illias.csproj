@@ -68,6 +68,7 @@
     <Compile Include="Description\IDescription.cs" />
     <Compile Include="EndiannessHell\EndiannessHell.cs" />
     <Compile Include="Exceptions\ExceptionHelpers.cs" />
+    <Compile Include="ExtensionMethods\RandomExtensions.cs" />
     <Compile Include="ExtensionMethods\ByteExtensions.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="ExtensionMethods\DelegateExtensions.cs" />
