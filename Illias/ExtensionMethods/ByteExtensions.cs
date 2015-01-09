@@ -61,6 +61,14 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #endregion
 
 
+        public static Byte[] HexStringToByteArray(this String HexValue)
+        {
+            return Enumerable.Range(0, HexValue.Length)
+                             .Where(x => x % 2 == 0)
+                             .Select(x => Convert.ToByte(HexValue.Substring(x, 2), 16))
+                             .ToArray();
+        }
+
         #region Reverse(this ByteArray)
 
         /// <summary>
