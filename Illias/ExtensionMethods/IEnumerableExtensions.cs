@@ -596,7 +596,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region AggregateOrDefault(this IEnumerable, AggreationDelegate, DefaultT = default(T))
+        #region AggregateOrDefault(this IEnumerable, Prefix, Map, Reduce, Suffix, DefaultT = default(T))
 
         /// <summary>
         /// Safely aggregates the given enumeration. If the enumeration is null
