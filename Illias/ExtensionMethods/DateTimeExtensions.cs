@@ -82,6 +82,21 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region ToRfc1123(this DateTime)
+
+        /// <summary>
+        /// Convert the given DateTime object to an RFC 1123 datetime string.
+        /// </summary>
+        /// <param name="DateTime">A DateTime object.</param>
+        /// <returns>The DateTime formated as e.g. "Wed, 24 Nov 2016 09:44:55 GMT"</returns>
+        public static String ToRfc1123(this DateTime DateTime)
+        {
+            return DateTime.ToUniversalTime().ToString("R");
+        }
+
+        #endregion
+
+
     }
 
 }
