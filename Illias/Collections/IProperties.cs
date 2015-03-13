@@ -328,7 +328,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
 
         #region Increment<TKey>(this IProperties, Key)
 
-        public static IProperties<TKey, Object> IncPropertis<TKey>(this IProperties<TKey, Object> IProperties, TKey Key)
+        public static IProperties<TKey, Object> Increment<TKey>(this IProperties<TKey, Object> IProperties, TKey Key)
 
             where TKey : IEquatable<TKey>, IComparable<TKey>, IComparable
 

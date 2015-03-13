@@ -354,6 +354,20 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region ReplacePrefix(Prefix, Replacement)
+
+        public static String ReplacePrefix(this String Text, String Prefix, String Replacement)
+        {
+
+            if (Text.StartsWith(Prefix))
+                return Replacement + Text.Substring(Prefix.Length);
+
+            return Text;
+
+        }
+
+        #endregion
+
     }
 
 }
