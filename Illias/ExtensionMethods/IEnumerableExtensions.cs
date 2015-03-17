@@ -581,8 +581,6 @@ namespace org.GraphDefined.Vanaheimr.Illias
             if (IEnumerable == null)
                 return DefaultT;
 
-            //if (!IEnumerable.Any())
-            //    return DefaultT;
             try
             {
                 return IEnumerable.Aggregate(AggreationDelegate);
@@ -619,8 +617,6 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
             var Array = IEnumerable.Select(i => Map(i)).ToArray();
 
-            //if (!IEnumerable.Any())
-            //    return DefaultT;
             try
             {
                 return Reduce(Reduce(Prefix, Array.Aggregate(Reduce)), Suffix);
@@ -644,15 +640,16 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="IEnumerable">An enumeration.</param>
         /// <param name="Seperator">A string as element seperator.</param>
         public static String AggregateWith<T>(this IEnumerable<T>  IEnumerable,
-                                              String               Seperator)
+                                              String               Seperator,
+                                              String               DefaultValue = null)
         {
 
-            if (IEnumerable == null || !IEnumerable.Any())
+            if (IEnumerable == null)
                 return String.Empty;
 
             return IEnumerable.
                        Select(v => v.ToString()).
-                       Aggregate((a, b) => a + Seperator + b);
+                       AggregateOrDefault((a, b) => a + Seperator + b, DefaultValue);
 
         }
 
@@ -663,7 +660,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public static String CSVAggregate(this IEnumerable<String> IEnumerable)
         {
 
-            if (IEnumerable == null || !IEnumerable.Any())
+            if (IEnumerable == null)
                 return String.Empty;
 
             return IEnumerable.Aggregate((a, b) => a + ", " + b);
@@ -677,7 +674,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public static String CSVAggregate(this IEnumerable<String> IEnumerable, String Prefix, String Suffix)
         {
 
-            if (IEnumerable == null || !IEnumerable.Any())
+            if (IEnumerable == null)
                 return Prefix + Suffix;
 
             return String.Concat(Prefix, IEnumerable.Aggregate((a, b) => a + ", " + b), Suffix);

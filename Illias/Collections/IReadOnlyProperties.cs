@@ -44,7 +44,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
 
     // Interface
 
-    #region IProperties<TKey, TValue>
+    #region IReadOnlyProperties<TKey, TValue>
 
     /// <summary>
     /// A generic interface maintaining a collection of key/value properties
