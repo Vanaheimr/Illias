@@ -37,13 +37,15 @@ namespace org.GraphDefined.Vanaheimr.Illias
                                                    String         Default)
         {
 
-            var XElement = ParentXElement.Element(XName);
-
-            if (XElement != null)
-                return ParentXElement.Element(XName).Value;
-
-            else
+            if (ParentXElement == null)
                 return Default;
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return Default;
+
+            return _XElement.Value;
 
         }
 
@@ -52,13 +54,15 @@ namespace org.GraphDefined.Vanaheimr.Illias
                                              String         Message)
         {
 
-            var XElement = ParentXElement.Element(XName);
-
-            if (XElement != null)
-                return ParentXElement.Element(XName);
-
-            else
+            if (ParentXElement == null)
                 throw new Exception(Message);
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                throw new Exception(Message);
+
+            return _XElement;
 
         }
 
@@ -67,13 +71,53 @@ namespace org.GraphDefined.Vanaheimr.Illias
                                                 String         Message)
         {
 
-            var XElement = ParentXElement.Element(XName);
-
-            if (XElement != null)
-                return ParentXElement.Element(XName).Value;
-
-            else
+            if (ParentXElement == null)
                 throw new Exception(Message);
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                throw new Exception(Message);
+
+            return _XElement.Value;
+
+        }
+
+        public static String ElementValueOrNull(this XElement  ParentXElement,
+                                                XName          XName)
+        {
+
+            if (ParentXElement == null)
+                return null;
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return null;
+
+            return _XElement.Value;
+
+        }
+
+        public static void UseValue(this XElement   ParentXElement,
+                                    XName           XName,
+                                    Action<String>  Action)
+        {
+
+            if (ParentXElement == null)
+                return;
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return;
+
+            if (_XElement.Value == null)
+                return;
+
+            var ActionLocal = Action;
+            if (ActionLocal != null)
+                ActionLocal(_XElement.Value);
 
         }
 
