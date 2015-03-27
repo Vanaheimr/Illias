@@ -19,6 +19,7 @@
 
 using System;
 using System.Linq;
+using System.Text;
 using System.Xml.Linq;
 
 #endregion
@@ -120,6 +121,20 @@ namespace org.GraphDefined.Vanaheimr.Illias
                 ActionLocal(_XElement.Value);
 
         }
+
+        #region ToUTF8Bytes(this XML)
+
+        public static Byte[] ToUTF8Bytes(this XElement XML)
+        {
+
+            if (XML == null)
+                return new Byte[0];
+
+            return Encoding.UTF8.GetBytes(XML.ToString());
+
+        }
+
+        #endregion
 
     }
 

@@ -170,15 +170,15 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region ToUTF8Bytes(this myString)
+        #region ToUTF8Bytes(this Text)
 
-        public static Byte[] ToUTF8Bytes(this String myString)
+        public static Byte[] ToUTF8Bytes(this String Text)
         {
 
-            if (myString == null)
-                throw new ArgumentNullException("myString must not be null!");
+            if (Text == null)
+                return new Byte[0];
 
-            return Encoding.UTF8.GetBytes(myString);
+            return Encoding.UTF8.GetBytes(Text);
 
         }
 
