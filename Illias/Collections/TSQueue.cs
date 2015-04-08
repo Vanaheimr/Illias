@@ -165,18 +165,14 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
 
         #region Constructor(s)
 
-        #region TSQueue(MaxNumberOfElements = 100)
-
         /// <summary>
         /// Create a new thread-safe, lock-free queue.
         /// </summary>
         /// <param name="MaxNumberOfElements">The maximal number of values within the queue.</param>
-        public TSQueue(UInt64 MaxNumberOfElements = 100)
+        public TSQueue(UInt64 MaxNumberOfElements = 500)
         {
             this.MaxNumberOfElements = MaxNumberOfElements;
         }
-
-        #endregion
 
         #endregion
 
