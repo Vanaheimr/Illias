@@ -33,23 +33,6 @@ namespace org.GraphDefined.Vanaheimr.Illias
     public static class XElementExtensions
     {
 
-        public static String ElementValueOrDefault(this XElement  ParentXElement,
-                                                   XName          XName,
-                                                   String         Default)
-        {
-
-            if (ParentXElement == null)
-                return Default;
-
-            var _XElement = ParentXElement.Element(XName);
-
-            if (_XElement == null)
-                return Default;
-
-            return _XElement.Value;
-
-        }
-
         public static XElement ElementOrFail(this XElement  ParentXElement,
                                              XName          XName,
                                              String         Message)
@@ -64,6 +47,41 @@ namespace org.GraphDefined.Vanaheimr.Illias
                 throw new Exception(Message);
 
             return _XElement;
+
+        }
+
+        public static T IfElementExists<T>(this XElement      ParentXElement,
+                                           XName              XName,
+                                           Func<XElement, T>  Mapper,
+                                           T                  Default = default(T))
+        {
+
+            if (ParentXElement == null || Mapper == null)
+                return Default;
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return Default;
+
+            return Mapper(_XElement);
+
+        }
+
+        public static String ElementValueOrDefault(this XElement  ParentXElement,
+                                                   XName          XName,
+                                                   String         Default)
+        {
+
+            if (ParentXElement == null)
+                return Default;
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return Default;
+
+            return _XElement.Value;
 
         }
 
