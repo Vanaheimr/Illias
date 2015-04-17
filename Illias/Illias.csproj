@@ -100,6 +100,7 @@
     <Compile Include="Range.cs" />
     <Compile Include="StaticClasses\Loops.cs" />
     <Compile Include="Time\Measurement.cs" />
+    <Compile Include="Time\Timestamped.cs" />
     <Compile Include="Time\UniqueTimestamp.cs" />
     <Compile Include="Transactions\IsolationLevel.cs" />
     <Compile Include="Transactions\Transaction.cs" />
