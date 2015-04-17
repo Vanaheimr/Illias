@@ -103,13 +103,13 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region I18NString(params Texts)
+        #region I18NString(Texts)
 
         /// <summary>
         /// Create a new internationalized (I18N) string
         /// based on the given language and string pairs.
         /// </summary>
-        public I18NString(params KeyValuePair<Languages, String>[] Texts)
+        public I18NString(KeyValuePair<Languages, String>[] Texts)
             : this()
         {
 
