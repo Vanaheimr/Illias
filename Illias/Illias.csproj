@@ -84,6 +84,7 @@
     <Compile Include="ExtensionMethods\TypeExtensions.cs" />
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
     <Compile Include="I18N\Country.cs" />
+    <Compile Include="I18N\JSONString.cs" />
     <Compile Include="I18N\I18NTools.cs" />
     <Compile Include="I18N\I18NPair.cs" />
     <Compile Include="I18N\Languages.cs" />
