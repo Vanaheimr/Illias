@@ -203,8 +203,20 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region this[Language]
+        #region has(Language)
 
+        /// <summary>
+        /// Checks if the given language representation exists.
+        /// </summary>
+        /// <param name="Language">The internationalized (I18N) language.</param>
+        public Boolean has(Languages Language)
+        {
+            return I18NStrings.ContainsKey(Language);
+        }
+
+        #endregion
+
+        #region this[Language]
 
         /// <summary>
         /// Get the text specified by the given language.

@@ -255,7 +255,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public static readonly Country Gabon                                    = new Country(new I18NString(Languages.en, "Gabon"),                                          "GA", "GAB", 266, 241);
         public static readonly Country Gambia                                   = new Country(new I18NString(Languages.en, "Gambia"),                                         "GM", "GMB", 270, 220);
         public static readonly Country Georgia                                  = new Country(new I18NString(Languages.en, "Georgia"),                                        "GE", "GEO", 268, 995);
-        public static readonly Country Germany                                  = new Country(new I18NString(Languages.en, "Germany"),                                        "DE", "DEU", 276, 49);
+        public static readonly Country Germany                                  = new Country(new I18NString(Languages.en, "Germany").Add(Languages.de, "Deutschland"),       "DE", "DEU", 276, 49);
         public static readonly Country Ghana                                    = new Country(new I18NString(Languages.en, "Ghana"),                                          "GH", "GHA", 288, 233);
         public static readonly Country Gibraltar                                = new Country(new I18NString(Languages.en, "Gibraltar"),                                      "GI", "GIB", 292, 350);
         public static readonly Country Greece                                   = new Country(new I18NString(Languages.en, "Greece"),                                         "GR", "GRC", 300, 30);

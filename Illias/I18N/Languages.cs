@@ -24,7 +24,13 @@ namespace org.GraphDefined.Vanaheimr.Illias
         de,
         en,
         fr,
-        dk
+        dk,
+        no,
+        fi,
+        se,
+        nl,
+        ru,
+        sk
     }
 
 }
