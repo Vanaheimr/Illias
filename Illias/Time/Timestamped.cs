@@ -102,6 +102,21 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+
+        #region Value -implicit-> Timestamped<Value>
+
+        /// <summary>
+        /// Implicit conversatiuon from an non-timestamped value
+        /// to a timestamped value.
+        /// </summary>
+        /// <param name="Value">The value to be timestamped.</param>
+        public static implicit operator Timestamped<T>(T Value)
+        {
+            return new Timestamped<T>(Value);
+        }
+
+        #endregion
+
     }
 
     #endregion
