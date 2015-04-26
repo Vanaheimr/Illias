@@ -36,7 +36,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region IsNullOrEmpty(GivenString)
 
         /// <summary>
-        /// Indicates whether the specified string is null or empty.
+        /// Indicates whether the given string is null or empty.
         /// </summary>
         /// <param name="GivenString">The string.</param>
         public static Boolean IsNullOrEmpty(this String GivenString)
@@ -49,12 +49,26 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region IsNotNullOrEmpty(GivenString)
 
         /// <summary>
-        /// Indicates whether the specified string is not null or empty.
+        /// Indicates whether the given string is not null or empty.
         /// </summary>
         /// <param name="GivenString">The string.</param>
         public static Boolean IsNotNullOrEmpty(this String GivenString)
         {
             return !String.IsNullOrEmpty(GivenString);
+        }
+
+        #endregion
+
+        #region IfNotNullOrEmpty(GivenString, Mapper)
+
+        /// <summary>
+        /// Mappes the given string if it is not null or empty.
+        /// </summary>
+        /// <param name="GivenString">The string.</param>
+        /// <param name="Mapper">A string mapper delegate.</param>
+        public static String IfNotNullOrEmpty(this String GivenString, Func<String, String> Mapper)
+        {
+            return !String.IsNullOrEmpty(GivenString) ? Mapper(GivenString) : GivenString;
         }
 
         #endregion
