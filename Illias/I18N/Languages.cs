@@ -20,7 +20,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
     public enum Languages
     {
-        undef,
+        unknown,
         de,
         en,
         fr,
