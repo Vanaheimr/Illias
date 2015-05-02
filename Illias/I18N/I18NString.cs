@@ -452,6 +452,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public override String ToString()
         {
 
+            if (I18NStrings.Count == 0)
+                return String.Empty;
+
             return I18NStrings.
                        Select(i8n => i8n.Key.ToString() + ": " + i8n.Value).
                        AggregateWith("; ");
