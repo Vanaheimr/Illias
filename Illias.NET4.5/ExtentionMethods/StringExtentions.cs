@@ -133,6 +133,35 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region ToKeyValuePairs(Text)
+
+        /// <summary>
+        /// Converts the given enumeration of strings into an enumeration of key-value-pairs.
+        /// </summary>
+        /// <param name="Text">An enumeration of strings.</param>
+        public static IEnumerable<KeyValuePair<String, String>> ToKeyValuePairs(this IEnumerable<String>  Text,
+                                                                                params Char[]             Delimiter)
+        {
+
+            if (Delimiter == null || Delimiter.Length == 0)
+                throw new ArgumentNullException("The given delimiter must not be null or empty!");
+
+            String[] Tokens;
+
+            foreach (var line in Text)
+            {
+
+                Tokens = line.Split(Delimiter, 2);
+
+                if (Tokens.Length == 2)
+                    yield return new KeyValuePair<String, String>(Tokens[0].Trim(), Tokens[1].Trim());
+
+            }
+
+        }
+
+        #endregion
+
     }
 
 }
