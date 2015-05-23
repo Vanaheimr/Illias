@@ -139,19 +139,70 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// Converts the given enumeration of strings into an enumeration of key-value-pairs.
         /// </summary>
         /// <param name="Text">An enumeration of strings.</param>
-        public static IEnumerable<KeyValuePair<String, String>> ToKeyValuePairs(this IEnumerable<String>  Text,
-                                                                                params Char[]             Delimiter)
+        public static IEnumerable<String> AggregateIndentedLines(this IEnumerable<String> Text)
         {
 
-            if (Delimiter == null || Delimiter.Length == 0)
+            #region Initial checks
+
+            if (Text == null)
+                yield break;
+
+            #endregion
+
+            var Enumerator   = Text.GetEnumerator();
+            var CurrentLine  = String.Empty;
+
+            while (Enumerator.MoveNext())
+            {
+
+                if (Enumerator.Current.StartsWith(" ") || Enumerator.Current.StartsWith("\t"))
+                    CurrentLine = CurrentLine + Enumerator.Current.TrimStart();
+
+                else
+                {
+
+                    if (CurrentLine != String.Empty)
+                        yield return CurrentLine;
+
+                    CurrentLine = Enumerator.Current;
+
+                }
+
+            }
+
+            yield return CurrentLine;
+
+        }
+
+        #endregion
+
+        #region ToKeyValuePairs(Text, Delimiters)
+
+        /// <summary>
+        /// Converts the given enumeration of strings into an enumeration of key-value-pairs.
+        /// </summary>
+        /// <param name="Text">An enumeration of strings.</param>
+        /// <param name="Delimiters">The delimiter(s) between keys and values.</param>
+        public static IEnumerable<KeyValuePair<String, String>> ToKeyValuePairs(this IEnumerable<String>  Text,
+                                                                                params Char[]             Delimiters)
+        {
+
+            #region Initial checks
+
+            if (Text == null)
+                yield break;
+
+            if (Delimiters == null || Delimiters.Length == 0)
                 throw new ArgumentNullException("The given delimiter must not be null or empty!");
 
             String[] Tokens;
 
+            #endregion
+
             foreach (var line in Text)
             {
 
-                Tokens = line.Split(Delimiter, 2);
+                Tokens = line.Split(Delimiters, 2);
 
                 if (Tokens.Length == 2)
                     yield return new KeyValuePair<String, String>(Tokens[0].Trim(), Tokens[1].Trim());
