@@ -351,23 +351,6 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region RandomNumber(Length, Random = null)
-
-        public static String RandomNumber(UInt16 Length, Random Random = null)
-        {
-
-            var StringBuilder  = new StringBuilder();
-            var _Random        = (Random == null) ? new Random() : Random;
-
-            for (var i = 0; i < Length; i++)
-                StringBuilder.Append(_Random.Next(10));
-
-            return StringBuilder.ToString();
-
-        }
-
-        #endregion
-
         #region ReplacePrefix(Prefix, Replacement)
 
         public static String ReplacePrefix(this String Text, String Prefix, String Replacement)
