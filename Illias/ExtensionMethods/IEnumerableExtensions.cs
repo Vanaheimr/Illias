@@ -731,7 +731,29 @@ namespace org.GraphDefined.Vanaheimr.Illias
             var List = new List<T>();
 
             while (Enumerator.MoveNext())
-                List.Add((T)Enumerator.Current);
+                List.Add((T) Enumerator.Current);
+
+            return List;
+
+        }
+
+        #endregion
+
+        #region ConsumeAll<T>(this IEnumerator)
+
+        /// <summary>
+        /// Consume all elements of the given enumerator.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements.</typeparam>
+        /// <param name="Enumerator">An IEnumerator.</param>
+        /// <returns>An enumerable of T.</returns>
+        public static IEnumerable<T> ConsumeAll<T>(this IEnumerator<T> Enumerator)
+        {
+
+            var List = new List<T>();
+
+            while (Enumerator.MoveNext())
+                List.Add((T) Enumerator.Current);
 
             return List;
 
