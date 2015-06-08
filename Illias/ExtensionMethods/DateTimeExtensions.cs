@@ -36,33 +36,33 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// The UNIX epoch.
         /// </summary>
-        public static DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
+        public static DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         #endregion
 
-        #region ToUnixTimeStamp(this DateTime)
+        #region ToUnixTimestamp(this DateTime)
 
         /// <summary>
         /// Convert the given DateTime object to UNIX timestamp.
         /// </summary>
-        /// <param name="Date">A DateTime object.</param>
+        /// <param name="DateTime">A DateTime object.</param>
         /// <returns>The seconds since 1. January 1970</returns>
-        public static Int64 ToUnixTimeStamp(this DateTime DateTime)
+        public static Int64 ToUnixTimestamp(this DateTime DateTime)
         {
-            return (Int64) Math.Round(DateTime.Subtract(UnixEpoch).TotalSeconds);
+            return (Int64)Math.Floor(DateTime.Subtract(UnixEpoch).TotalSeconds);
         }
 
         #endregion
 
-        #region FromUnixTimeStamp(this UnixTimestamp)
+        #region FromUnixTimestamp(this UnixTimestamp)
 
         /// <summary>
         /// Convert the given UNIX timestamp to a .NET DateTime object.
         /// </summary>
         /// <param name="UnixTimestamp">A UNIX timestamp (seconds since 1. January 1970)</param>
-        public static DateTime FromUnixTimeStamp(this Int64 UnixTimestamp)
+        public static DateTime FromUnixTimestamp(this Int64 UnixTimestamp)
         {
-            return UnixEpoch.AddTicks(UnixTimestamp);
+            return UnixEpoch.AddSeconds(UnixTimestamp);
         }
 
         #endregion

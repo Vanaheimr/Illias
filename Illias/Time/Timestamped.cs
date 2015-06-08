@@ -95,7 +95,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public Timestamped(T Value, DateTime Timestamp)
         {
             _Value      = Value;
-            _Timestamp  = Timestamp;
+            _Timestamp  = Timestamp.ToUniversalTime();
         }
 
         #endregion
