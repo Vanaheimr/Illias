@@ -18,6 +18,8 @@
 #region Usings
 
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 #endregion
 
@@ -208,5 +210,34 @@ namespace org.GraphDefined.Vanaheimr.Illias
     }
 
     #endregion
+
+
+    public static class TimestampedExtentions
+    {
+
+        public static IEnumerable<Timestamped<T>> Deduplicate<T>(this IEnumerable<Timestamped<T>> Enumeration)
+        {
+
+            var OrderedEnumeration = Enumeration.
+                                         OrderBy(TVP => TVP.Timestamp).
+                                         ToArray();
+
+            if (OrderedEnumeration.Length > 0)
+            {
+
+                for (var i = 0; i < OrderedEnumeration.Length - 1; i++)
+                {
+                    if (!OrderedEnumeration[i].Equals(OrderedEnumeration[i + 1]))
+                        yield return OrderedEnumeration[i];
+                }
+
+                yield return OrderedEnumeration[OrderedEnumeration.Length];
+
+            }
+
+        }
+
+
+    }
 
 }
