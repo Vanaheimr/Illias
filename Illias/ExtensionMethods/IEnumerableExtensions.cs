@@ -549,62 +549,51 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #endregion
 
 
-        #region Aggregate(this IEnumerable<String>)
-
-        public static String Aggregate(this IEnumerable<String> IEnumerable)
-        {
-
-            if (IEnumerable == null || !IEnumerable.Any())
-                return String.Empty;
-
-            return String.Concat(IEnumerable.ToArray());
-
-        }
-
-        #endregion
-
-        #region AggregateOrDefault(this IEnumerable, AggreationDelegate, DefaultT = default(T))
+        #region AggregateOrDefault(this Enumeration, AggreationDelegate, DefaultValue = default(T))
 
         /// <summary>
         /// Safely aggregates the given enumeration. If the enumeration is null
         /// or has no elements the default value will be returned.
         /// </summary>
         /// <typeparam name="T">The type of the enumeration.</typeparam>
-        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Enumeration">An enumeration.</param>
         /// <param name="AggreationDelegate">The delegate to aggregate the given enumeration.</param>
-        /// <param name="DefaultT">The default value to return for an empty enumeration.</param>
-        public static T AggregateOrDefault<T>(this IEnumerable<T>  IEnumerable,
+        /// <param name="DefaultValue">The default value to return for an empty enumeration.</param>
+        public static T AggregateOrDefault<T>(this IEnumerable<T>  Enumeration,
                                               Func<T, T, T>        AggreationDelegate,
-                                              T                    DefaultT = default(T))
+                                              T                    DefaultValue = default(T))
         {
 
-            if (IEnumerable == null)
-                return DefaultT;
+            if (Enumeration == null)
+                return DefaultValue;
+
+            var Array = Enumeration.ToArray();
+
+            if (Array.Length == 0)
+                return DefaultValue;
 
             try
             {
-                return IEnumerable.Aggregate(AggreationDelegate);
+                return Array.Aggregate(AggreationDelegate);
             }
             catch (Exception e)
             {
-                return DefaultT;
+                return DefaultValue;
             }
 
         }
 
         #endregion
 
-        #region AggregateOrDefault(this IEnumerable, Prefix, Map, Reduce, Suffix, DefaultT = default(T))
+        #region AggregateOrDefault(this Enumeration, Prefix, Map, Reduce, Suffix, DefaultT = default(T))
 
         /// <summary>
         /// Safely aggregates the given enumeration. If the enumeration is null
         /// or has no elements the default value will be returned.
         /// </summary>
         /// <typeparam name="T">The type of the enumeration.</typeparam>
-        /// <param name="IEnumerable">An enumeration.</param>
-        /// <param name="AggreationDelegate">The delegate to aggregate the given enumeration.</param>
-        /// <param name="DefaultT">The default value to return for an empty enumeration.</param>
-        public static T AggregateOrDefault<T>(this IEnumerable<T>  IEnumerable,
+        /// <param name="Enumeration">An enumeration.</param>
+        public static T AggregateOrDefault<T>(this IEnumerable<T>  Enumeration,
                                               T                    Prefix,
                                               Func<T, T>           Map,
                                               Func<T, T, T>        Reduce,
@@ -612,10 +601,10 @@ namespace org.GraphDefined.Vanaheimr.Illias
                                               T                    DefaultValue = default(T))
         {
 
-            if (IEnumerable == null)
+            if (Enumeration == null)
                 return DefaultValue;
 
-            var Array = IEnumerable.Select(i => Map(i)).ToArray();
+            var Array = Enumeration.Select(i => Map(i)).ToArray();
 
             try
             {
@@ -630,24 +619,33 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region AggregateWith(this IEnumerable, Seperator)
+        #region AggregateWith(this Enumeration, Seperator, DefaultValue = null)
 
         /// <summary>
         /// Safely aggregates the given enumeration. If the enumeration is null
         /// or has no elements an empty string will be returned.
         /// </summary>
         /// <typeparam name="T">The type of the enumeration.</typeparam>
-        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Enumeration">An enumeration.</param>
         /// <param name="Seperator">A string as element seperator.</param>
-        public static String AggregateWith<T>(this IEnumerable<T>  IEnumerable,
+        /// <param name="DefaultValue">The default value to return for an empty enumeration.</param>
+        public static String AggregateWith<T>(this IEnumerable<T>  Enumeration,
                                               String               Seperator,
                                               String               DefaultValue = null)
         {
 
-            if (IEnumerable == null)
-                return String.Empty;
+            if (DefaultValue == null)
+                DefaultValue = String.Empty;
 
-            return IEnumerable.
+            if (Enumeration == null)
+                return DefaultValue;
+
+            var Array = Enumeration.ToArray();
+
+            if (Array.Length == 0)
+                return DefaultValue;
+
+            return Array.
                        Select(v => v.ToString()).
                        AggregateOrDefault((a, b) => a + Seperator + b, DefaultValue);
 
@@ -655,29 +653,52 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region CSVAggregate(this IEnumerable<String>)
+        #region Aggregate(this EnumerationOfStrings, DefaultValue = null)
 
-        public static String CSVAggregate(this IEnumerable<String> IEnumerable)
+        public static String Aggregate(this IEnumerable<String> EnumerationOfStrings,
+                                       String                   DefaultValue = null)
         {
 
-            if (IEnumerable == null)
-                return String.Empty;
+            if (DefaultValue == null)
+                DefaultValue = String.Empty;
 
-            return IEnumerable.Aggregate((a, b) => a + ", " + b);
+            if (EnumerationOfStrings == null)
+                return DefaultValue;
+
+            var Array = EnumerationOfStrings.ToArray();
+
+            if (Array.Length == 0)
+                return DefaultValue;
+
+            return String.Concat(Array);
 
         }
 
         #endregion
 
-        #region CSVAggregate(this IEnumerable<String>, Prefix, Suffix)
+        #region CSVAggregate(this EnumerationOfStrings)
 
-        public static String CSVAggregate(this IEnumerable<String> IEnumerable, String Prefix, String Suffix)
+        public static String CSVAggregate(this IEnumerable<String> EnumerationOfStrings)
         {
 
-            if (IEnumerable == null)
+            if (EnumerationOfStrings == null)
+                return String.Empty;
+
+            return EnumerationOfStrings.Aggregate((a, b) => a + ", " + b);
+
+        }
+
+        #endregion
+
+        #region CSVAggregate(this EnumerationOfStrings, Prefix, Suffix)
+
+        public static String CSVAggregate(this IEnumerable<String> EnumerationOfStrings, String Prefix, String Suffix)
+        {
+
+            if (EnumerationOfStrings == null)
                 return Prefix + Suffix;
 
-            return String.Concat(Prefix, IEnumerable.Aggregate((a, b) => a + ", " + b), Suffix);
+            return String.Concat(Prefix, EnumerationOfStrings.Aggregate((a, b) => a + ", " + b), Suffix);
 
         }
 

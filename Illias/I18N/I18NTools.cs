@@ -94,6 +94,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public static String ToJSON(this I18NString I18NString)
         {
 
+            if (!I18NString.Any())
+                return "{ }";
+
             return "{" + Environment.NewLine +
                    I18NString.
                        Select(v => @"""" + v.Language + @""": """ + v.Text + @"""").

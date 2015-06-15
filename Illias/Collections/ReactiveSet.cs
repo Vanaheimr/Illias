@@ -119,6 +119,12 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        public Boolean Contains(T Item)
+        {
+            return _Set.Contains(Item);
+        }
+
+
         public ReactiveSet<T> Remove(T Item)
         {
 
