@@ -100,7 +100,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
             return "{" + Environment.NewLine +
                    I18NString.
                        Select(v => @"""" + v.Language + @""": """ + v.Text + @"""").
-                       AggregateWith("," + Environment.NewLine) +
+                       AggregateWith("," + Environment.NewLine) + Environment.NewLine +
                    "}";
 
         }
