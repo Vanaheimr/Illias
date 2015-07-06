@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.Threading;
 using System.Diagnostics;
 
 #endregion
@@ -40,6 +41,19 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public static void Log(String Text)
         {
             Debug.WriteLine("[" + DateTime.Now + "] " + Text);
+        }
+
+        #endregion
+
+        #region LogT(Text)
+
+        /// <summary>
+        /// Write the current timestamp and given text to Debug.
+        /// </summary>
+        /// <param name="Text">The text to be logged.</param>
+        public static void LogT(String Text)
+        {
+            Debug.WriteLine("[" + DateTime.Now + ", Thread " + Thread.CurrentThread.ManagedThreadId + "] " + Text);
         }
 
         #endregion
