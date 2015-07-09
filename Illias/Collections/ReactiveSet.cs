@@ -40,6 +40,18 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Properties
 
+        #region Count
+
+        public UInt64 Count
+        {
+            get
+            {
+                return (UInt64) _Set.Count;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Events
@@ -82,6 +94,13 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
 
             this._Set = new HashSet<T>();
+
+        }
+
+        public ReactiveSet(IEnumerable<T> Items)
+        {
+
+            this._Set = new HashSet<T>(Items);
 
         }
 

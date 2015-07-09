@@ -324,42 +324,42 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Operator overloading
 
-        #region Operator == (I8NString1, I8NString2)
+        #region Operator == (I18NString1, I18NString2)
 
         /// <summary>
-        /// Compares two I8N-strings for equality.
+        /// Compares two I18N-strings for equality.
         /// </summary>
-        /// <param name="I8NString1">A I8N-string.</param>
-        /// <param name="I8NString2">Another I8N-string.</param>
+        /// <param name="I18NString1">A I18N-string.</param>
+        /// <param name="I18NString2">Another I18N-string.</param>
         /// <returns>True if both match; False otherwise.</returns>
-        public static Boolean operator == (I18NString I8NString1, I18NString I8NString2)
+        public static Boolean operator == (I18NString I18NString1, I18NString I18NString2)
         {
 
             // If both are null, or both are same instance, return true.
-            if (Object.ReferenceEquals(I8NString1, I8NString2))
+            if (Object.ReferenceEquals(I18NString1, I18NString2))
                 return true;
 
             // If one is null, but not both, return false.
-            if (((Object) I8NString1 == null) || ((Object) I8NString2 == null))
+            if (((Object) I18NString1 == null) || ((Object) I18NString2 == null))
                 return false;
 
-            return I8NString1.Equals(I8NString2);
+            return I18NString1.Equals(I18NString2);
 
         }
 
         #endregion
 
-        #region Operator != (I8NString1, I8NString2)
+        #region Operator != (I18NString1, I18NString2)
 
         /// <summary>
-        /// Compares two I8N-strings for inequality.
+        /// Compares two I18N-strings for inequality.
         /// </summary>
-        /// <param name="I8NString1">A I8N-string.</param>
-        /// <param name="I8NString2">Another I8N-string.</param>
+        /// <param name="I18NString1">A I18N-string.</param>
+        /// <param name="I18NString2">Another I18N-string.</param>
         /// <returns>False if both match; True otherwise.</returns>
-        public static Boolean operator != (I18NString I8NString1, I18NString I8NString2)
+        public static Boolean operator != (I18NString I18NString1, I18NString I18NString2)
         {
-            return !(I8NString1 == I8NString2);
+            return !(I18NString1 == I18NString2);
         }
 
         #endregion
