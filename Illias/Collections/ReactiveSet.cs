@@ -90,10 +90,14 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Constructor(s)
 
-        public ReactiveSet()
+        public ReactiveSet(params T[] Items)
         {
 
-            this._Set = new HashSet<T>();
+            if (Items == null)
+                this._Set = new HashSet<T>();
+
+            else
+                this._Set = new HashSet<T>(Items);
 
         }
 
