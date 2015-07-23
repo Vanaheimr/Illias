@@ -94,11 +94,13 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Constructor(s)
 
+        #region ReactiveSet(params Items)
+
         /// <summary>
         /// Create a new reactive set storing on the given items.
         /// </summary>
-        /// <param name="Items">An optional enumeration of items to store.</param>
-        public ReactiveSet(IEnumerable<T> Items = null)
+        /// <param name="Items">An optional array of items to store.</param>
+        public ReactiveSet(params T[] Items)
         {
 
             if (Items == null)
@@ -108,6 +110,23 @@ namespace org.GraphDefined.Vanaheimr.Illias
                 this._Set = new HashSet<T>(Items);
 
         }
+
+        #endregion
+
+        #region ReactiveSet(Items)
+
+        /// <summary>
+        /// Create a new reactive set storing on the given items.
+        /// </summary>
+        /// <param name="Items">An optional enumeration of items to store.</param>
+        public ReactiveSet(IEnumerable<T> Items)
+        {
+
+            this._Set = new HashSet<T>(Items);
+
+        }
+
+        #endregion
 
         #endregion
 
