@@ -29,7 +29,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
     /// <summary>
     /// A reactive set.
     /// </summary>
-    public class ReactiveSet<T> : IEnumerable<T>
+    public class ReactiveSet<T> : IEnumerable<T>,
+                                  IEquatable<ReactiveSet<T>>
     {
 
         #region Data
@@ -42,6 +43,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Count
 
+        /// <summary>
+        /// The number of items stored within this reactive set.
+        /// </summary>
         public UInt64 Count
         {
             get
@@ -90,93 +94,130 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Constructor(s)
 
-        public ReactiveSet()
+        /// <summary>
+        /// Create a new reactive set storing on the given items.
+        /// </summary>
+        /// <param name="Items">An optional enumeration of items to store.</param>
+        public ReactiveSet(IEnumerable<T> Items = null)
         {
 
-            this._Set = new HashSet<T>();
+            if (Items == null)
+                this._Set = new HashSet<T>();
 
-        }
-
-        public ReactiveSet(IEnumerable<T> Items)
-        {
-
-            this._Set = new HashSet<T>(Items);
+            else
+                this._Set = new HashSet<T>(Items);
 
         }
 
         #endregion
 
 
-        public ReactiveSet<T> Add(T Item)
+        #region Add(Items...)
+
+        /// <summary>
+        /// Add the given array of items to the reactive set.
+        /// </summary>
+        /// <param name="Items">An array of items.</param>
+        public ReactiveSet<T> Add(params T[] Items)
         {
-
-            _Set.Add(Item);
-
-            var OnItemAddedLocal = OnItemAdded;
-            if (OnItemAddedLocal != null)
-                OnItemAddedLocal(DateTime.Now, this, Item);
-
-            return this;
-
+            return Add(Items as IEnumerable<T>);
         }
 
+        #endregion
+
+        #region Add(Items)
+
+        /// <summary>
+        /// Add the given enumeration of items to the reactive set.
+        /// </summary>
+        /// <param name="Items">An enumeration of items.</param>
         public ReactiveSet<T> Add(IEnumerable<T> Items)
         {
 
-            var OnItemAddedLocal = OnItemAdded;
+            if (Items != null)
+            {
 
-            Items.ForEach(Item => {
+                var OnItemAddedLocal  = OnItemAdded;
+                var Timestamp         = DateTime.Now;
 
-                _Set.Add(Item);
+                Items.ForEach(Item => {
 
-                if (OnItemAddedLocal != null)
-                    OnItemAddedLocal(DateTime.Now, this, Item);
+                    _Set.Add(Item);
 
-            });
+                    if (OnItemAddedLocal != null)
+                        OnItemAddedLocal(Timestamp, this, Item);
+
+                });
+
+            }
 
             return this;
 
         }
 
+        #endregion
+
+        #region Contains(Item)
+
+        /// <summary>
+        /// Determines whether the reactive set contains the given item.
+        /// </summary>
+        /// <param name="Item">An item.</param>
+        /// <returns>true if the reactive set contains the specified item; otherwise, false.</returns>
         public Boolean Contains(T Item)
         {
             return _Set.Contains(Item);
         }
 
+        #endregion
 
-        public ReactiveSet<T> Remove(T Item)
+        #region Remove(Items...)
+
+        /// <summary>
+        /// Remove the given array of items from the reactive set.
+        /// </summary>
+        /// <param name="Items">An array of items.</param>
+        public ReactiveSet<T> Remove(params T[] Items)
         {
-
-            _Set.Remove(Item);
-
-            var OnItemRemovedLocal = OnItemRemoved;
-            if (OnItemRemovedLocal != null)
-                OnItemRemovedLocal(DateTime.Now, this, Item);
-
-            return this;
-
+            return Remove(Items as IEnumerable<T>);
         }
 
+        #endregion
+
+        #region Remove(Items)
+
+        /// <summary>
+        /// Remove the given enumeration of items from the reactive set.
+        /// </summary>
+        /// <param name="Items">An enumeration of items.</param>
         public ReactiveSet<T> Remove(IEnumerable<T> Items)
         {
 
-            var OnItemRemovedLocal = OnItemRemoved;
+            if (Items != null)
+            {
 
-            Items.ForEach(Item => {
+                var OnItemRemovedLocal  = OnItemRemoved;
+                var Timestamp           = DateTime.Now;
 
-                _Set.Remove(Item);
+                Items.ForEach(Item => {
 
-                if (OnItemRemovedLocal != null)
-                    OnItemRemovedLocal(DateTime.Now, this, Item);
+                    _Set.Remove(Item);
 
-            });
+                    if (OnItemRemovedLocal != null)
+                        OnItemRemovedLocal(Timestamp, this, Item);
+
+                });
+
+            }
 
             return this;
 
         }
 
+        #endregion
 
-        #region GetEnumerator()
+
+        #region IEnumerable<T> Members
 
         /// <summary>
         /// Enumerate the reactive list.
@@ -192,6 +233,80 @@ namespace org.GraphDefined.Vanaheimr.Illias
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return _Set.GetEnumerator();
+        }
+
+        #endregion
+
+        #region IEquatable<ReactiveSet<T>> Members
+
+        #region Equals(Object)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Object">An object to compare with.</param>
+        /// <returns>true|false</returns>
+        public override Boolean Equals(Object Object)
+        {
+
+            if (Object == null)
+                return false;
+
+            // Check if the given object is a reactive set.
+            var ReactiveSet = Object as ReactiveSet<T>;
+            if ((Object) ReactiveSet == null)
+                return false;
+
+            return this.Equals(ReactiveSet);
+
+        }
+
+        #endregion
+
+        #region Equals(ReactiveSet)
+
+        /// <summary>
+        /// Compares two reactive sets for equality.
+        /// </summary>
+        /// <param name="ReactiveSet">A reactive set to compare with.</param>
+        /// <returns>True if both match; False otherwise.</returns>
+        public Boolean Equals(ReactiveSet<T> ReactiveSet)
+        {
+
+            if ((Object) ReactiveSet == null)
+                return false;
+
+            if (this.Count != ReactiveSet.Count)
+                return false;
+
+            return _Set.All(item => ReactiveSet.Contains(item));
+
+        }
+
+        #endregion
+
+        #endregion
+
+        #region GetHashCode()
+
+        /// <summary>
+        /// Get the hashcode of this object.
+        /// </summary>
+        public override Int32 GetHashCode()
+        {
+            return _Set.GetHashCode();
+        }
+
+        #endregion
+
+        #region ToString()
+
+        /// <summary>
+        /// Get a string representation of this object.
+        /// </summary>
+        public override String ToString()
+        {
+            return "'" + _Set.AggregateWith(", ") + "'";
         }
 
         #endregion
