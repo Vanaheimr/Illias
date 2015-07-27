@@ -236,6 +236,120 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #endregion
 
 
+        #region Operator overloading
+
+        #region Operator == (ReactiveSet1, ReactiveSet2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="ReactiveSet1">A ReactiveSet.</param>
+        /// <param name="ReactiveSet2">Another ReactiveSet.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator == (ReactiveSet<T> ReactiveSet1, ReactiveSet<T> ReactiveSet2)
+        {
+
+            // If both are null, or both are same instance, return true.
+            if (Object.ReferenceEquals(ReactiveSet1, ReactiveSet2))
+                return true;
+
+            // If one is null, but not both, return false.
+            if (((Object) ReactiveSet1 == null) || ((Object) ReactiveSet2 == null))
+                return false;
+
+            return ReactiveSet1.Equals(ReactiveSet2);
+
+        }
+
+        #endregion
+
+        #region Operator != (ReactiveSet1, ReactiveSet2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="ReactiveSet1">A ReactiveSet.</param>
+        /// <param name="ReactiveSet2">Another ReactiveSet.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator != (ReactiveSet<T> ReactiveSet1, ReactiveSet<T> ReactiveSet2)
+        {
+            return !(ReactiveSet1 == ReactiveSet2);
+        }
+
+        #endregion
+
+        #region Operator <  (ReactiveSet1, ReactiveSet2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="ReactiveSet1">A ReactiveSet.</param>
+        /// <param name="ReactiveSet2">Another ReactiveSet.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator < (ReactiveSet<T> ReactiveSet1, ReactiveSet<T> ReactiveSet2)
+        {
+
+            if ((Object) ReactiveSet1 == null)
+                throw new ArgumentNullException("The given ReactiveSet1 must not be null!");
+
+            return ReactiveSet1.Count < ReactiveSet2.Count;
+
+        }
+
+        #endregion
+
+        #region Operator <= (ReactiveSet1, ReactiveSet2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="ReactiveSet1">A ReactiveSet.</param>
+        /// <param name="ReactiveSet2">Another ReactiveSet.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator <= (ReactiveSet<T> ReactiveSet1, ReactiveSet<T> ReactiveSet2)
+        {
+            return !(ReactiveSet1 > ReactiveSet2);
+        }
+
+        #endregion
+
+        #region Operator >  (ReactiveSet1, ReactiveSet2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="ReactiveSet1">A ReactiveSet.</param>
+        /// <param name="ReactiveSet2">Another ReactiveSet.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator > (ReactiveSet<T> ReactiveSet1, ReactiveSet<T> ReactiveSet2)
+        {
+
+            if ((Object) ReactiveSet1 == null)
+                throw new ArgumentNullException("The given ReactiveSet1 must not be null!");
+
+            return ReactiveSet1.Count > ReactiveSet2.Count;
+
+        }
+
+        #endregion
+
+        #region Operator >= (ReactiveSet1, ReactiveSet2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="ReactiveSet1">A ReactiveSet.</param>
+        /// <param name="ReactiveSet2">Another ReactiveSet.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator >= (ReactiveSet<T> ReactiveSet1, ReactiveSet<T> ReactiveSet2)
+        {
+            return !(ReactiveSet1 < ReactiveSet2);
+        }
+
+        #endregion
+
+        #endregion
+
         #region IEnumerable<T> Members
 
         /// <summary>
