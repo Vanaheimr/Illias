@@ -18,6 +18,7 @@
 #region Usings
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -63,6 +64,24 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
             if (_XElement == null)
                 return Default;
+
+            return Mapper(_XElement);
+
+        }
+
+        public static IEnumerable<T> IfElementExists<T>(this XElement                   ParentXElement,
+                                                        XName                           XName,
+                                                        Func<XElement, IEnumerable<T>>  Mapper,
+                                                        T                               Default = default(T))
+        {
+
+            if (ParentXElement == null || Mapper == null)
+                return new T[] { Default };
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return new T[] { Default };
 
             return Mapper(_XElement);
 

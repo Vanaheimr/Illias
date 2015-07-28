@@ -161,7 +161,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// An unkown country.
         /// </summary>
-        public static readonly Country unknown = new Country(new I18NString(Languages.en, "unknown"), "", "", 000, 00);
+        public static readonly Country unknown                                  = new Country(new I18NString(Languages.en, "unknown"),                                        "",   "",    000, 00);
 
         #region List of countries
 
