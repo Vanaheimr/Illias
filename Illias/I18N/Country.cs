@@ -504,6 +504,39 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region TryParse(AnyString, out CountryValue)
+
+        /// <summary>
+        /// Tries to find the apropriate country for the given string.
+        /// </summary>
+        /// <param name="AnyString">Any string.</param>
+        /// <param name="CountryValue">The country.</param>
+        public static Boolean TryParse(String AnyString, out Country CountryValue)
+        {
+
+            Country _Country;
+
+            if (TryParseAlpha2Code(AnyString, out CountryValue))
+                return true;
+
+            if (TryParseAlpha3Code(AnyString, out CountryValue))
+                return true;
+
+            if (TryParseNumericCode(AnyString, out CountryValue))
+                return true;
+
+            if (TryParseTelefonCode(AnyString, out CountryValue))
+                return true;
+
+            if (TryParseCountryName(AnyString, out CountryValue))
+                return true;
+
+            return false;
+
+        }
+
+        #endregion
+
 
         #region ParseCountryName(CountryName)
 

@@ -51,6 +51,61 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        public static IEnumerable<XElement> ElementsOrFail(this XElement  ParentXElement,
+                                                           XName          XName,
+                                                           String         Message)
+        {
+
+            if (ParentXElement == null)
+                throw new Exception(Message);
+
+            var _XElements = ParentXElement.Elements(XName);
+
+            if (_XElements == null || !_XElements.Any())
+                throw new Exception(Message);
+
+            return _XElements;
+
+        }
+
+        public static IEnumerable<TResult> ElementsOrDefault<TResult>(this XElement          ParentXElement,
+                                                                      XName                  XName,
+                                                                      Func<String, TResult>  Mapper,
+                                                                      IEnumerable<TResult>   DefaultValues = null)
+        {
+
+            if (DefaultValues == null)
+                DefaultValues = new TResult[0];
+
+            if (ParentXElement  == null ||
+                XName           == null ||
+                Mapper          == null)
+                return DefaultValues;
+
+            var _XElements = ParentXElement.
+                                 Elements(XName).
+                                 SafeSelect(XMLTag => Mapper(XMLTag.Value)).
+                                 ToArray();
+
+            if (_XElements == null || !_XElements.Any())
+                return DefaultValues;
+
+            return _XElements;
+
+        }
+
+        public static IEnumerable<String> ElementsOrDefault(this XElement        ParentXElement,
+                                                            XName                XName,
+                                                            IEnumerable<String>  DefaultValues = null)
+        {
+
+            return ElementsOrDefault(ParentXElement,
+                                     XName,
+                                     Text => Text,
+                                     DefaultValues);
+
+        }
+
         public static T IfElementExists<T>(this XElement      ParentXElement,
                                            XName              XName,
                                            Func<XElement, T>  Mapper,
@@ -87,55 +142,70 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+
+        #region ElementValueOrDefault(this ParentXElement, XName, DefaultValue)
+
+        /// <summary>
+        /// Return the value of the first (in document order) child element with the
+        /// specified System.Xml.Linq.XName or the given default value.
+        /// </summary>
+        /// <param name="ParentXElement">The XML parent element.</param>
+        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
+        /// <param name="DefaultValue">A default value.</param>
         public static String ElementValueOrDefault(this XElement  ParentXElement,
                                                    XName          XName,
-                                                   String         Default)
+                                                   String         DefaultValue)
         {
 
             if (ParentXElement == null)
-                return Default;
+                return DefaultValue;
 
             var _XElement = ParentXElement.Element(XName);
 
             if (_XElement == null)
-                return Default;
+                return DefaultValue;
 
             return _XElement.Value;
 
         }
 
-        public static String ElementValueOrFail(this XElement  ParentXElement,
-                                                XName          XName,
-                                                String         Message)
+        #endregion
+
+        #region ElementValue(this ParentXElement, XName, ExceptionMessage = null)
+
+        /// <summary>
+        /// Return the value of the first (in document order) child element with the
+        /// specified System.Xml.Linq.XName or throw an optional exception.
+        /// </summary>
+        /// <param name="ParentXElement">The XML parent element.</param>
+        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
+        /// <param name="ExceptionMessage">An optional exception message.</param>
+        public static String ElementValue(this XElement  ParentXElement,
+                                          XName          XName,
+                                          String         ExceptionMessage = null)
         {
 
             if (ParentXElement == null)
-                throw new Exception(Message);
+                throw new Exception(ExceptionMessage);
 
             var _XElement = ParentXElement.Element(XName);
 
             if (_XElement == null)
-                throw new Exception(Message);
+            {
 
-            return _XElement.Value;
+                if (ExceptionMessage.IsNotNullOrEmpty())
+                    throw new Exception(ExceptionMessage);
 
-        }
-
-        public static String ElementValueOrNull(this XElement  ParentXElement,
-                                                XName          XName)
-        {
-
-            if (ParentXElement == null)
                 return null;
 
-            var _XElement = ParentXElement.Element(XName);
-
-            if (_XElement == null)
-                return null;
+            }
 
             return _XElement.Value;
 
         }
+
+        #endregion
+
 
         public static void UseValue(this XElement   ParentXElement,
                                     XName           XName,
@@ -158,6 +228,38 @@ namespace org.GraphDefined.Vanaheimr.Illias
                 ActionLocal(_XElement.Value);
 
         }
+
+
+        #region AttributeValueOrDefault(this ParentXElement, XName, DefaultValue)
+
+
+        /// <summary>
+        /// Return the value of the first (in document order) attribute with the
+        /// specified System.Xml.Linq.XName or the given default value.
+        /// </summary>
+        /// <param name="ParentXElement">The XML parent element.</param>
+        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
+        /// <param name="DefaultValue">A default value.</param>
+        public static String AttributeValueOrDefault(this XElement  ParentXElement,
+                                                     XName          XName,
+                                                     String         DefaultValue)
+        {
+
+            if (ParentXElement == null)
+                return DefaultValue;
+
+            var _XElement = ParentXElement.Attribute(XName);
+
+            if (_XElement == null)
+                return DefaultValue;
+
+            return _XElement.Value;
+
+        }
+
+        #endregion
+
+
 
         #region ToUTF8Bytes(this XML)
 

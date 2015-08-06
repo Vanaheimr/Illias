@@ -502,7 +502,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region SafeSelect(this IEnumerable, SelectionDelegate)
+        #region SafeSelect(this IEnumerable, SelectionDelegate, DefaultValues = null)
 
         /// <summary>
         /// Safely selects the given enumeration.
@@ -511,14 +511,24 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <typeparam name="TResult">The type of the resulting enumeration.</typeparam>
         /// <param name="IEnumerable">An enumeration.</param>
         /// <param name="SelectionDelegate">The delegate to select the given enumeration.</param>
-        public static IEnumerable<TResult> SafeSelect<T, TResult>(this IEnumerable<T>  IEnumerable,
-                                                                  Func<T, TResult>     SelectionDelegate)
+        /// <param name="DefaultValues">A default value.</param>
+        public static IEnumerable<TResult> SafeSelect<T, TResult>(this IEnumerable<T>   IEnumerable,
+                                                                  Func<T, TResult>      SelectionDelegate,
+                                                                  IEnumerable<TResult>  DefaultValues = null)
         {
 
-            if (IEnumerable == null)
-                return null;
+            if (DefaultValues == null)
+                DefaultValues = new TResult[0];
 
-            return IEnumerable.Select(SelectionDelegate);
+            if (IEnumerable == null)
+                return DefaultValues;
+
+            var Items = IEnumerable.ToArray();
+
+            if (!Items.Any())
+                return DefaultValues;
+
+            return Items.Select(SelectionDelegate);
 
         }
 
