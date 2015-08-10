@@ -75,6 +75,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         /// <param name="DateTime">A DateTime object.</param>
         /// <returns>The DateTime formated as "yyyy-MM-ddTHH:mm:ss.fff" + "Z"</returns>
+        /// <example>2014-02-01T15:45:00.000Z</example>
         public static String ToIso8601(this DateTime DateTime)
         {
             return DateTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fff") + "Z";
