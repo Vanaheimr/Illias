@@ -180,7 +180,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="ParentXElement">The XML parent element.</param>
         /// <param name="XName">The System.Xml.Linq.XName to match.</param>
         /// <param name="ExceptionMessage">An optional exception message.</param>
-        public static String ElementValue(this XElement  ParentXElement,
+        public static String ElementValueOrFail(this XElement  ParentXElement,
                                           XName          XName,
                                           String         ExceptionMessage = null)
         {
