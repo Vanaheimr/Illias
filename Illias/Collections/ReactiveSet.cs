@@ -176,6 +176,35 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region AddAndReturn(Item)
+
+        /// <summary>
+        /// Add the given item to the reactive set and return it.
+        /// </summary>
+        /// <param name="Item">An item.</param>
+        public T AddAndReturn(T Item)
+        {
+
+            if (Item != null)
+            {
+
+                var OnItemAddedLocal = OnItemAdded;
+                var Timestamp = DateTime.Now;
+
+                _Set.Add(Item);
+
+                if (OnItemAddedLocal != null)
+                    OnItemAddedLocal(Timestamp, this, Item);
+
+            }
+
+            return Item;
+
+        }
+
+        #endregion
+
+
         #region Contains(Item)
 
         /// <summary>
