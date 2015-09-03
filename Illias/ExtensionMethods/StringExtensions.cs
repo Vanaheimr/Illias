@@ -365,6 +365,20 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region RemoveLastSlash(this Text)
+
+        public static String RemoveLastSlash(this String Text)
+        {
+
+            if (Text[Text.Length - 1] == '/')
+                return Text.Substring(0, Text.Length - 1);
+
+            return Text;
+
+        }
+
+        #endregion
+
     }
 
 }
