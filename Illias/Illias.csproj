@@ -81,6 +81,7 @@
     <Compile Include="ExtensionMethods\IntegerExtensions.cs" />
     <Compile Include="ExtensionMethods\SilverlightExtensions.cs" />
     <Compile Include="ExtensionMethods\StringBuilderExtentions.cs" />
+    <Compile Include="ExtensionMethods\StreamExtensions.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ExtensionMethods\TypeExtensions.cs" />
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
