@@ -49,6 +49,30 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region GetString(this _Random, Length)
+
+        /// <summary>
+        /// Get random string of the given length.
+        /// </summary>
+        /// <param name="Random">The source of randomness.</param>
+        /// <param name="Length">The the length of the string.</param>
+        public static String GetString(this Random Random, UInt16 Length)
+        {
+
+            var ByteArray = new Byte[Length];
+            Random.NextBytes(ByteArray);
+
+            for (var i = 0; i < ByteArray.Length; i++)
+            {
+                ByteArray[i] = (Byte) (ByteArray[i] % 26 + 64);
+            }
+
+            return System.Text.Encoding.UTF8.GetString(ByteArray, 0, ByteArray.Length);
+
+        }
+
+        #endregion
+
     }
 
 }
