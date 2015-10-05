@@ -44,8 +44,13 @@ namespace org.GraphDefined.Vanaheimr.Illias
                                          Stream       DestinationStream,
                                          Int32        SkipFromBeginning)
         {
+
+            if (SourceStream == null)
+                return;
+
             SourceStream.Seek(SkipFromBeginning, SeekOrigin.Begin);
             SourceStream.CopyTo(DestinationStream);
+
         }
 
         #endregion
