@@ -34,6 +34,26 @@ namespace org.GraphDefined.Vanaheimr.Illias
     public static class XElementExtensions
     {
 
+        public static void IfElementIsDefined(this XElement   ParentXElement,
+                                            XName           XName,
+                                            Action<String>  ValueAction)
+        {
+
+            if (ValueAction == null)
+                return;
+
+            if (ParentXElement == null)
+                return;
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return;
+
+            ValueAction(_XElement.Value.Trim());
+
+        }
+
         public static XElement ElementOrFail(this XElement  ParentXElement,
                                              XName          XName,
                                              String         Message)

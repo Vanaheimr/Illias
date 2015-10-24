@@ -839,6 +839,20 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #endregion
 
 
+        #region NotNullAny<T>(this Enumeration)
+
+        public static Boolean NotNullAny<T>(this IEnumerable<T> Enumeration)
+        {
+
+            if (Enumeration == null)
+                return false;
+
+            return Enumeration.Any();
+
+        }
+
+        #endregion
+
     }
 
 }

@@ -49,6 +49,7 @@
     <Compile Include="Collections\ImmutableMap.cs" />
     <Compile Include="Collections\Imutable\IBinarySearchTree.cs" />
     <Compile Include="Collections\Imutable\IImmutableMap.cs" />
+    <Compile Include="Collections\Enumeration.cs" />
     <Compile Include="Collections\IProperties.cs" />
     <Compile Include="Collections\IReadOnlyProperties.cs" />
     <Compile Include="Collections\IReadOnlyPropertiesExtensions.cs" />
