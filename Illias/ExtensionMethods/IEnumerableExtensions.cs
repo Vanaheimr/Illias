@@ -665,8 +665,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Aggregate(this EnumerationOfStrings, DefaultValue = null)
 
-        public static String Aggregate(this IEnumerable<String> EnumerationOfStrings,
-                                       String                   DefaultValue = null)
+        public static String Aggregate(this IEnumerable<String>  EnumerationOfStrings,
+                                       String                    DefaultValue = null)
         {
 
             if (DefaultValue == null)
