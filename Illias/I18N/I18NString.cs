@@ -366,7 +366,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region IEquatable<I8NString> Members
+        #region IEquatable<I18NString> Members
 
         #region Equals(Object)
 
@@ -381,36 +381,36 @@ namespace org.GraphDefined.Vanaheimr.Illias
             if (Object == null)
                 return false;
 
-            // Check if the given object is an I8NString.
-            var I8NString = Object as I18NString;
-            if ((Object) I8NString == null)
+            // Check if the given object is an I18NString.
+            var I18NString = Object as I18NString;
+            if ((Object) I18NString == null)
                 return false;
 
-            return this.Equals(I8NString);
+            return this.Equals(I18NString);
 
         }
 
         #endregion
 
-        #region Equals(I8NString)
+        #region Equals(I18NString)
 
         /// <summary>
-        /// Compares two I8NString for equality.
+        /// Compares two I18NString for equality.
         /// </summary>
-        /// <param name="I8NString">An I8NString to compare with.</param>
+        /// <param name="I18NString">An I18NString to compare with.</param>
         /// <returns>True if both match; False otherwise.</returns>
-        public Boolean Equals(I18NString I8NString)
+        public Boolean Equals(I18NString I18NString)
         {
 
-            if ((Object) I8NString == null)
+            if ((Object) I18NString == null)
                 return false;
 
-            if (I18NStrings.Count != I8NString.Count())
+            if (I18NStrings.Count != I18NString.Count())
                 return false;
 
-            foreach (var i8n in I18NStrings)
+            foreach (var I18N in I18NStrings)
             {
-                if (i8n.Value != I8NString[i8n.Key])
+                if (I18N.Value != I18NString[I18N.Key])
                     return false;
             }
 
@@ -433,7 +433,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
             Int32 ReturnValue = 0;
 
             foreach (var Value in I18NStrings.
-                                      Select(i8n => i8n.Key.GetHashCode() ^ i8n.Value.GetHashCode()))
+                                      Select(I18N => I18N.Key.GetHashCode() ^ I18N.Value.GetHashCode()))
             {
                 ReturnValue ^= Value;
             }
@@ -456,7 +456,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
                 return String.Empty;
 
             return I18NStrings.
-                       Select(i8n => i8n.Key.ToString() + ": " + i8n.Value).
+                       Select(I18N => I18N.Key.ToString() + ": " + I18N.Value).
                        AggregateWith("; ");
 
         }

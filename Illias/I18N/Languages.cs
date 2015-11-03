@@ -30,7 +30,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         se,
         nl,
         ru,
-        sk
+        sk,
+        gb
     }
 
 }

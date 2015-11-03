@@ -250,18 +250,18 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #endregion
 
 
-        #region Skip<T>(this IEnumerable, Count)
+        #region Skip<T>(this Enumerable, Count)
 
         /// <summary>
         /// Skips the given number of elements in the enumeration.
         /// </summary>
         /// <typeparam name="T">The type fo the enumeration.</typeparam>
-        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Enumerable">An enumeration.</param>
         /// <param name="Count">The number of elements to skip.</param>
-        public static IEnumerable<T> Skip<T>(this IEnumerable<T> IEnumerable, UInt32 Count)
+        public static IEnumerable<T> Skip<T>(this IEnumerable<T> Enumerable, UInt32 Count)
         {
 
-            var IEnumerator = IEnumerable.GetEnumerator();
+            var IEnumerator = Enumerable.GetEnumerator();
 
             for (var i = 0U; i<Count; i++)
                 IEnumerator.MoveNext();
@@ -311,18 +311,18 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region Take<T>(this IEnumerable, Count)
+        #region Take<T>(this Enumerable, Count)
 
         /// <summary>
         /// Takes the given number of elements from the enumeration.
         /// </summary>
         /// <typeparam name="T">The type fo the enumeration.</typeparam>
-        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Enumerable">An enumeration.</param>
         /// <param name="Count">The number of elements to skip.</param>
-        public static IEnumerable<T> Take<T>(this IEnumerable<T> IEnumerable, UInt32 Count)
+        public static IEnumerable<T> Take<T>(this IEnumerable<T> Enumerable, UInt32 Count)
         {
 
-            var IEnumerator = IEnumerable.GetEnumerator();
+            var IEnumerator = Enumerable.GetEnumerator();
 
             for (var i = 0U; i < Count; i++)
             {
@@ -387,12 +387,12 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region IsNullOrEmpty<T>(this myEnumerable)
+        #region IsNullOrEmpty<T>(this Enumerable)
 
-        public static Boolean IsNullOrEmpty<T>(this IEnumerable<T> myEnumerable)
+        public static Boolean IsNullOrEmpty<T>(this IEnumerable<T> Enumerable)
         {
 
-            if (myEnumerable == null || !myEnumerable.Any())
+            if (Enumerable == null || !Enumerable.Any())
                 return true;
 
             return false;
@@ -401,12 +401,12 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region IsNeitherNullNorEmpty<T>(this myEnumerable)
+        #region IsNeitherNullNorEmpty<T>(this Enumerable)
 
-        public static Boolean IsNeitherNullNorEmpty<T>(this IEnumerable<T> myEnumerable)
+        public static Boolean IsNeitherNullNorEmpty<T>(this IEnumerable<T> Enumerable)
         {
 
-            if (myEnumerable == null || !myEnumerable.Any())
+            if (Enumerable == null || !Enumerable.Any())
                 return false;
 
             return true;

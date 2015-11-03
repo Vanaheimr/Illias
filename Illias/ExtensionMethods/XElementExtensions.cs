@@ -35,8 +35,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
     {
 
         public static void IfElementIsDefined(this XElement   ParentXElement,
-                                            XName           XName,
-                                            Action<String>  ValueAction)
+                                              XName           XName,
+                                              Action<String>  ValueAction)
         {
 
             if (ValueAction == null)
@@ -50,7 +50,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
             if (_XElement == null)
                 return;
 
-            ValueAction(_XElement.Value.Trim());
+            if (_XElement.Value.Trim().IsNotNullOrEmpty())
+                ValueAction(_XElement.Value.Trim());
 
         }
 
@@ -162,21 +163,21 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
-        public static IEnumerable<T> MapElements<T>(this XElement      ParentXElement,
-                                                    XName              XName,
-                                                    Func<XElement, T>  Mapper,
-                                                    T                  Default = default(T))
+        public static IEnumerable<T> MapElements<T>(this XElement                           ParentXElement,
+                                                    XName                                   XName,
+                                                    Func<XElement, OnExceptionDelegate, T>  Mapper,
+                                                    OnExceptionDelegate                     OnException = null)
         {
 
             if (ParentXElement == null || Mapper == null)
-                return new T[] { Default };
+                return new T[0];
 
             var _XElements = ParentXElement.Elements(XName);
 
             if (_XElements == null)
-                return new T[] { Default };
+                return new T[0];
 
-            return _XElements.Select(Mapper);
+            return _XElements.Select(XML => Mapper(XML, OnException)).Where(v => v != null);
 
         }
 
@@ -311,6 +312,95 @@ namespace org.GraphDefined.Vanaheimr.Illias
                 throw new Exception(ExceptionMessage.IsNotNullOrEmpty() ? ExceptionMessage : "The given XML element value must not be null!");
 
             return ValueMapper(_XElement.Value);
+
+        }
+
+        public static T MapValueOrDefault<T>(this XElement    ParentXElement,
+                                             XName            XName,
+                                             Func<String, T>  ValueMapper,
+                                             T                DefaultValue = default(T))
+        {
+
+            if (ParentXElement == null)
+                return DefaultValue;
+
+            if (ValueMapper == null)
+                return DefaultValue;
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return DefaultValue;
+
+            if (_XElement.Value == null)
+                return DefaultValue;
+
+            return ValueMapper(_XElement.Value);
+
+        }
+
+        public static IEnumerable<T> MapValuesOrDefault<T>(this XElement    ParentXElement,
+                                                           XName            XWrapperName,
+                                                           XName            XElementsName,
+                                                           Func<String, T>  ValueMapper,
+                                                           T                DefaultValue = default(T))
+        {
+
+            if (ParentXElement == null)
+                return new T[1] { DefaultValue };
+
+            if (ValueMapper == null)
+                return new T[1] { DefaultValue };
+
+            var _XElement = ParentXElement.Element(XWrapperName);
+
+            if (_XElement == null)
+                return new T[1] { DefaultValue };
+
+            var _XElements = _XElement.Elements(XElementsName);
+
+            if (_XElements == null)
+                return new T[1] { DefaultValue };
+
+            var __XElements = _XElements.ToArray();
+
+            if (__XElements.Length == 0)
+                return new T[1] { DefaultValue };
+
+            return _XElements.Select(__XElement => ValueMapper(__XElement.Value));
+
+        }
+
+        public static IEnumerable<T> MapValuesOrFail<T>(this XElement    ParentXElement,
+                                                        XName            XWrapperName,
+                                                        String           ExceptionMessage,
+                                                        XName            XElementsName,
+                                                        Func<String, T>  ValueMapper,
+                                                        T                DefaultValue = default(T))
+        {
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException("ParentXElement", "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException("ValueMapper", "The given XML element mapper delegate must not be null!");
+
+            var _XElement = ParentXElement.Element(XWrapperName);
+
+            if (_XElement == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty() ? ExceptionMessage : "The given XML element must not be null!");
+
+            var _XElements = _XElement.Elements(XElementsName);
+
+            if (_XElements == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty() ? ExceptionMessage : "The given XML elements must not be null!");
+
+            var __XElements = _XElements.ToArray();
+
+            if (__XElements.Length == 0)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty() ? ExceptionMessage : "The given array of XML elements must not be empty!");
+
+            return _XElements.Select(__XElement => ValueMapper(__XElement.Value));
 
         }
 
