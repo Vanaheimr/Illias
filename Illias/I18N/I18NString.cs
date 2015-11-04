@@ -71,6 +71,18 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region FirstText
+
+        public String FirstText
+        {
+            get
+            {
+                return I18NStrings.Any() ? I18NStrings.First().Value : String.Empty;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Constructor(s)
@@ -300,6 +312,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
             return !I18NStrings[Language].Equals(Value);
 
         }
+
+
+
 
 
         #region GetEnumerator()
