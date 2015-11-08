@@ -54,6 +54,23 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region RunOrDefault(this Task, Timeout, Default)
+
+        public static T RunOrDefault<T>(this Task<T> Task, TimeSpan Timeout, T Default)
+        {
+
+            Task.Wait(Timeout);
+
+            if (Task.IsCompleted)
+                return Task.Result;
+
+            return Default;
+
+        }
+
+        #endregion
+
+
     }
 
 }
