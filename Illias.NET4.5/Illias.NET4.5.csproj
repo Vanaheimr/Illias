@@ -46,6 +46,7 @@
     <Compile Include="Concurrent\GroupedCollection.cs" />
     <Compile Include="Concurrent\IGroupedCollection.cs" />
     <Compile Include="DLR\IReadOnlyPropertiesExtensions.cs" />
+    <Compile Include="ExtentionMethods\ConsoleExtensions.cs" />
     <Compile Include="ExtentionMethods\TaskExtentions.cs" />
     <Compile Include="ExtentionMethods\RandomExtentions.cs" />
     <Compile Include="ExtentionMethods\StringExtentions.cs" />
