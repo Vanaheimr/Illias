@@ -264,7 +264,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         }
 
 
-        #region ElementValueOrDefault(this ParentXElement, XName, DefaultValue)
+        #region ElementValueOrDefault(this ParentXElement, XName, DefaultValue = null)
 
         /// <summary>
         /// Return the value of the first (in document order) child element with the
@@ -275,7 +275,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="DefaultValue">A default value.</param>
         public static String ElementValueOrDefault(this XElement  ParentXElement,
                                                    XName          XName,
-                                                   String         DefaultValue)
+                                                   String         DefaultValue = null)
         {
 
             if (ParentXElement == null)
@@ -418,6 +418,37 @@ namespace org.GraphDefined.Vanaheimr.Illias
                 return DefaultValue;
 
             return ValueMapper(_XElement.Value);
+
+        }
+
+        public static IEnumerable<T> MapValues<T>(this XElement    ParentXElement,
+                                                  XName            XWrapperName,
+                                                  XName            XElementsName,
+                                                  Func<String, T>  ValueMapper)
+        {
+
+            if (ParentXElement == null)
+                return new T[0];
+
+            if (ValueMapper == null)
+                return new T[0];
+
+            var _XElement = ParentXElement.Element(XWrapperName);
+
+            if (_XElement == null)
+                return new T[0];
+
+            var _XElements = _XElement.Elements(XElementsName);
+
+            if (_XElements == null)
+                return new T[0];
+
+            var __XElements = _XElements.ToArray();
+
+            if (__XElements.Length == 0)
+                return new T[0];
+
+            return _XElements.Select(__XElement => ValueMapper(__XElement.Value));
 
         }
 
