@@ -85,27 +85,27 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region ToJSON(this I18NString)
+        //#region ToJSON(this I18NString)
 
-        /// <summary>
-        /// Convert the given internationalized (I18N) text/string to JSON.
-        /// </summary>
-        /// <param name="I18NString">An internationalized (I18N) text/string.</param>
-        public static String ToJSON(this I18NString I18NString)
-        {
+        ///// <summary>
+        ///// Convert the given internationalized (I18N) text/string to JSON.
+        ///// </summary>
+        ///// <param name="I18NString">An internationalized (I18N) text/string.</param>
+        //public static String ToJSON(this I18NString I18NString)
+        //{
 
-            if (!I18NString.Any())
-                return "{ }";
+        //    if (!I18NString.Any())
+        //        return "{ }";
 
-            return "{" + Environment.NewLine +
-                   I18NString.
-                       Select(v => @"""" + v.Language + @""": """ + v.Text + @"""").
-                       AggregateWith("," + Environment.NewLine) + Environment.NewLine +
-                   "}";
+        //    return "{" + Environment.NewLine +
+        //           I18NString.
+        //               Select(v => @"""" + v.Language + @""": """ + v.Text + @"""").
+        //               AggregateWith("," + Environment.NewLine) + Environment.NewLine +
+        //           "}";
 
-        }
+        //}
 
-        #endregion
+        //#endregion
 
     }
 
