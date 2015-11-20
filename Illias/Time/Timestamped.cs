@@ -82,19 +82,19 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         /// <param name="Value">The value.</param>
         public Timestamped(T Value)
-            : this(Value, DateTime.Now)
+            : this(DateTime.Now, Value)
         { }
 
         #endregion
 
-        #region Timestamped(Value, Timestamp)
+        #region Timestamped(Timestamp, Value)
 
         /// <summary>
         /// Create a new timestamped value.
         /// </summary>
-        /// <param name="Value">The value.</param>
         /// <param name="Timestamp">The timestamp.</param>
-        public Timestamped(T Value, DateTime Timestamp)
+        /// <param name="Value">The value.</param>
+        public Timestamped(DateTime Timestamp, T Value)
         {
             _Value      = Value;
             _Timestamp  = Timestamp.ToUniversalTime();
