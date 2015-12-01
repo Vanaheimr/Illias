@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{23D37453-2D4E-4BD8-B40F-3E731FEE7712}</ProjectGuid>
+    <ProjectGuid>{E156F18D-D41C-4529-9BCC-9962E6EE25DA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>org.GraphDefined.Vanaheimr.Illias</RootNamespace>
