@@ -38,7 +38,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         /// <typeparam name="T">The type of the Task.</typeparam>
         /// <param name="Task">The type of the result produced by the continuation.</param>
-        /// <param name="Action">An action to run when the System.Threading.Tasks.Task<TResult> completes. When run, the delegate will be passed the completed task as an argument.</param>
+        /// <param name="Action">An action to run when the System.Threading.Tasks.Task completes. When run, the delegate will be passed the completed task as an argument.</param>
         public static Task<T> CallSideeffect<T>(this Task<T> Task, Action<Task<T>> Delegate)
         {
 

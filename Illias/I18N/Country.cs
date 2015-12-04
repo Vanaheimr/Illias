@@ -161,7 +161,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// An unkown country.
         /// </summary>
-        public static readonly Country unknown                                  = new Country(new I18NString(Languages.en, "unknown"),                                        "",   "",    000, 00);
+        public static readonly Country unknown = new Country(new I18NString(Languages.en, "unknown"), "", "", 000, 00);
 
         #region List of countries
 
@@ -478,7 +478,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region Parse(AnyString)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given string.
+        /// Tries to find the appropriate country for the given string.
         /// </summary>
         /// <param name="AnyString">Any string.</param>
         public static Country Parse(String AnyString)
@@ -507,7 +507,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region TryParse(AnyString, out CountryValue)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given string.
+        /// Tries to find the appropriate country for the given string.
         /// </summary>
         /// <param name="AnyString">Any string.</param>
         /// <param name="CountryValue">The country.</param>
@@ -541,7 +541,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region ParseCountryName(CountryName)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given country name.
+        /// Tries to find the appropriate country for the given country name.
         /// </summary>
         /// <param name="CountryName">A country name.</param>
         public static Country ParseCountryName(String CountryString)
@@ -563,7 +563,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region TryParseCountryName(CountryName, out Country)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given country name.
+        /// Tries to find the appropriate country for the given country name.
         /// </summary>
         /// <param name="CountryName">A country name.</param>
         /// <param name="Country">The corresponding country.</param>
@@ -592,7 +592,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region ParseAlpha2Code(Alpha2Code)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given alpha2code.
+        /// Tries to find the appropriate country for the given alpha2code.
         /// </summary>
         /// <param name="Alpha2Code">An alpha2code for a country, e.g. "DE" for Germany.</param>
         public static Country ParseAlpha2Code(String Alpha2Code)
@@ -614,7 +614,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region TryParseAlpha2Code(Alpha2Code, out Country)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given alpha2code.
+        /// Tries to find the appropriate country for the given alpha2code.
         /// </summary>
         /// <param name="Alpha2Code">An alpha2code for a country, e.g. "DE" for Germany.</param>
         /// <param name="Country">The corresponding country.</param>
@@ -631,7 +631,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region ParseAlpha3Code(Alpha3Code)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given alpha3code.
+        /// Tries to find the appropriate country for the given alpha3code.
         /// </summary>
         /// <param name="Alpha3Code">An alpha3code for a country, e.g. "DEU" for Germany.</param>
         public static Country ParseAlpha3Code(String Alpha3Code)
@@ -653,7 +653,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region TryParseAlpha3Code(Alpha3Code, out Country)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given alpha3code.
+        /// Tries to find the appropriate country for the given alpha3code.
         /// </summary>
         /// <param name="Alpha3Code">An alpha3code for a country, e.g. "DEU" for Germany.</param>
         /// <param name="Country">The corresponding country.</param>
@@ -670,7 +670,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region ParseNumericCode(NumericCode)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given numeric code.
+        /// Tries to find the appropriate country for the given numeric code.
         /// </summary>
         /// <param name="NumericCode">A numeric code for a country, e.g. "276" for Germany.</param>
         public static Country ParseNumericCode(UInt16 NumericCode)
@@ -688,7 +688,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         }
 
         /// <summary>
-        /// Tries to find the apropriate country for the given numeric code.
+        /// Tries to find the appropriate country for the given numeric code.
         /// </summary>
         /// <param name="NumericCode">A numeric code for a country, e.g. "276" for Germany.</param>
         public static Country ParseNumericCode(String NumericCode)
@@ -702,7 +702,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region TryParseNumericCode(NumericCode, out Country)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given numeric code.
+        /// Tries to find the appropriate country for the given numeric code.
         /// </summary>
         /// <param name="NumericCode">A numeric code for a country, e.g. "276" for Germany.</param>
         /// <param name="Country">The corresponding country.</param>
@@ -714,7 +714,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         }
 
         /// <summary>
-        /// Tries to find the apropriate country for the given numeric code.
+        /// Tries to find the appropriate country for the given numeric code.
         /// </summary>
         /// <param name="NumericCode">A numeric code for a country, e.g. "276" for Germany.</param>
         /// <param name="Country">The corresponding country.</param>
@@ -740,7 +740,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region ParseTelefonCode(TelefonCode)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given telefon code.
+        /// Tries to find the appropriate country for the given telefon code.
         /// </summary>
         /// <param name="TelefonCode">A telefon code for a country, e.g. "49" for Germany.</param>
         public static Country ParseTelefonCode(UInt16 TelefonCode)
@@ -758,7 +758,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         }
 
         /// <summary>
-        /// Tries to find the apropriate country for the given telefon code.
+        /// Tries to find the appropriate country for the given telefon code.
         /// </summary>
         /// <param name="TelefonCode">A telefon code for a country, e.g. "49" for Germany.</param>
         public static Country ParseTelefonCode(String TelefonCode)
@@ -772,7 +772,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region TryParseTelefonCode(TelefonCode, out Country)
 
         /// <summary>
-        /// Tries to find the apropriate country for the given telefon code.
+        /// Tries to find the appropriate country for the given telefon code.
         /// </summary>
         /// <param name="TelefonCode">A telefon code for a country, e.g. "49" for Germany.</param>
         /// <param name="Country">The corresponding country.</param>
@@ -784,7 +784,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         }
 
         /// <summary>
-        /// Tries to find the apropriate country for the given telefon code.
+        /// Tries to find the appropriate country for the given telefon code.
         /// </summary>
         /// <param name="TelefonCode">A telefon code for a country, e.g. "49" for Germany.</param>
         /// <param name="Country">The corresponding country.</param>
@@ -1008,10 +1008,10 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region ToString()
+        #region (override) ToString()
 
         /// <summary>
-        /// Return a string represtentation of this object.
+        /// Return a string representation of this object.
         /// </summary>
         public override String ToString()
         {

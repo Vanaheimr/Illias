@@ -15,6 +15,12 @@
  * limitations under the License.
  */
 
+#region Usings
+
+using System;
+
+#endregion
+
 namespace org.GraphDefined.Vanaheimr.Illias
 {
 
@@ -27,19 +33,35 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Min
 
+        private readonly T _Min;
+
         /// <summary>
-        /// The minimal value.
+        /// The minimal value or lower bound.
         /// </summary>
-        public readonly T Min;
+        public T Min
+        {
+            get
+            {
+                return _Min;
+            }
+        }
 
         #endregion
 
         #region Max
 
+        private readonly T _Max;
+
         /// <summary>
-        /// The maximum value.
+        /// The maximum value or upper bound.
         /// </summary>
-        public readonly T Max;
+        public T Max
+        {
+            get
+            {
+                return _Max;
+            }
+        }
 
         #endregion
 
@@ -48,12 +70,40 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Creates a new range of values.
         /// </summary>
-        /// <param name="MinValue">The minimal value.</param>
-        /// <param name="MaxValue">The maximum value.</param>
-        public Range(T MinValue, T MaxValue)
+        /// <param name="Min">The minimal value or lower bound.</param>
+        /// <param name="Max">The maximum value or upper bound.</param>
+        public Range(T Min, T Max)
         {
-            Min = MinValue;
-            Max = MaxValue;
+            _Min = Min;
+            _Max = Max;
+        }
+
+        #endregion
+
+
+        #region GetHashCode()
+
+        /// <summary>
+        /// Get the hashcode of this object.
+        /// </summary>
+        public override Int32 GetHashCode()
+        {
+            unchecked
+            {
+                return _Min.GetHashCode() * 17 ^ _Max.GetHashCode();
+            }
+        }
+
+        #endregion
+
+        #region (override) ToString()
+
+        /// <summary>
+        /// Get a string representation of this object.
+        /// </summary>
+        public override String ToString()
+        {
+            return String.Concat(_Min.ToString(), " -> ", _Max.ToString());
         }
 
         #endregion

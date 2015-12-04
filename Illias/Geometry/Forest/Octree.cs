@@ -781,7 +781,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Geometry
         #endregion
 
 
-        #region ToString()
+        #region (override) ToString()
 
         /// <summary>
         /// Return a string representation of this object.

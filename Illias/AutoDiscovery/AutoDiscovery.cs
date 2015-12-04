@@ -31,7 +31,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
 {
 
     /// <summary>
-    /// A factory which uses reflection to generate a apropriate
+    /// A factory which uses reflection to generate a appropriate
     /// implementation of T for you.
     /// </summary>
     public class AutoDiscovery<TClass> : IEnumerable<TClass>
