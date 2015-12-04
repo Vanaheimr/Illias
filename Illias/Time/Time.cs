@@ -244,7 +244,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
             unchecked
             {
-                return _Hour.GetHashCode() * 32 ^ _Minute.GetHashCode() * 17 ^ _Second.GetHashCode();
+                return _Hour.GetHashCode() * 23 ^ _Minute.GetHashCode() * 17 ^ _Second.GetHashCode();
             }
         }
 
