@@ -68,12 +68,12 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Second
 
-        private readonly Byte _Second;
+        private readonly Byte? _Second;
 
         /// <summary>
         /// The second.
         /// </summary>
-        public Byte Second
+        public Byte? Second
         {
             get
             {
@@ -93,9 +93,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="Hour">The hour.</param>
         /// <param name="Minute">The minute.</param>
         /// <param name="Second">The second.</param>
-        private Time(Byte  Hour,
-                     Byte  Minute  = 0,
-                     Byte  Second  = 0)
+        private Time(Byte   Hour,
+                     Byte   Minute  = 0,
+                     Byte?  Second  = null)
         {
 
             #region Initial checks
@@ -264,9 +264,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
             var Minutes  = Time1.Minute - Time2.Minute;
             var Seconds  = Time1.Second - Time2.Second;
 
-            return new TimeSpan(Hours   >= 0 ? Hours   : 0,
-                                Minutes >= 0 ? Minutes : 0,
-                                Seconds >= 0 ? Seconds : 0);
+            return new TimeSpan(Hours   >= 0 ? Hours         : 0,
+                                Minutes >= 0 ? Minutes       : 0,
+                                Seconds >= 0 ? Seconds.Value : 0);
 
         }
 
@@ -282,13 +282,31 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public static TimeSpan operator +  (Time Time1, Time Time2)
         {
 
+            var Days    = 0;
             var Hours   = Time1.Hour   + Time2.Hour;
             var Minutes = Time1.Minute + Time2.Minute;
             var Seconds = Time1.Second + Time2.Second;
 
-            return new TimeSpan(Time1.Hour   + Time2.Hour,
-                                Time1.Minute + Time2.Minute,
-                                Time1.Second + Time2.Second);
+            if (Seconds > 59)
+            {
+                Seconds -= 59;
+                Minutes++;
+            }
+
+            if (Minutes > 59)
+            {
+                Minutes -= 59;
+                Hours++;
+            }
+
+            if (Hours > 23)
+            {
+                Hours -= 23;
+                Days++;
+            }
+
+            return new TimeSpan(Hours, Minutes, Seconds.Value).
+                       Add(TimeSpan.FromDays(Days));
 
         }
 
@@ -411,7 +429,12 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         public override String ToString()
         {
-            return String.Concat(_Hour.ToString(), ":", _Minute.ToString(), ":", _Second.ToString());
+
+            if (_Second.HasValue)
+                return String.Concat(_Hour.ToString("D2"), ":", _Minute.ToString("D2"), ":", _Second.Value.ToString("D2"));
+
+            return String.Concat(_Hour.ToString("D2"), ":", _Minute.ToString("D2"));
+
         }
 
         #endregion
