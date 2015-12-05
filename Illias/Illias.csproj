@@ -172,9 +172,10 @@
     <Compile Include="Helpers\Range.cs" />
     <Compile Include="StaticClasses\Loops.cs" />
     <Compile Include="Time\StartEndDateTime.cs" />
+    <Compile Include="Time\TimeRangeExtentions.cs" />
     <Compile Include="Time\TimeSpanMinMax.cs" />
     <Compile Include="Time\Measurement.cs" />
-    <Compile Include="Time\StartEndTime.cs" />
+    <Compile Include="Time\TimeRange.cs" />
     <Compile Include="Time\Time.cs" />
     <Compile Include="Time\Timestamped.cs" />
     <Compile Include="Time\UniqueTimestamp.cs" />

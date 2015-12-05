@@ -93,9 +93,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="Hour">The hour.</param>
         /// <param name="Minute">The minute.</param>
         /// <param name="Second">The second.</param>
-        public Time(Byte  Hour,
-                    Byte  Minute,
-                    Byte  Second)
+        private Time(Byte  Hour,
+                     Byte  Minute  = 0,
+                     Byte  Second  = 0)
         {
 
             #region Initial checks
@@ -120,11 +120,143 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #endregion
 
 
+        #region FromHour(Hour)
+
         /// <summary>
-        /// 
+        /// Create a new time based on the given hour.
         /// </summary>
-        /// <param name="Time1"></param>
-        /// <param name="Time2"></param>
+        /// <param name="Hour">The hour.</param>
+        public static Time FromHour(Byte Hour)
+        {
+            return new Time(Hour);
+        }
+
+        #endregion
+
+        #region FromHourMin(Hour, Minute)
+
+        /// <summary>
+        /// Create a new time based on the given hour and minute.
+        /// </summary>
+        /// <param name="Hour">The hour.</param>
+        /// <param name="Minute">The minute</param>
+        public static Time FromHourMin(Byte Hour, Byte Minute)
+        {
+            return new Time(Hour, Minute);
+        }
+
+        #endregion
+
+        #region FromHourMinSec(Hour, Minute, Second)
+
+        /// <summary>
+        /// Create a new time based on the given hour and minute.
+        /// </summary>
+        /// <param name="Hour">The hour.</param>
+        /// <param name="Minute">The minute</param>
+        /// <param name="Second">The second.</param>
+        public static Time FromHourMinSec(Byte Hour, Byte Minute, Byte Second)
+        {
+            return new Time(Hour, Minute, Second);
+        }
+
+        #endregion
+
+
+        #region (static) Parse(Text)
+
+        /// <summary>
+        /// Parse the given text as time.
+        /// </summary>
+        /// <param name="Text">A text representation of the time.</param>
+        public static Time Parse(String Text)
+        {
+
+            Time Time;
+
+            if (!TryParse(Text, out Time))
+                throw new ArgumentException("Could not parse '" + Text + "' as a time.!");
+
+            return Time;
+
+        }
+
+        #endregion
+
+        #region (static) TryParse(Text, out Time)
+
+        /// <summary>
+        /// Try to parse the given text as time.
+        /// </summary>
+        /// <param name="Text">A text representation of the time.</param>
+        /// <param name="Time">The parsed time.</param>
+        public static Boolean TryParse(String Text, out Time Time)
+        {
+
+            var Fragments = Text.Trim().Split(':');
+
+            Byte Hour    = 0;
+            Byte Minute  = 0;
+            Byte Second  = 0;
+
+            Time = Time.FromHour(0);
+
+            if (Fragments.Length == 1)
+            {
+
+                if (!Byte.TryParse(Fragments[0], out Hour))
+                    return false;
+
+                Time = Time.FromHour(Hour);
+                return true;
+
+            }
+
+            else if (Fragments.Length == 2)
+            {
+
+                if (!Byte.TryParse(Fragments[0], out Hour))
+                    return false;
+
+                if (!Byte.TryParse(Fragments[1], out Minute))
+                    return false;
+
+                Time = Time.FromHourMin(Hour, Minute);
+                return true;
+
+            }
+
+            else if (Fragments.Length == 3)
+            {
+
+                if (!Byte.TryParse(Fragments[0], out Hour))
+                    return false;
+
+                if (!Byte.TryParse(Fragments[1], out Minute))
+                    return false;
+
+                if (!Byte.TryParse(Fragments[2], out Second))
+                    return false;
+
+                Time = Time.FromHourMinSec(Hour, Minute, Second);
+                return true;
+
+            }
+
+            return false;
+
+        }
+
+        #endregion
+
+
+        #region (static) Operator -
+
+        /// <summary>
+        /// Operator -
+        /// </summary>
+        /// <param name="Time1">A time.</param>
+        /// <param name="Time2">Another time.</param>
         public static TimeSpan operator -  (Time Time1, Time Time2)
         {
 
@@ -138,11 +270,15 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        #endregion
+
+        #region (static) Operator +
+
         /// <summary>
-        /// 
+        /// Operator +
         /// </summary>
-        /// <param name="Time1"></param>
-        /// <param name="Time2"></param>
+        /// <param name="Time1">A time.</param>
+        /// <param name="Time2">Another time.</param>
         public static TimeSpan operator +  (Time Time1, Time Time2)
         {
 
@@ -156,11 +292,15 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        #endregion
+
+        #region (static) Operator >
+
         /// <summary>
-        /// 
+        /// Operator >
         /// </summary>
-        /// <param name="Time1"></param>
-        /// <param name="Time2"></param>
+        /// <param name="Time1">A time.</param>
+        /// <param name="Time2">Another time.</param>
         public static Boolean operator >  (Time Time1, Time Time2)
         {
 
@@ -183,11 +323,15 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        #endregion
+
+        #region (static) Operator <=
+
         /// <summary>
-        /// 
+        /// Operator <=
         /// </summary>
-        /// <param name="Time1"></param>
-        /// <param name="Time2"></param>
+        /// <param name="Time1">A time.</param>
+        /// <param name="Time2">Another time.</param>
         public static Boolean operator <= (Time Time1, Time Time2)
         {
 
@@ -195,11 +339,15 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        #endregion
+
+        #region (static) Operator <
+
         /// <summary>
-        /// 
+        /// Operator <
         /// </summary>
-        /// <param name="Time1"></param>
-        /// <param name="Time2"></param>
+        /// <param name="Time1">A time.</param>
+        /// <param name="Time2">Another time.</param>
         public static Boolean operator <  (Time Time1, Time Time2)
         {
 
@@ -222,17 +370,23 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        #endregion
+
+        #region (static) Operator >=
+
         /// <summary>
-        /// 
+        /// Operator >=
         /// </summary>
-        /// <param name="Time1"></param>
-        /// <param name="Time2"></param>
+        /// <param name="Time1">A time.</param>
+        /// <param name="Time2">Another time.</param>
         public static Boolean operator >= (Time Time1, Time Time2)
         {
 
             return !(Time1 < Time2);
 
         }
+
+        #endregion
 
 
         #region GetHashCode()

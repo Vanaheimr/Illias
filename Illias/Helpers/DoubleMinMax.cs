@@ -35,7 +35,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         private readonly Double? _Min;
 
         /// <summary>
-        /// The minimal value or lower bound.
+        /// The minimum value or lower bound.
         /// </summary>
         public Double? Min
         {
@@ -69,7 +69,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Creates a new range of double values.
         /// </summary>
-        /// <param name="Min">The minimal value or lower bound.</param>
+        /// <param name="Min">The minimum value or lower bound.</param>
         /// <param name="Max">The maximum value or upper bound.</param>
         public DoubleMinMax(Double? Min, Double? Max)
         {

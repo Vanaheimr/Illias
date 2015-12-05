@@ -35,7 +35,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         private readonly Decimal? _Min;
 
         /// <summary>
-        /// The minimal value or lower bound.
+        /// The minimum value or lower bound.
         /// </summary>
         public Decimal? Min
         {
@@ -69,7 +69,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Creates a new range of decimal values.
         /// </summary>
-        /// <param name="Min">The minimal value or lower bound.</param>
+        /// <param name="Min">The minimum value or lower bound.</param>
         /// <param name="Max">The maximum value or upper bound.</param>
         public DecimalMinMax(Decimal? Min, Decimal? Max)
         {
@@ -84,6 +84,33 @@ namespace org.GraphDefined.Vanaheimr.Illias
             _Min = Min;
             _Max = Max;
 
+        }
+
+        #endregion
+
+
+        #region (static) FromMin(MinValue)
+
+        /// <summary>
+        /// Create a new half-open definition having just a minimum value.
+        /// </summary>
+        /// <param name="MinValue">The minimum value.</param>
+        public static DecimalMinMax FromMin(Decimal MinValue)
+        {
+            return new DecimalMinMax(MinValue, null);
+        }
+
+        #endregion
+
+        #region (static) FromMax(MaxValue)
+
+        /// <summary>
+        /// Create a new half-open definition having just a maximum value.
+        /// </summary>
+        /// <param name="MaxValue">The maximum value.</param>
+        public static DecimalMinMax FromMax(Decimal MaxValue)
+        {
+            return new DecimalMinMax(null, MaxValue);
         }
 
         #endregion

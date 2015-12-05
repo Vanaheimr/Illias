@@ -27,19 +27,19 @@ namespace org.GraphDefined.Vanaheimr.Illias
     /// <summary>
     /// A structure to store a start and end time.
     /// </summary>
-    public struct StartEndTime
+    public struct TimeRange
     {
 
         #region Properties
 
         #region StartTime
 
-        private readonly Time _StartTime;
+        private readonly Time? _StartTime;
 
         /// <summary>
-        /// The start time.
+        /// The starting time.
         /// </summary>
-        public Time StartTime
+        public Time? StartTime
         {
             get
             {
@@ -51,12 +51,12 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region EndTime
 
-        private readonly Time _EndTime;
+        private readonly Time? _EndTime;
 
         /// <summary>
-        /// The end time.
+        /// The ending time.
         /// </summary>
-        public Time EndTime
+        public Time? EndTime
         {
             get
             {
@@ -69,13 +69,18 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region Duration
 
         /// <summary>
-        /// The duration.
+        /// The duration of the time range.
         /// </summary>
         public TimeSpan Duration
         {
             get
             {
-                return _EndTime - _StartTime;
+
+                if (_StartTime.HasValue && _EndTime.HasValue)
+                    return _EndTime.Value - _StartTime.Value;
+
+                return TimeSpan.Zero;
+
             }
         }
 
@@ -86,24 +91,56 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region Constructor(s)
 
         /// <summary>
-        /// Create a new start and end time structure.
+        /// Create a new time range having a start and end time.
         /// </summary>
         /// <param name="StartTime">The start time.</param>
         /// <param name="EndTime">The end time.</param>
-        public StartEndTime(Time  StartTime,
-                            Time  EndTime)
+        public TimeRange(Time?  StartTime,
+                         Time?  EndTime)
         {
 
             #region Initial checks
 
-            if (StartTime > EndTime)
-                throw new ArgumentException("The Starttime must not be after the Endtime!");
+            if (StartTime.HasValue && EndTime.HasValue && StartTime > EndTime)
+                throw new ArgumentException("The starting time of the time range must not be after the ending time!");
 
             #endregion
 
             _StartTime  = StartTime;
             _EndTime    = EndTime;
 
+        }
+
+        #endregion
+
+
+        #region From(StartTime)
+
+        /// <summary>
+        /// Create a new time range having the given starting time.
+        /// </summary>
+        /// <param name="StartTime">The starting time.</param>
+        public static TimeRange From(Time StartTime)
+        {
+            return new TimeRange(StartTime, null);
+        }
+
+        /// <summary>
+        /// Create a new time range having the given starting time.
+        /// </summary>
+        /// <param name="StartTime">The starting time.</param>
+        public static TimeRange From(Byte StartTime)
+        {
+            return new TimeRange(Time.FromHour(StartTime), null);
+        }
+
+        /// <summary>
+        /// Create a new time range having the given starting time.
+        /// </summary>
+        /// <param name="StartTime">The starting time.</param>
+        public static TimeRange From(String StartTime)
+        {
+            return new TimeRange(Time.Parse(StartTime), null);
         }
 
         #endregion

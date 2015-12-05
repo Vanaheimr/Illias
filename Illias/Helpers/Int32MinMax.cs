@@ -35,7 +35,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         private readonly Int32? _Min;
 
         /// <summary>
-        /// The minimal value or lower bound.
+        /// The minimum value or lower bound.
         /// </summary>
         public Int32? Min
         {
@@ -69,7 +69,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Creates a new range of Int32 values.
         /// </summary>
-        /// <param name="Min">The minimal value or lower bound.</param>
+        /// <param name="Min">The minimum value or lower bound.</param>
         /// <param name="Max">The maximum value or upper bound.</param>
         public Int32MinMax(Int32? Min, Int32? Max)
         {

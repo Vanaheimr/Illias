@@ -36,7 +36,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         private readonly T _Min;
 
         /// <summary>
-        /// The minimal value or lower bound.
+        /// The minimum value or lower bound.
         /// </summary>
         public T Min
         {
@@ -70,7 +70,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Creates a new range of values.
         /// </summary>
-        /// <param name="Min">The minimal value or lower bound.</param>
+        /// <param name="Min">The minimum value or lower bound.</param>
         /// <param name="Max">The maximum value or upper bound.</param>
         public Range(T Min, T Max)
         {
