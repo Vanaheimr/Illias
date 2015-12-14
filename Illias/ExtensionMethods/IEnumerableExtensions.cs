@@ -338,6 +338,22 @@ namespace org.GraphDefined.Vanaheimr.Illias
         }
 
         /// <summary>
+        /// Takes the given number of elements from the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type fo the enumeration.</typeparam>
+        /// <param name="Enumerable">An enumeration.</param>
+        /// <param name="Count">The number of elements to skip.</param>
+        public static IEnumerable<T> Take<T>(this IEnumerable<T> Enumerable, UInt32? Count)
+        {
+
+            if (Count.HasValue)
+                return Enumerable.Take(Count.Value);
+
+            return Enumerable;
+
+        }
+
+        /// <summary>
         /// Skips the given number of elements in the enumeration.
         /// </summary>
         /// <typeparam name="T">The type fo the enumeration.</typeparam>
@@ -362,6 +378,22 @@ namespace org.GraphDefined.Vanaheimr.Illias
         }
 
         /// <summary>
+        /// Takes the given number of elements from the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type fo the enumeration.</typeparam>
+        /// <param name="Enumerable">An enumeration.</param>
+        /// <param name="Count">The number of elements to skip.</param>
+        public static IEnumerable<T> Take<T>(this IEnumerable<T> Enumerable, UInt64? Count)
+        {
+
+            if (Count.HasValue)
+                return Enumerable.Take(Count.Value);
+
+            return Enumerable;
+
+        }
+
+        /// <summary>
         /// Skips the given number of elements in the enumeration.
         /// </summary>
         /// <typeparam name="T">The type fo the enumeration.</typeparam>
@@ -382,6 +414,22 @@ namespace org.GraphDefined.Vanaheimr.Illias
                     break;
 
             }
+
+        }
+
+        /// <summary>
+        /// Takes the given number of elements from the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type fo the enumeration.</typeparam>
+        /// <param name="Enumerable">An enumeration.</param>
+        /// <param name="Count">The number of elements to skip.</param>
+        public static IEnumerable<T> Take<T>(this IEnumerable<T> Enumerable, Int64? Count)
+        {
+
+            if (Count.HasValue)
+                return Enumerable.Take(Count.Value);
+
+            return Enumerable;
 
         }
 
