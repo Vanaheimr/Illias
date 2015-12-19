@@ -97,7 +97,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public Timestamped(DateTime Timestamp, T Value)
         {
             _Value      = Value;
-            _Timestamp  = Timestamp.ToUniversalTime();
+            _Timestamp  = Timestamp;
         }
 
         #endregion
@@ -115,6 +115,239 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public static implicit operator Timestamped<T>(T Value)
         {
             return new Timestamped<T>(Value);
+        }
+
+        #endregion
+
+
+        #region Operator overloading
+
+        #region Operator == (Timestamped1, Timestamped2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Timestamped1">A timestamped.</param>
+        /// <param name="Timestamped2">Another timestamped.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator == (Timestamped<T> Timestamped1, Timestamped<T> Timestamped2)
+        {
+
+            // If both are null, or both are same instance, return true.
+            if (Object.ReferenceEquals(Timestamped1, Timestamped2))
+                return true;
+
+            // If one is null, but not both, return false.
+            if (((Object) Timestamped1 == null) || ((Object) Timestamped2 == null))
+                return false;
+
+            return Timestamped1.Equals(Timestamped2);
+
+        }
+
+        #endregion
+
+        #region Operator != (Timestamped1, Timestamped2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Timestamped1">A timestamped.</param>
+        /// <param name="Timestamped2">Another timestamped.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator != (Timestamped<T> Timestamped1, Timestamped<T> Timestamped2)
+        {
+            return !(Timestamped1 == Timestamped2);
+        }
+
+        #endregion
+
+        #region Operator <  (Timestamped1, Timestamped2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Timestamped1">A timestamped.</param>
+        /// <param name="Timestamped2">Another timestamped.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator < (Timestamped<T> Timestamped1, Timestamped<T> Timestamped2)
+        {
+
+            if ((Object) Timestamped1 == null)
+                throw new ArgumentNullException("The given Timestamped1 must not be null!");
+
+            return Timestamped1.CompareTo(Timestamped2) < 0;
+
+        }
+
+        #endregion
+
+        #region Operator <= (Timestamped1, Timestamped2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Timestamped1">A timestamped.</param>
+        /// <param name="Timestamped2">Another timestamped.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator <= (Timestamped<T> Timestamped1, Timestamped<T> Timestamped2)
+        {
+            return !(Timestamped1 > Timestamped2);
+        }
+
+        #endregion
+
+        #region Operator >  (Timestamped1, Timestamped2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Timestamped1">A timestamped.</param>
+        /// <param name="Timestamped2">Another timestamped.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator > (Timestamped<T> Timestamped1, Timestamped<T> Timestamped2)
+        {
+
+            if ((Object) Timestamped1 == null)
+                throw new ArgumentNullException("The given Timestamped1 must not be null!");
+
+            return Timestamped1.CompareTo(Timestamped2) > 0;
+
+        }
+
+        #endregion
+
+        #region Operator >= (Timestamped1, Timestamped2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Timestamped1">A timestamped.</param>
+        /// <param name="Timestamped2">Another timestamped.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator >= (Timestamped<T> Timestamped1, Timestamped<T> Timestamped2)
+        {
+            return !(Timestamped1 < Timestamped2);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region IComparable<Timestamped<T>> Members
+
+        #region CompareTo(Object)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Object">An object to compare with.</param>
+        public Int32 CompareTo(Object Object)
+        {
+
+            if (Object == null)
+                throw new ArgumentNullException("The given object must not be null!");
+
+            return CompareTo((Timestamped<T>) Object);
+
+        }
+
+        #endregion
+
+        #region CompareTo(Timestamped)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Timestamped">An object to compare with.</param>
+        public Int32 CompareTo(Timestamped<T> Timestamped)
+        {
+
+            if ((Object) Timestamped == null)
+                throw new ArgumentNullException("The given Timestamped must not be null!");
+
+            // Compare the timestamps
+            var _Result = _Timestamp.CompareTo(Timestamped._Timestamp);
+
+            // If equal: Compare the values
+            if (_Result == 0)
+                _Result = _Value.ToString().CompareTo(Timestamped._Value.ToString());
+
+            return _Result;
+
+        }
+
+        #endregion
+
+        #endregion
+
+        #region IEquatable<Timestamped<T>> Members
+
+        #region Equals(Object)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Object">An object to compare with.</param>
+        /// <returns>true|false</returns>
+        public override Boolean Equals(Object Object)
+        {
+
+            if (Object == null)
+                return false;
+
+            return this.Equals((Timestamped<T>) Object);
+
+        }
+
+        #endregion
+
+        #region Equals(Timestamped)
+
+        /// <summary>
+        /// Compares two charging station identifications for equality.
+        /// </summary>
+        /// <param name="Timestamped">A charging station identification to compare with.</param>
+        /// <returns>True if both match; False otherwise.</returns>
+        public Boolean Equals(Timestamped<T> Timestamped)
+        {
+
+            if ((Object) Timestamped == null)
+                return false;
+
+            return _Timestamp.       Equals(Timestamped._Timestamp) &&
+                   _Value.ToString().Equals(Timestamped._Value.ToString());
+
+        }
+
+        #endregion
+
+        #endregion
+
+        #region (override) GetHashCode()
+
+        /// <summary>
+        /// Return the HashCode of this object.
+        /// </summary>
+        /// <returns>The HashCode of this object.</returns>
+        public override Int32 GetHashCode()
+        {
+            unchecked
+            {
+                return _Timestamp.GetHashCode() * 17 ^ _Value.GetHashCode();
+            }
+        }
+
+        #endregion
+
+        #region (override) ToString()
+
+        /// <summary>
+        /// Return a string representation of this object.
+        /// </summary>
+        public override String ToString()
+        {
+            return String.Concat(_Timestamp.ToIso8601(), " -> ", _Value.ToString());
         }
 
         #endregion
