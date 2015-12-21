@@ -315,8 +315,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
             if ((Object) Timestamped == null)
                 return false;
 
-            return _Timestamp.       Equals(Timestamped._Timestamp) &&
-                   _Value.ToString().Equals(Timestamped._Value.ToString());
+            return _Timestamp.Equals(Timestamped._Timestamp) &&
+                   _Value.    Equals(Timestamped._Value);
 
         }
 
