@@ -315,8 +315,16 @@ namespace org.GraphDefined.Vanaheimr.Illias
             if ((Object) Timestamped == null)
                 return false;
 
-            return _Timestamp.Equals(Timestamped._Timestamp) &&
-                   _Value.    Equals(Timestamped._Value);
+            if (!_Timestamp.Equals(Timestamped._Timestamp))
+                return false;
+
+            if (_Value == null && Timestamped.Value == null)
+                return true;
+
+            if (_Value == null)
+                return false;
+
+            return _Value.Equals(Timestamped._Value);
 
         }
 
