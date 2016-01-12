@@ -77,7 +77,11 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
             get
             {
-                return I18NStrings.Any() ? I18NStrings.First().Value : String.Empty;
+
+                return I18NStrings.Any()
+                           ? I18NStrings.First().Value
+                           : null;
+
             }
         }
 
