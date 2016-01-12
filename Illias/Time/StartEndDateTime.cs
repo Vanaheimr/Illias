@@ -71,11 +71,15 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// The duration.
         /// </summary>
-        public TimeSpan Duration
+        public TimeSpan? Duration
         {
             get
             {
-                return _EndTime.HasValue ? _EndTime.Value - _StartTime : TimeSpan.MaxValue;
+
+                return _EndTime.HasValue
+                           ? _EndTime.Value - _StartTime
+                           : new TimeSpan?();
+
             }
         }
 
