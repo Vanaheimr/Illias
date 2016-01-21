@@ -159,6 +159,7 @@
     <Compile Include="I18N\I18NTools.cs" />
     <Compile Include="I18N\JSONString.cs" />
     <Compile Include="I18N\Languages.cs" />
+    <Compile Include="Ids\EventTracking_Id.cs" />
     <Compile Include="Ids\IdGenerator.cs" />
     <Compile Include="Ids\IIdentifier.cs" />
     <Compile Include="Ids\IIdGenerator.cs" />
