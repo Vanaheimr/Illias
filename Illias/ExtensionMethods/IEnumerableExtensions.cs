@@ -524,29 +524,29 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region When(this Object)
 
-        /// <summary>
-        /// Return the given object, when the condition delegate returns true.
-        /// Otherwise return default(T).
-        /// </summary>
-        /// <typeparam name="T">The type of the object.</typeparam>
-        /// <param name="Object">An object.</param>
-        /// <param name="ConditionDelegate">A delegate for checking some condition.</param>
-        /// <returns>The object if the condition is true; default(T) otherwise.</returns>
-        public static T When<T>(this T Object, Func<T, Boolean> ConditionDelegate)
-        {
+        ///// <summary>
+        ///// Return the given object, when the condition delegate returns true.
+        ///// Otherwise return default(T).
+        ///// </summary>
+        ///// <typeparam name="T">The type of the object.</typeparam>
+        ///// <param name="Object">An object.</param>
+        ///// <param name="ConditionDelegate">A delegate for checking some condition.</param>
+        ///// <returns>The object if the condition is true; default(T) otherwise.</returns>
+        //public static T When<T>(this T Object, Func<T, Boolean> ConditionDelegate)
+        //{
 
-            if (ConditionDelegate == null)
-                throw new ArgumentNullException("ConditionDelegate", "The ConditionDelegate must not be null!");
+        //    if (ConditionDelegate == null)
+        //        throw new ArgumentNullException("ConditionDelegate", "The ConditionDelegate must not be null!");
 
-            if (Object == null)
-                return default(T);
+        //    if (Object == null)
+        //        return default(T);
 
-            if (ConditionDelegate(Object))
-                return Object;
+        //    if (ConditionDelegate(Object))
+        //        return Object;
 
-            return default(T);
+        //    return default(T);
 
-        }
+        //}
 
         #endregion
 
@@ -896,6 +896,46 @@ namespace org.GraphDefined.Vanaheimr.Illias
                 return false;
 
             return Enumeration.Any();
+
+        }
+
+        #endregion
+
+
+        #region NotNullAny<T>(this Enumeration, Delegate)
+
+        public static void WithFirstDo<T>(this IEnumerable<T>  Enumeration,
+                                          Action<T>            Delegate)
+        {
+
+            if (Enumeration == null || Delegate == null)
+                return;
+
+            var FirstItem = Enumeration.FirstOrDefault();
+
+            if (FirstItem != null)
+                Delegate(FirstItem);
+
+        }
+
+        #endregion
+
+        #region MapFirst<T>(this Enumeration, Delegate)
+
+        public static T2 MapFirst<T, T2>(this IEnumerable<T>  Enumeration,
+                                         Func<T, T2>          Delegate,
+                                         T2                   DefaultValue)
+        {
+
+            if (Enumeration == null || Delegate == null)
+                return DefaultValue;
+
+            var FirstItem = Enumeration.FirstOrDefault();
+
+            if (FirstItem != null)
+                return Delegate(FirstItem);
+
+            return DefaultValue;
 
         }
 
