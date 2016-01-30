@@ -58,6 +58,20 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region Log(this Exception, Source)
+
+        /// <summary>
+        /// Write the current timestamp and given exception to Debug.
+        /// </summary>
+        /// <param name="Exception">The exception.</param>
+        /// <param name="Source">The source of the exception.</param>
+        public static void Log(this Exception Exception, String Source)
+        {
+            Debug.WriteLine("[" + DateTime.Now + "] " + Source + " led to an exception: " + Exception.Message);
+        }
+
+        #endregion
+
     }
 
 }
