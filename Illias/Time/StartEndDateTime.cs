@@ -113,6 +113,23 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #endregion
 
 
+        #region Now
+
+        /// <summary>
+        /// Retuen a StartEndDateTime object which start time
+        /// is set to the current date and time.
+        /// </summary>
+        public static StartEndDateTime Now
+        {
+            get
+            {
+                return new StartEndDateTime(DateTime.Now);
+            }
+        }
+
+        #endregion
+
+
         #region GetHashCode()
 
         /// <summary>
