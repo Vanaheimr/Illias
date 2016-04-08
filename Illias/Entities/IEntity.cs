@@ -24,21 +24,20 @@ using System;
 namespace org.GraphDefined.Vanaheimr.Illias
 {
 
-    /// <summary>
-    /// Provides a generic label.
-    /// </summary>
-    /// <typeparam name="TLabel">The type of the label.</typeparam>
-    public interface ILabel<TLabel>
-        //ToDo: Error 326: cannot implement both 'System.IComparable<TId>' and 'System.IComparable<TLabel>' because they may unify for some type parameter substitutions
-        //: IEquatable<TLabel>, IComparable<TLabel>, IComparable
-        where TLabel : IEquatable<TLabel>, IComparable<TLabel>, IComparable
+    public interface IEntity
     {
 
-        /// <summary>
-        /// A generic label.
-        /// </summary>
-        TLabel Label { get; }
+        DateTime LastChange { get; }
 
+        event OnPropertyChangedDelegate OnPropertyChanged;
+
+    }
+
+    public interface IEntity<TId> : IEntity
+        where TId : IId
+
+    {
+        TId Id { get; }
     }
 
 }

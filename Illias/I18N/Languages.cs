@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2010-2016 Achim 'ahzf' Friedland <achim@graphdefined.org>
+ * Copyright (c) 2010-2016 Achim 'ahzf' Friedland <achim.friedland@graphdefined.com>
  * This file is part of Illias <http://www.github.com/Vanaheimr/Illias>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,10 @@
 namespace org.GraphDefined.Vanaheimr.Illias
 {
 
+    /// <summary>
+    /// ISO 639-1 codes for languages.
+    /// http://www.loc.gov/standards/iso639-2/php/code_list.php
+    /// </summary>
     public enum Languages
     {
         unknown,

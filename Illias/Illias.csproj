@@ -72,6 +72,11 @@
     <Compile Include="Description\IDescription.cs" />
     <Compile Include="DLR\IReadOnlyPropertiesExtensions.cs" />
     <Compile Include="EndiannessHell\EndiannessHell.cs" />
+    <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Entities\IId.cs" />
+    <Compile Include="Entities\Mandatory.cs" />
+    <Compile Include="Entities\OnPropertyChangedDelegate.cs" />
+    <Compile Include="Entities\Optional.cs" />
     <Compile Include="Exceptions\ExceptionHelpers.cs" />
     <Compile Include="ExtensionMethods\ByteExtensions.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
