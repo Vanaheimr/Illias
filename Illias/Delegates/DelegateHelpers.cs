@@ -27,26 +27,30 @@ namespace org.GraphDefined.Vanaheimr.Illias
 {
 
     /// <summary>
-    /// TypeHelpers
+    /// Delegate helpers.
     /// </summary>
-    public class TypeHelpers
+    public static class DelegateHelpers
     {
 
-        private const TypeAttributes AnonymousTypeAttributes = TypeAttributes.NotPublic;
-
-        /// <summary>
-        /// Is the given type an anonymous type?
-        /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        public static bool IsAnonymousType(Type t)
+        public static void IfNotNull<T>(this T     SomeObject,
+                                        Action<T>  SomeDelegate)
         {
 
-            return t.GetCustomAttributes(typeof (CompilerGeneratedAttribute), false).Length == 1
-                   && t.IsGenericType
-                   && t.Name.Contains("AnonymousType")
-                   && (t.Name.StartsWith("<>") || t.Name.StartsWith("VB$"))
-                   && (t.Attributes & AnonymousTypeAttributes) == AnonymousTypeAttributes;
+            if (SomeObject == null || SomeDelegate == null)
+                return;
+
+            SomeDelegate(SomeObject);
+
+        }
+
+        public static T2 IfNotNull<T1, T2>(this T1       SomeObject,
+                                           Func<T1, T2>  SomeDelegate)
+        {
+
+            if (SomeObject == null || SomeDelegate == null)
+                return default(T2);
+
+            return SomeDelegate(SomeObject);
 
         }
 

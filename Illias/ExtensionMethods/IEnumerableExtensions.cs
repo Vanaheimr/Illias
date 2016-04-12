@@ -172,16 +172,16 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         /// <typeparam name="T">The type of the enumeration.</typeparam>
         /// <param name="IEnumerable">An enumeration of type T.</param>
-        /// <param name="Action">An action to call for a counter and each element of the enumeration.</param>
+        /// <param name="Action">An action to call for each element of the enumeration and a counter.</param>
         /// <param name="Counter">The initial value of the counter.</param>
-        public static void ForEachCounted<T>(this IEnumerable<T> IEnumerable, Action<UInt64, T> Action, UInt64 Counter = 1UL)
+        public static void ForEachCounted<T>(this IEnumerable<T> IEnumerable, Action<T, UInt64> Action, UInt64 Counter = 1UL)
         {
 
             if (IEnumerable == null || Action == null)
                 return;
 
             foreach (var Element in IEnumerable)
-                Action(Counter++, Element);
+                Action(Element, Counter++);
 
         }
 

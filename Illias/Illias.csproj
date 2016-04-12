@@ -74,6 +74,7 @@
     <Compile Include="EndiannessHell\EndiannessHell.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\IId.cs" />
+    <Compile Include="Entities\Builder.cs" />
     <Compile Include="Entities\Mandatory.cs" />
     <Compile Include="Entities\OnPropertyChangedDelegate.cs" />
     <Compile Include="Entities\Optional.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Transactions\TransactionExceptions.cs" />
     <Compile Include="Transactions\TransactionState.cs" />
     <Compile Include="Trinary.cs" />
+    <Compile Include="Delegates\DelegateHelpers.cs" />
     <Compile Include="TypeHelpers.cs" />
     <Compile Include="Votes\ABooleanVote.cs" />
     <Compile Include="Votes\IVote.cs" />
