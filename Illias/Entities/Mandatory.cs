@@ -24,7 +24,7 @@ using System;
 namespace org.GraphDefined.Vanaheimr.Illias
 {
 
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class MandatoryAttribute : Attribute
     {
 
