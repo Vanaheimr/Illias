@@ -18,15 +18,48 @@
 #region Usings
 
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 #endregion
 
 namespace org.GraphDefined.Vanaheimr.Illias
 {
 
-    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    /// <summary>
+    /// Tag a class or property as 'optional'.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Property,
+                    AllowMultiple  = false,
+                    Inherited      = true)]
     public class OptionalAttribute : Attribute
     {
+
+        #region Tags
+
+        private readonly String[] _Tags;
+
+        /// <summary>
+        /// Additional tags of the 'mandatory'-tag.
+        /// </summary>
+        public IEnumerable<String> Tags
+        {
+            get
+            {
+                return _Tags;
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Create a new 'optional'-tag having the given tags.
+        /// </summary>
+        /// <param name="Tags">Some tags.</param>
+        public OptionalAttribute(params String[] Tags)
+        {
+            this._Tags = Tags?.Where(tag => !tag.IsNullOrEmpty()).ToArray();
+        }
 
     }
 
