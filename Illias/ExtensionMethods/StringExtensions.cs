@@ -561,6 +561,86 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+
+        #region DoubleSplit(this Text, FirstSeparator, SecondSeparator)
+
+        public static Dictionary<String, String> DoubleSplit(this String  Text,
+                                                             Char         FirstSeparator,
+                                                             Char         SecondSeparator)
+        {
+
+            var Dictionary = new Dictionary<String, String>();
+
+            if (Text.IsNullOrEmpty())
+                return Dictionary;
+
+            Text.Split(FirstSeparator).
+                 SafeSelect(command => command.Split(SecondSeparator)).
+                 ForEach   (tuple   => {
+
+                                           if (tuple.Length == 1)
+                                           {
+                                               if (!Dictionary.ContainsKey(tuple[0]))
+                                                   Dictionary.Add(tuple[0], "");
+                                               else
+                                                   Dictionary[tuple[0]] = "";
+                                           }
+
+                                           if (tuple.Length == 2)
+                                           {
+                                               if (!Dictionary.ContainsKey(tuple[0]))
+                                                   Dictionary.Add(tuple[0], tuple[1]);
+                                               else
+                                                   Dictionary[tuple[0]] = tuple[1];
+                                           }
+
+                                       });
+
+            return Dictionary;
+
+        }
+
+        #endregion
+
+        #region DoubleSplitInto(this Text, FirstSeparator, SecondSeparator, Dictionary)
+
+        public static Dictionary<String, String> DoubleSplitInto(this String                 Text,
+                                                                 Char                        FirstSeparator,
+                                                                 Char                        SecondSeparator,
+                                                                 Dictionary<String, String>  Dictionary)
+        {
+
+            if (Text.IsNullOrEmpty())
+                return Dictionary;
+
+            Text.Split(FirstSeparator).
+                 SafeSelect(command => command.Split(SecondSeparator)).
+                 ForEach   (tuple   => {
+
+                                           if (tuple.Length == 1)
+                                           {
+                                               if (!Dictionary.ContainsKey(tuple[0]))
+                                                   Dictionary.Add(tuple[0], "");
+                                               else
+                                                   Dictionary[tuple[0]] = "";
+                                           }
+
+                                           if (tuple.Length == 2)
+                                           {
+                                               if (!Dictionary.ContainsKey(tuple[0]))
+                                                   Dictionary.Add(tuple[0], tuple[1]);
+                                               else
+                                                   Dictionary[tuple[0]] = tuple[1];
+                                           }
+
+                                       });
+
+            return Dictionary;
+
+        }
+
+        #endregion
+
     }
 
 }

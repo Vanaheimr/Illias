@@ -100,10 +100,10 @@ namespace org.GraphDefined.Vanaheimr.Illias
             #region Initial checks
 
             if (IEnumerable == null)
-                throw new ArgumentNullException("The given IEnumerable must not be null!");
+                return;
 
             if (Action == null)
-                throw new ArgumentNullException("The given Action must not be null!");
+                throw new ArgumentNullException(nameof(Action), "The given delegate must not be null!");
 
             #endregion
 
@@ -555,20 +555,20 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Safely selects the given enumeration.
         /// </summary>
-        /// <typeparam name="T">The type of the enumeration.</typeparam>
+        /// <typeparam name="TSource">The type of the enumeration.</typeparam>
         /// <typeparam name="TResult">The type of the resulting enumeration.</typeparam>
         /// <param name="IEnumerable">An enumeration.</param>
         /// <param name="SelectionDelegate">The delegate to select the given enumeration.</param>
         /// <param name="DefaultValues">A default value.</param>
-        public static IEnumerable<TResult> SafeSelect<T, TResult>(this IEnumerable<T>   IEnumerable,
-                                                                  Func<T, TResult>      SelectionDelegate,
-                                                                  IEnumerable<TResult>  DefaultValues = null)
+        public static IEnumerable<TResult> SafeSelect<TSource, TResult>(this IEnumerable<TSource>   IEnumerable,
+                                                                        Func<TSource, TResult>      SelectionDelegate,
+                                                                        IEnumerable<TResult>        DefaultValues = null)
         {
 
             if (DefaultValues == null)
                 DefaultValues = new TResult[0];
 
-            if (IEnumerable == null)
+            if (IEnumerable == null || SelectionDelegate == null)
                 return DefaultValues;
 
             var Items = IEnumerable.ToArray();
@@ -582,7 +582,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region SafeSelect(this IEnumerable, SelectionDelegate)
+        #region MapReduce(this IEnumerable, MapDelegate)
 
         /// <summary>
         /// Safely selects the given enumeration.
@@ -601,6 +601,37 @@ namespace org.GraphDefined.Vanaheimr.Illias
                 return null;
 
             return IEnumerable.Select(MapDelegate).AggregateOrDefault((a, b) => a + Seperator + b, Default);
+
+        }
+
+        #endregion
+
+        #region SafeSelectMany(this IEnumerable, SelectionDelegate, DefaultValues = null)
+
+        /// <summary>
+        /// Safely selects the given enumeration.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the enumeration.</typeparam>
+        /// <typeparam name="TResult">The type of the resulting enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration of an enumeration.</param>
+        /// <param name="SelectionDelegate">The delegate to select the given enumeration.</param>
+        public static IEnumerable<TResult> SafeSelectMany<TSource, TResult>(this IEnumerable<TSource>            IEnumerable,
+                                                                            Func<TSource, IEnumerable<TResult>>  SelectionDelegate,
+                                                                            IEnumerable<TResult>                 DefaultValues = null)
+        {
+
+            if (DefaultValues == null)
+                DefaultValues = new TResult[0];
+
+            if (IEnumerable == null || SelectionDelegate == null)
+                return DefaultValues;
+
+            var Items = IEnumerable.ToArray();
+
+            if (!Items.Any())
+                return new TResult[0];
+
+            return Items.SelectMany(SelectionDelegate);
 
         }
 
