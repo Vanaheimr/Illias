@@ -582,6 +582,48 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region SelectIgnoreErrors(this IEnumerable, SelectionDelegate, DefaultValues = null)
+
+        /// <summary>
+        /// Safely selects the given enumeration.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the enumeration.</typeparam>
+        /// <typeparam name="TResult">The type of the resulting enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="SelectionDelegate">The delegate to select the given enumeration.</param>
+        /// <param name="DefaultValues">A default value.</param>
+        public static IEnumerable<TResult> SelectIgnoreErrors<TSource, TResult>(this IEnumerable<TSource>   IEnumerable,
+                                                                                Func<TSource, TResult>      SelectionDelegate,
+                                                                                IEnumerable<TResult>        DefaultValues = null)
+        {
+
+            if (DefaultValues == null)
+                DefaultValues = new TResult[0];
+
+            if (IEnumerable == null || SelectionDelegate == null)
+                return DefaultValues;
+
+            var Items = IEnumerable.ToArray();
+
+            if (!Items.Any())
+                return DefaultValues;
+
+            return Items.Select(item => {
+                                    try
+                                    {
+                                        return SelectionDelegate(item);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        return default(TResult);
+                                    }
+                                }).
+                        Where(item => !item.Equals(default(TResult)));
+
+        }
+
+        #endregion
+
         #region MapReduce(this IEnumerable, MapDelegate)
 
         /// <summary>
