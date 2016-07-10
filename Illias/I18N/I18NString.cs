@@ -172,6 +172,16 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region (static) Empty
+
+        /// <summary>
+        /// Create an empty internationalized (I18N) string.
+        /// </summary>
+        public static I18NString Empty
+            => new I18NString();
+
+        #endregion
+
         #region Add(Language, Text)
 
         /// <summary>

@@ -80,7 +80,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
 
             if (Random == null)
-                throw new ArgumentNullException("Random");
+                throw new ArgumentNullException(nameof(Random));
 
             var _StringBuilder = new StringBuilder();
 
