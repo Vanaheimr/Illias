@@ -180,6 +180,7 @@
     <Compile Include="StaticClasses\Loops.cs" />
     <Compile Include="Time\StartEndDateTime.cs" />
     <Compile Include="Time\TimeRangeExtentions.cs" />
+    <Compile Include="Time\TimeSpanExtentions.cs" />
     <Compile Include="Time\TimeSpanMinMax.cs" />
     <Compile Include="Time\Measurement.cs" />
     <Compile Include="Time\TimeRange.cs" />
