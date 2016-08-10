@@ -21,6 +21,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+
 using org.GraphDefined.Vanaheimr.Illias.Collections;
 
 #endregion
@@ -1013,6 +1014,25 @@ namespace org.GraphDefined.Vanaheimr.Illias
         }
 
         #endregion
+
+
+        #region ULongCount(this Enumeration)
+
+        public static UInt64 ULongCount<T>(this IEnumerable<T> Enumeration)
+
+            => (UInt64) Enumeration.LongCount();
+
+        #endregion
+
+        #region ULongCount(this Enumeration, Predicate)
+
+        public static UInt64 ULongCount<T>(this IEnumerable<T>  Enumeration,
+                                           Func<T, Boolean>     Predicate)
+
+            => (UInt64) Enumeration.LongCount(Predicate);
+
+        #endregion
+
 
     }
 
