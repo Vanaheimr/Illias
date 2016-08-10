@@ -18,10 +18,11 @@
 #region Usings
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
+using System.Linq;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 #endregion
 
@@ -231,6 +232,24 @@ namespace org.GraphDefined.Vanaheimr.Illias
             {
                 return Environment.NewLine + Environment.NewLine;
             }
+        }
+
+        #endregion
+
+        #region Reverse(this String)
+
+        /// <summary>
+        /// Reverse the given string.
+        /// </summary>
+        /// <param name="String">The string to reverse.</param>
+        public static String Reverse(this String String)
+        {
+
+            if (String.IsNullOrEmpty())
+                return String;
+
+            return new String(String.ToCharArray().ReverseAndReturn().ToArray());
+
         }
 
         #endregion
