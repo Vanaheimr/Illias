@@ -82,7 +82,6 @@
     <Compile Include="ExtensionMethods\ByteExtensions.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="ExtensionMethods\DebugExtensions.cs" />
-    <Compile Include="ExtensionMethods\DelegateExtensions.cs" />
     <Compile Include="ExtensionMethods\EnumExtensions.cs" />
     <Compile Include="ExtensionMethods\IComparableExtensions.cs" />
     <Compile Include="ExtensionMethods\IDictionaryExtensions.cs" />
