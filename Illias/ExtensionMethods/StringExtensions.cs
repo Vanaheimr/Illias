@@ -371,12 +371,14 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region ReplacePrefix(Prefix, Replacement)
+        #region ReplacePrefix(this Text, Prefix, Replacement)
 
-        public static String ReplacePrefix(this String Text, String Prefix, String Replacement)
+        public static String ReplacePrefix(this String  Text,
+                                           String       Prefix,
+                                           String       Replacement)
         {
 
-            if (Text.StartsWith(Prefix))
+            if (Text.StartsWith(Prefix, StringComparison.Ordinal))
                 return Replacement + Text.Substring(Prefix.Length);
 
             return Text;
