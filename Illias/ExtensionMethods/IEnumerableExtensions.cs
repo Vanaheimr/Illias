@@ -561,9 +561,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="IEnumerable">An enumeration.</param>
         /// <param name="SelectionDelegate">The delegate to select the given enumeration.</param>
         /// <param name="DefaultValues">A default value.</param>
-        public static IEnumerable<TResult> SafeSelect<TSource, TResult>(this IEnumerable<TSource>   IEnumerable,
-                                                                        Func<TSource, TResult>      SelectionDelegate,
-                                                                        IEnumerable<TResult>        DefaultValues = null)
+        public static IEnumerable<TResult> SafeSelect<TSource, TResult>(this IEnumerable<TSource>  IEnumerable,
+                                                                        Func<TSource, TResult>     SelectionDelegate,
+                                                                        IEnumerable<TResult>       DefaultValues = null)
         {
 
             if (DefaultValues == null)
