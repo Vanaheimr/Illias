@@ -32,58 +32,24 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Properties
 
-        #region StartTime
-
-        private readonly DateTime _StartTime;
-
         /// <summary>
         /// The start time.
         /// </summary>
-        public DateTime StartTime
-        {
-            get
-            {
-                return _StartTime;
-            }
-        }
-
-        #endregion
-
-        #region EndTime
-
-        private readonly DateTime? _EndTime;
+        public DateTime   StartTime   { get; }
 
         /// <summary>
         /// The end time.
         /// </summary>
-        public DateTime? EndTime
-        {
-            get
-            {
-                return _EndTime;
-            }
-        }
-
-        #endregion
-
-        #region Duration
+        public DateTime?  EndTime     { get; }
 
         /// <summary>
         /// The duration.
         /// </summary>
         public TimeSpan? Duration
-        {
-            get
-            {
 
-                return _EndTime.HasValue
-                           ? _EndTime.Value - _StartTime
-                           : new TimeSpan?();
-
-            }
-        }
-
-        #endregion
+            => EndTime.HasValue
+                   ? EndTime.Value - StartTime
+                   : new TimeSpan?();
 
         #endregion
 
@@ -105,8 +71,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
             #endregion
 
-            _StartTime  = StartTime;
-            _EndTime    = EndTime;
+            this.StartTime  = StartTime;
+            this.EndTime    = EndTime;
 
         }
 
@@ -120,12 +86,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// is set to the current date and time.
         /// </summary>
         public static StartEndDateTime Now
-        {
-            get
-            {
-                return new StartEndDateTime(DateTime.Now);
-            }
-        }
+
+            => new StartEndDateTime(DateTime.Now);
 
         #endregion
 
@@ -139,7 +101,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
             unchecked
             {
-                return _StartTime.GetHashCode() * 17 ^ _EndTime.GetHashCode();
+                return StartTime.GetHashCode() * 17 ^ EndTime.GetHashCode();
             }
         }
 
@@ -151,9 +113,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// Get a string representation of this object.
         /// </summary>
         public override String ToString()
-        {
-            return String.Concat(_StartTime.ToString(), " -> ", _EndTime.ToString());
-        }
+
+            => String.Concat(StartTime.ToIso8601(), " -> ", EndTime.HasValue ? EndTime.Value.ToIso8601() : "...");
 
         #endregion
 
