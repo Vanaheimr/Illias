@@ -373,17 +373,24 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+
+        #region MapValueOrFail(ParentXElement, XName, ValueMapper, ExceptionMessage = null)
+
         public static T MapValueOrFail<T>(this XElement    ParentXElement,
                                           XName            XName,
                                           Func<String, T>  ValueMapper,
                                           String           ExceptionMessage = null)
         {
 
+            #region Initial checks
+
             if (ParentXElement == null)
-                throw new ArgumentNullException("ParentXElement", "The given XML element must not be null!");
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
 
             if (ValueMapper == null)
-                throw new ArgumentNullException("ValueMapper", "The given XML element mapper delegate must not be null!");
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
 
             var _XElement = ParentXElement.Element(XName);
 
@@ -396,6 +403,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
             return ValueMapper(_XElement.Value);
 
         }
+
+        #endregion
 
         public static T MapValueOrDefault<T>(this XElement    ParentXElement,
                                              XName            XName,
