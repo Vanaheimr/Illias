@@ -60,8 +60,14 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         /// <param name="GivenString">The string.</param>
         public static Boolean IsNotNullOrEmpty(this String GivenString)
+        {
 
-            => !String.IsNullOrEmpty(GivenString);
+            if (String.IsNullOrEmpty(GivenString))
+                return false;
+
+            return !String.IsNullOrEmpty(GivenString.Trim());
+
+        }
 
         #endregion
 
