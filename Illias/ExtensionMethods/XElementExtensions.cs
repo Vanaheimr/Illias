@@ -18,10 +18,10 @@
 #region Usings
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using System.Collections.Generic;
 
 #endregion
 
@@ -34,34 +34,21 @@ namespace org.GraphDefined.Vanaheimr.Illias
     public static class XElementExtensions
     {
 
-        public static void IfElementIsDefined(this XElement   ParentXElement,
-                                              XName           XName,
-                                              Action<String>  ValueAction)
-        {
+        // XML Elements
 
-            if (ValueAction == null)
-                return;
-
-            if (ParentXElement == null)
-                return;
-
-            var _XElement = ParentXElement.Element(XName);
-
-            if (_XElement == null)
-                return;
-
-            if (_XElement.Value.Trim().IsNotNullOrEmpty())
-                ValueAction(_XElement.Value.Trim());
-
-        }
+        #region ElementOrFail(ParentXElement, XName, Message)
 
         public static XElement ElementOrFail(this XElement  ParentXElement,
                                              XName          XName,
                                              String         Message)
         {
 
+            #region Initial checks
+
             if (ParentXElement == null)
                 throw new Exception(Message);
+
+            #endregion
 
             var _XElement = ParentXElement.Element(XName);
 
@@ -72,13 +59,21 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        #endregion
+
+        #region ElementsOrFail(ParentXElement, XName, Message)
+
         public static IEnumerable<XElement> ElementsOrFail(this XElement  ParentXElement,
                                                            XName          XName,
                                                            String         Message)
         {
 
+            #region Initial checks
+
             if (ParentXElement == null)
                 throw new Exception(Message);
+
+            #endregion
 
             var _XElements = ParentXElement.Elements(XName);
 
@@ -89,43 +84,176 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
-        //public static IEnumerable<TResult> ElementsOrDefault<TResult>(this XElement          ParentXElement,
-        //                                                              XName                  XName,
-        //                                                              Func<String, TResult>  Mapper,
-        //                                                              IEnumerable<TResult>   DefaultValues = null)
-        //{
+        #endregion
 
-        //    if (DefaultValues == null)
-        //        DefaultValues = new TResult[0];
 
-        //    if (ParentXElement  == null ||
-        //        XName           == null ||
-        //        Mapper          == null)
-        //        return DefaultValues;
+        #region ElementValueOrDefault(this ParentXElement, XName, DefaultValue = null)
 
-        //    var _XElements = ParentXElement.
-        //                         Elements(XName).
-        //                         SafeSelect(XMLTag => Mapper(XMLTag.Value)).
-        //                         ToArray();
+        /// <summary>
+        /// Return the value of the first (in document order) child element with the
+        /// specified System.Xml.Linq.XName or the given default value.
+        /// </summary>
+        /// <param name="ParentXElement">The XML parent XML element.</param>
+        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
+        /// <param name="DefaultValue">A default value.</param>
+        public static String ElementValueOrDefault(this XElement  ParentXElement,
+                                                   XName          XName,
+                                                   String         DefaultValue = null)
+        {
 
-        //    if (_XElements == null || !_XElements.Any())
-        //        return DefaultValues;
+            #region Initial checks
 
-        //    return _XElements;
+            if (ParentXElement == null)
+                return DefaultValue;
 
-        //}
+            #endregion
 
-        //public static IEnumerable<String> ElementsOrDefault(this XElement        ParentXElement,
-        //                                                    XName                XName,
-        //                                                    IEnumerable<String>  DefaultValues = null)
-        //{
+            var _XElement = ParentXElement.Element(XName);
 
-        //    return ElementsOrDefault(ParentXElement,
-        //                             XName,
-        //                             Text => Text,
-        //                             DefaultValues);
+            if (_XElement == null)
+                return DefaultValue;
 
-        //}
+            return _XElement.Value ?? DefaultValue;
+
+        }
+
+        #endregion
+
+        #region ElementValueOrDefault(this ParentXElement, NestedXName, XName, DefaultValue = null)
+
+        /// <summary>
+        /// Return the value of the first (in document order) child element with the
+        /// specified System.Xml.Linq.XName or the given default value.
+        /// </summary>
+        /// <param name="ParentXElement">The XML parent XML element.</param>
+        /// <param name="NestedXName">The nested System.Xml.Linq.XName.</param>
+        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
+        /// <param name="DefaultValue">A default value.</param>
+        public static String ElementValueOrDefault(this XElement  ParentXElement,
+                                                   XName          NestedXName,
+                                                   XName          XName,
+                                                   String         DefaultValue = null)
+        {
+
+            if (ParentXElement == null)
+                return DefaultValue;
+
+            var _XElement1 = ParentXElement.Element(XName);
+
+            if (_XElement1 == null)
+                return DefaultValue;
+
+            var _XElement2 = _XElement1.Element(NestedXName);
+
+            if (_XElement2 == null)
+                return DefaultValue;
+
+            return _XElement2.Value;
+
+        }
+
+        #endregion
+
+        #region ElementValueOrFail(this ParentXElement, XName, ExceptionMessage = null)
+
+        /// <summary>
+        /// Return the value of the first (in document order) child element with the
+        /// specified System.Xml.Linq.XName or throw an optional exception.
+        /// </summary>
+        /// <param name="ParentXElement">The XML parent XML element.</param>
+        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
+        /// <param name="ExceptionMessage">An optional exception message.</param>
+        public static String ElementValueOrFail(this XElement  ParentXElement,
+                                                XName          XName,
+                                                String         ExceptionMessage = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new Exception(ExceptionMessage);
+
+            #endregion
+
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+            {
+
+                if (ExceptionMessage.IsNotNullOrEmpty())
+                    throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                            ? ExceptionMessage
+                                            : "Missing XML element '" + XName.LocalName + "'!");
+
+                return null;
+
+            }
+
+            return _XElement.Value;
+
+        }
+
+        #endregion
+
+        #region IfValueIsNotNullOrEmpty(ParentXElement, XName, ValueAction)
+
+        public static void IfValueIsNotNullOrEmpty(this XElement   ParentXElement,
+                                                   XName           XName,
+                                                   Action<String>  ValueAction)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                return;
+
+            if (ValueAction    == null)
+                return;
+
+            #endregion
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return;
+
+            if (_XElement.Value.IsNotNullOrEmpty())
+                ValueAction(_XElement.Value);
+
+        }
+
+        #endregion
+
+
+        #region ElementValues(ParentXElement, XName)
+
+        public static IEnumerable<String> ElementValues(this XElement  ParentXElement,
+                                                        XName          XName)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                return new String[0];
+
+            #endregion
+
+            var _XElements = ParentXElement.Elements(XName);
+
+            if (_XElements == null || !_XElements.Any())
+                return new String[0];
+
+            return _XElements.Select(xelement => xelement.Value);
+
+        }
+
+        #endregion
+
+
+        // Map XML Element
+
+        #region MapElement(ParentXElement, XName, Mapper, Default = default(T))
 
         public static T MapElement<T>(this XElement      ParentXElement,
                                       XName              XName,
@@ -133,8 +261,12 @@ namespace org.GraphDefined.Vanaheimr.Illias
                                       T                  Default = default(T))
         {
 
+            #region Initial checks
+
             if (ParentXElement == null || Mapper == null)
                 return Default;
+
+            #endregion
 
             var _XElement = ParentXElement.Element(XName);
 
@@ -145,29 +277,37 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
-        public static IEnumerable<T> MapElement<T>(this XElement                   ParentXElement,
-                                                   XName                           XName,
-                                                   Func<XElement, IEnumerable<T>>  Mapper,
-                                                   T                               Default = default(T))
+        public static T MapElement<T>(this XElement                           ParentXElement,
+                                      XName                                   XName,
+                                      Func<XElement, OnExceptionDelegate, T>  Mapper,
+                                      T                                       Default = default(T))
         {
 
+            #region Initial checks
+
             if (ParentXElement == null || Mapper == null)
-                return new T[] { Default };
+                return Default;
+
+            #endregion
 
             var _XElement = ParentXElement.Element(XName);
 
             if (_XElement == null)
-                return new T[] { Default };
+                return Default;
 
-            return Mapper(_XElement);
+            return Mapper(_XElement, null);
 
         }
+
+        #endregion
+
+        #region MapElementOrFail(ParentXElement, XName, Mapper, OnException = null, ExceptionMessage = null)
 
         public static T MapElementOrFail<T>(this XElement                           ParentXElement,
                                             XName                                   XName,
-                                            String                                  ExceptionMessage,
                                             Func<XElement, OnExceptionDelegate, T>  Mapper,
-                                            OnExceptionDelegate                     OnException = null)
+                                            OnExceptionDelegate                     OnException       = null,
+                                            String                                  ExceptionMessage  = null)
         {
 
             if (ParentXElement == null)
@@ -194,31 +334,71 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        #endregion
+
+
+        // Map XML Elements
+
+        #region MapElements(ParentXElement, XName, Mapper, OnException = null)
+
+        public static IEnumerable<T> MapElements<T>(this XElement        ParentXElement,
+                                                    XName                XName,
+                                                    Func<XElement, T>    Mapper,
+                                                    OnExceptionDelegate  OnException = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null || Mapper == null)
+                return new T[0];
+
+            #endregion
+
+            var _XElements = ParentXElement.Elements(XName);
+
+            if (_XElements == null || !_XElements.Any())
+                return new T[0];
+
+            return _XElements.Select(XML   => Mapper(XML)).
+                              Where (value => value != null);
+
+        }
+
         public static IEnumerable<T> MapElements<T>(this XElement                           ParentXElement,
                                                     XName                                   XName,
                                                     Func<XElement, OnExceptionDelegate, T>  Mapper,
                                                     OnExceptionDelegate                     OnException = null)
         {
 
+            #region Initial checks
+
             if (ParentXElement == null || Mapper == null)
                 return new T[0];
 
+            #endregion
+
             var _XElements = ParentXElement.Elements(XName);
 
-            if (_XElements == null)
+            if (_XElements == null || !_XElements.Any())
                 return new T[0];
 
-            return _XElements.Select(XML => Mapper(XML, OnException)).Where(v => v != null);
+            return _XElements.Select(XML   => Mapper(XML, OnException)).
+                              Where (value => value != null);
 
         }
 
+        #endregion
+
+        #region MapElementsOrFail(ParentXElement, XName, Mapper, OnException = null, ExceptionMessage = null)
+
         public static IEnumerable<T> MapElementsOrFail<T>(this XElement                           ParentXElement,
-                                                          XName                                   XWrapperName,
-                                                          String                                  ExceptionMessage,
-                                                          XName                                   XElementsName,
+                                                          XName                                   XName,
                                                           Func<XElement, OnExceptionDelegate, T>  Mapper,
-                                                          OnExceptionDelegate                     OnException = null)
+                                                          OnExceptionDelegate                     OnException       = null,
+                                                          String                                  ExceptionMessage  = null)
         {
+
+            #region Initial checks
 
             if (ParentXElement == null)
                 if (OnException != null)
@@ -232,7 +412,65 @@ namespace org.GraphDefined.Vanaheimr.Illias
                 else
                     throw new Exception("Mapper delegate must not be null!");
 
-            var _XElement = ParentXElement.Element(XWrapperName);
+            #endregion
+
+
+            var _XElements = ParentXElement.Elements(XName);
+
+            if (_XElements == null || !_XElements.Any())
+            {
+
+                if (OnException != null)
+                {
+
+                    OnException(DateTime.Now,
+                                ParentXElement,
+                                new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                                  ? ExceptionMessage
+                                                  : "The given XML element must not be null!"));
+
+                    return new T[0];
+
+                }
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty() ? ExceptionMessage : "The given XML element must not be null!");
+
+            }
+
+            return _XElements.Select(XML   => Mapper(XML, OnException)).
+                              Where (value => value != null);
+
+        }
+
+        #endregion
+
+        #region MapElementsOrFail(ParentXElement, XWrapper, XName, Mapper, OnException = null, ExceptionMessage = null)
+
+        public static IEnumerable<T> MapElementsOrFail<T>(this XElement                           ParentXElement,
+                                                          XName                                   XWrapper,
+                                                          XName                                   XName,
+                                                          Func<XElement, OnExceptionDelegate, T>  Mapper,
+                                                          OnExceptionDelegate                     OnException       = null,
+                                                          String                                  ExceptionMessage  = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                if (OnException != null)
+                    OnException(DateTime.Now, ParentXElement, new Exception("The parent XML element must not be null!"));
+                else
+                    throw new Exception("The parent XML element must not be null!");
+
+            if (Mapper == null)
+                if (OnException != null)
+                    OnException(DateTime.Now, ParentXElement, new Exception("Mapper delegate must not be null!"));
+                else
+                    throw new Exception("Mapper delegate must not be null!");
+
+            #endregion
+
+            var _XElement = ParentXElement.Element(XWrapper);
 
             if (_XElement == null)
                 if (OnException != null)
@@ -240,7 +478,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
                 else
                     throw new Exception(ExceptionMessage.IsNotNullOrEmpty() ? ExceptionMessage : "The given XML element must not be null!");
 
-            var _XElements = _XElement.Elements(XElementsName);
+            var _XElements = _XElement.Elements(XName);
 
             if (_XElements == null)
                 //if (OnException != null)
@@ -263,103 +501,29 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
-
-        #region ElementValueOrDefault(this ParentXElement, XName, DefaultValue = null)
-
-        /// <summary>
-        /// Return the value of the first (in document order) child element with the
-        /// specified System.Xml.Linq.XName or the given default value.
-        /// </summary>
-        /// <param name="ParentXElement">The XML parent element.</param>
-        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
-        /// <param name="DefaultValue">A default value.</param>
-        public static String ElementValueOrDefault(this XElement  ParentXElement,
-                                                   XName          XName,
-                                                   String         DefaultValue = null)
-        {
-
-            if (ParentXElement == null)
-                return DefaultValue;
-
-            var _XElement = ParentXElement.Element(XName);
-
-            if (_XElement == null)
-                return DefaultValue;
-
-            return _XElement.Value;
-
-        }
-
-        #endregion
-
-        #region ElementValue(this ParentXElement, XName, ExceptionMessage = null)
-
-        /// <summary>
-        /// Return the value of the first (in document order) child element with the
-        /// specified System.Xml.Linq.XName or throw an optional exception.
-        /// </summary>
-        /// <param name="ParentXElement">The XML parent element.</param>
-        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
-        /// <param name="ExceptionMessage">An optional exception message.</param>
-        public static String ElementValueOrFail(this XElement  ParentXElement,
-                                                XName          XName,
-                                                String         ExceptionMessage = null)
-        {
-
-            if (ParentXElement == null)
-                throw new Exception(ExceptionMessage);
-
-            var _XElement = ParentXElement.Element(XName);
-
-            if (_XElement == null)
-            {
-
-                if (ExceptionMessage.IsNotNullOrEmpty())
-                    throw new Exception(ExceptionMessage);
-
-                return null;
-
-            }
-
-            return _XElement.Value;
-
-        }
-
         #endregion
 
 
-        public static void UseValue(this XElement   ParentXElement,
-                                    XName           XName,
-                                    Action<String>  Action)
-        {
 
-            if (ParentXElement == null)
-                return;
+        // Map XML Value
 
-            var _XElement = ParentXElement.Element(XName);
-
-            if (_XElement == null)
-                return;
-
-            if (_XElement.Value == null)
-                return;
-
-            var ActionLocal = Action;
-            if (ActionLocal != null)
-                ActionLocal(_XElement.Value);
-
-        }
+        #region MapValueOrNull(ParentXElement, XName, ValueMapper)
 
         public static T MapValueOrNull<T>(this XElement    ParentXElement,
                                           XName            XName,
                                           Func<String, T>  ValueMapper)
         {
 
+            #region Initial checks
+
             if (ParentXElement == null)
-                throw new ArgumentNullException("ParentXElement", "The given XML element must not be null!");
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
 
             if (ValueMapper == null)
-                throw new ArgumentNullException("ValueMapper", "The given XML element mapper delegate must not be null!");
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
 
             var _XElement = ParentXElement.Element(XName);
 
@@ -373,6 +537,94 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        #endregion
+
+        #region MapValueOrNullable(ParentXElement, XName, ValueMapper, ExceptionMessage = null)
+
+        public static T? MapValueOrNullable<T>(this XElement    ParentXElement,
+                                               XName            XName,
+                                               Func<String, T>  ValueMapper,
+                                               String           ExceptionMessage = null)
+
+            where T : struct
+
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null || _XElement.Value == null)
+                return new T?();
+
+
+            try
+            {
+
+                return ValueMapper(_XElement.Value);
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The XML element '" + XName.LocalName + "' is invalid!",
+                                    e);
+
+            }
+
+        }
+
+        #endregion
+
+        #region MapValueOrNullable(ParentXElement, XWrapper, XName, ValueMapper)
+
+        public static T? MapValueOrNullable<T>(this XElement    ParentXElement,
+                                               XName            XWrapper,
+                                               XName            XName,
+                                               Func<String, T>  ValueMapper)
+
+            where T : struct
+
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _XWrapper = ParentXElement.Element(XWrapper);
+
+            if (_XWrapper == null)
+                return new T?();
+
+
+            var _XElement = _XWrapper.Element(XName);
+
+            if (_XElement == null || _XElement.Value == null)
+                return new T?();
+
+            return ValueMapper(_XElement.Value);
+
+        }
+
+        #endregion
 
         #region MapValueOrFail(ParentXElement, XName, ValueMapper, ExceptionMessage = null)
 
@@ -392,19 +644,217 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
             #endregion
 
+
             var _XElement = ParentXElement.Element(XName);
 
             if (_XElement == null)
-                throw new Exception(ExceptionMessage.IsNotNullOrEmpty() ? ExceptionMessage : "The given XML element must not be null!");
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "Missing XML element '" + XName.LocalName + "'!");
 
             if (_XElement.Value == null)
-                throw new Exception(ExceptionMessage.IsNotNullOrEmpty() ? ExceptionMessage : "The given XML element value must not be null!");
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The value of the given XML element '" + XName.LocalName + "' must not be null!");
 
-            return ValueMapper(_XElement.Value);
+
+            try
+            {
+
+                return ValueMapper(_XElement.Value);
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The XML element '" + XName.LocalName + "' is invalid!",
+                                    e);
+
+            }
+
+        }
+
+        public static T MapValueOrFail<T>(this XElement                         ParentXElement,
+                                          XName                                 XName,
+                                          Func<String, OnExceptionDelegate, T>  ValueMapper,
+                                          OnExceptionDelegate                   OnException       = null,
+                                          String                                ExceptionMessage  = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "Missing XML element '" + XName.LocalName + "'!");
+
+            if (_XElement.Value == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The value of the given XML element '" + XName.LocalName + "' must not be null!");
+
+
+            try
+            {
+
+                return ValueMapper(_XElement.Value, OnException);
+
+            }
+            catch (Exception e)
+            {
+
+                OnException?.Invoke(DateTime.Now,
+                                    _XElement,
+                                    e);
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                    ? ExceptionMessage
+                                    : "The XML element '" + XName.LocalName + "' is invalid!",
+                                e);
+
+            }
 
         }
 
         #endregion
+
+        #region MapValueOrFail(ParentXElement, XWrapper, XName, ValueMapper, ExceptionMessage = null)
+
+        public static T MapValueOrFail<T>(this XElement                         ParentXElement,
+                                          XName                                 XWrapper,
+                                          XName                                 XName,
+                                          Func<String, OnExceptionDelegate, T>  ValueMapper,
+                                          OnExceptionDelegate                   OnException       = null,
+                                          String                                ExceptionMessage  = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _XWrapper = ParentXElement.Element(XWrapper);
+
+            if (_XWrapper == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "Missing XML wrapper element '" + XWrapper.LocalName + "'!");
+
+
+            var _XElement = _XWrapper.Element(XName);
+
+            if (_XElement == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "Missing XML element '" + XWrapper.LocalName + "' > '" + XName.LocalName + "'!");
+
+            if (_XElement.Value == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The value of the given XML element '" + XWrapper.LocalName + "' > '" + XName.LocalName + "' must not be null!");
+
+
+            try
+            {
+
+                return ValueMapper(_XElement.Value, OnException);
+
+            }
+            catch (Exception e)
+            {
+
+                OnException?.Invoke(DateTime.Now,
+                                    _XElement,
+                                    e);
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The XML element '" + XWrapper.LocalName + "' > '" + XName.LocalName + "' is invalid!",
+                                    e);
+
+            }
+
+        }
+
+        public static T MapValueOrFail<T>(this XElement    ParentXElement,
+                                          XName            XWrapper,
+                                          XName            XName,
+                                          Func<String, T>  ValueMapper,
+                                          String           ExceptionMessage = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _XWrapper = ParentXElement.Element(XWrapper);
+
+            if (_XWrapper == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "Missing XML wrapper element '" + XWrapper.LocalName + "'!");
+
+
+            var _XElement = _XWrapper.Element(XName);
+
+            if (_XElement == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "Missing XML element '" + XWrapper.LocalName + "' > '" + XName.LocalName + "'!");
+
+            if (_XElement.Value == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The value of the given XML element '" + XWrapper.LocalName + "' > '" + XName.LocalName + "' must not be null!");
+
+
+            try
+            {
+
+                return ValueMapper(_XElement.Value);
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The XML element '" + XWrapper.LocalName + "' > '" + XName.LocalName + "' is invalid!",
+                                    e);
+
+            }
+
+        }
+
+        #endregion
+
+        #region MapValueOrDefault(ParentXElement, XName, ValueMapper, DefaultValue = default(T))
 
         public static T MapValueOrDefault<T>(this XElement    ParentXElement,
                                              XName            XName,
@@ -412,11 +862,16 @@ namespace org.GraphDefined.Vanaheimr.Illias
                                              T                DefaultValue = default(T))
         {
 
+            #region Initial checks
+
             if (ParentXElement == null)
                 return DefaultValue;
 
             if (ValueMapper == null)
                 return DefaultValue;
+
+            #endregion
+
 
             var _XElement = ParentXElement.Element(XName);
 
@@ -430,17 +885,94 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        #endregion
+
+        #region MapValueOrDefault(ParentXElement, XWrapper, XName, ValueMapper, DefaultValue = default(T))
+
+        public static T MapValueOrDefault<T>(this XElement    ParentXElement,
+                                             XName            XWrapper,
+                                             XName            XName,
+                                             Func<String, T>  ValueMapper,
+                                             T                DefaultValue = default(T))
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                return DefaultValue;
+
+            if (ValueMapper == null)
+                return DefaultValue;
+
+            #endregion
+
+
+            var _XWrapper = ParentXElement.Element(XWrapper);
+
+            if (_XWrapper == null)
+                return DefaultValue;
+
+
+            var _XElement = _XWrapper.Element(XName);
+
+            if (_XElement == null || _XElement.Value == null)
+                return DefaultValue;
+
+
+            return ValueMapper(_XElement.Value);
+
+        }
+
+        #endregion
+
+
+        // Map XML Values
+
+        #region MapValues(ParentXElement, XName, ValueMapper)
+
         public static IEnumerable<T> MapValues<T>(this XElement    ParentXElement,
-                                                  XName            XWrapperName,
-                                                  XName            XElementsName,
+                                                  XName            XName,
                                                   Func<String, T>  ValueMapper)
         {
+
+            #region Initial checks
 
             if (ParentXElement == null)
                 return new T[0];
 
             if (ValueMapper == null)
                 return new T[0];
+
+            #endregion
+
+            var _XElements = ParentXElement.Elements(XName);
+
+            if (_XElements == null || !_XElements.Any())
+                return new T[0];
+
+            return _XElements.SafeSelect(xelement => ValueMapper(xelement.Value));
+
+        }
+
+        #endregion
+
+        #region MapValues(ParentXElement, XWrapperName, XElementsName, ValueMapper)
+
+        public static IEnumerable<T> MapValues<T>(this XElement    ParentXElement,
+                                                  XName            XWrapperName,
+                                                  XName            XElementsName,
+                                                  Func<String, T>  ValueMapper)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                return new T[0];
+
+            if (ValueMapper == null)
+                return new T[0];
+
+            #endregion
 
             var _XElement = ParentXElement.Element(XWrapperName);
 
@@ -449,17 +981,16 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
             var _XElements = _XElement.Elements(XElementsName);
 
-            if (_XElements == null)
+            if (_XElements == null || !_XElements.Any())
                 return new T[0];
 
-            var __XElements = _XElements.ToArray();
-
-            if (__XElements.Length == 0)
-                return new T[0];
-
-            return _XElements.Select(__XElement => ValueMapper(__XElement.Value));
+            return _XElements.SafeSelect(xelement => ValueMapper(xelement.Value));
 
         }
+
+        #endregion
+
+        #region MapValuesOrDefault(ParentXElement, XWrapperName, XElementsName, ValueMapper, DefaultValue = default(T))
 
         public static IEnumerable<T> MapValuesOrDefault<T>(this XElement    ParentXElement,
                                                            XName            XWrapperName,
@@ -468,11 +999,15 @@ namespace org.GraphDefined.Vanaheimr.Illias
                                                            T                DefaultValue = default(T))
         {
 
+            #region Initial checks
+
             if (ParentXElement == null)
                 return new T[1] { DefaultValue };
 
             if (ValueMapper == null)
                 return new T[1] { DefaultValue };
+
+            #endregion
 
             var _XElement = ParentXElement.Element(XWrapperName);
 
@@ -489,46 +1024,182 @@ namespace org.GraphDefined.Vanaheimr.Illias
             if (__XElements.Length == 0)
                 return new T[1] { DefaultValue };
 
-            return _XElements.Select(__XElement => ValueMapper(__XElement.Value));
+            return _XElements.SafeSelect(__XElement => ValueMapper(__XElement.Value));
 
         }
+
+        #endregion
+
+        #region MapValuesOrFail(ParentXElement, XWrapper, XName, ValueMapper, ExceptionMessage = null)
 
         public static IEnumerable<T> MapValuesOrFail<T>(this XElement    ParentXElement,
-                                                        XName            XWrapperName,
-                                                        String           ExceptionMessage,
-                                                        XName            XElementsName,
+                                                        XName            XWrapper,
+                                                        XName            XName,
                                                         Func<String, T>  ValueMapper,
-                                                        T                DefaultValue = default(T))
+                                                        String           ExceptionMessage = null)
         {
 
+            #region Initial checks
+
             if (ParentXElement == null)
-                throw new ArgumentNullException("ParentXElement", "The given XML element must not be null!");
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
 
             if (ValueMapper == null)
-                throw new ArgumentNullException("ValueMapper", "The given XML element mapper delegate must not be null!");
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
 
-            var _XElement = ParentXElement.Element(XWrapperName);
+            #endregion
+
+
+            var _XElement = ParentXElement.Element(XWrapper);
 
             if (_XElement == null)
-                throw new Exception(ExceptionMessage.IsNotNullOrEmpty() ? ExceptionMessage : "The given XML element must not be null!");
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                            ? ExceptionMessage
+                                            : "Missing XML element '" + XWrapper.LocalName + "'!");
 
-            var _XElements = _XElement.Elements(XElementsName);
 
-            if (_XElements == null)
-                throw new Exception(ExceptionMessage.IsNotNullOrEmpty() ? ExceptionMessage : "The given XML elements must not be null!");
+            var _XElements = _XElement.Elements(XName);
 
-            var __XElements = _XElements.ToArray();
+            if (_XElements == null || !_XElements.Any())
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "Missing or empty XML elements '" + XWrapper.LocalName + "' > '" + XName.LocalName + "'!");
 
-            if (__XElements.Length == 0)
-                throw new Exception(ExceptionMessage.IsNotNullOrEmpty() ? ExceptionMessage : "The given array of XML elements must not be empty!");
 
-            return _XElements.Select(__XElement => ValueMapper(__XElement.Value));
+            return _XElements.SafeSelect(__XElement => ValueMapper(__XElement.Value));
 
         }
 
+        #endregion
+
+        #region MapEnumValues(ParentXElement, XWrapper, XName, ValueMapper, ExceptionMessage = null)
+
+        public static T MapEnumValues<T>(this XElement    ParentXElement,
+                                         XName            XWrapper,
+                                         XName            XName,
+                                         Func<String, T>  ValueMapper,
+                                         String           ExceptionMessage = null)
+
+            where T : struct
+
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _XElement = ParentXElement.Element(XWrapper);
+
+            if (_XElement == null)
+                return default(T);
+
+
+            var _XElements = _XElement.Elements(XName);
+
+            if (_XElements == null || !_XElements.Any())
+                return default(T);
+
+
+            try
+            {
+
+                Int64 Value = 0;
+
+                foreach (var _T in _XElements.Select(__XElement => ValueMapper(__XElement.Value)))
+                    Value |= (Int64) (Object) _T;
+
+                return (T) (Object) Value;
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "A value of the XML element '" + XName.LocalName + "' could not be parsed as type '" + typeof(T) + "'!",
+                                    e);
+
+            }
+
+        }
+
+        #endregion
+
+        #region MapEnumValuesOrFail(ParentXElement, XWrapper, XName, ValueMapper, ExceptionMessage = null)
+
+        public static T MapEnumValuesOrFail<T>(this XElement    ParentXElement,
+                                               XName            XWrapper,
+                                               XName            XName,
+                                               Func<String, T>  ValueMapper,
+                                               String           ExceptionMessage = null)
+
+            where T : struct
+
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _XElement = ParentXElement.Element(XWrapper);
+
+            if (_XElement == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                            ? ExceptionMessage
+                                            : "Missing XML element '" + XWrapper.LocalName + "'!");
+
+
+            var _XElements = _XElement.Elements(XName);
+
+            if (_XElements == null || !_XElements.Any())
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "Missing or empty XML elements '" + XWrapper.LocalName + "' > '" + XName.LocalName + "'!");
+
+            try
+            {
+
+                Int64 Value = 0;
+
+                foreach (var _T in _XElements.Select(__XElement => ValueMapper(__XElement.Value)))
+                    Value |= (Int64) (Object) _T;
+
+                return (T) (Object) Value;
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "A value of the XML element '" + XName.LocalName + "' could not be parsed as type '" + typeof(T) + "'!",
+                                    e);
+
+            }
+
+        }
+
+        #endregion
+
+
+
+        // Attributes
 
         #region AttributeValueOrDefault(this ParentXElement, XName, DefaultValue)
-
 
         /// <summary>
         /// Return the value of the first (in document order) attribute with the
@@ -542,21 +1213,170 @@ namespace org.GraphDefined.Vanaheimr.Illias
                                                      String         DefaultValue)
         {
 
+            #region Initial checks
+
             if (ParentXElement == null)
                 return DefaultValue;
 
-            var _XElement = ParentXElement.Attribute(XName);
+            #endregion
 
-            if (_XElement == null)
+            var _XAttribute = ParentXElement.Attribute(XName);
+
+            if (_XAttribute == null)
                 return DefaultValue;
 
-            return _XElement.Value;
+            return _XAttribute.Value;
+
+        }
+
+        #endregion
+
+        #region AttributeValueOrFail(this ParentXElement, XName, ExceptionMessage = null)
+
+        /// <summary>
+        /// Return the value of the first (in document order) attribute with the
+        /// specified System.Xml.Linq.XName or the given default value.
+        /// </summary>
+        /// <param name="ParentXElement">The XML parent element.</param>
+        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
+        /// <param name="ExceptionMessage">An optional exception message.</param>
+        public static String AttributeValueOrFail(this XElement  ParentXElement,
+                                                  XName          XName,
+                                                  String         ExceptionMessage = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            #endregion
+
+
+            var _XAttribute = ParentXElement.Attribute(XName);
+
+            if (_XAttribute == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The given XML attribute '" + XName.LocalName + "' was not found!");
+
+            return _XAttribute.Value;
 
         }
 
         #endregion
 
 
+        #region MapAttributeValueOrFail(this ParentXElement, XName, ValueMapper, ExceptionMessage = null)
+
+        /// <summary>
+        /// Return the value of the first (in document order) attribute with the
+        /// specified System.Xml.Linq.XName or the given default value.
+        /// </summary>
+        /// <param name="ParentXElement">The XML parent element.</param>
+        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
+        /// <param name="ExceptionMessage">An optional exception message.</param>
+        public static T MapAttributeValueOrFail<T>(this XElement    ParentXElement,
+                                                   XName            XName,
+                                                   Func<String, T>  ValueMapper,
+                                                   String           ExceptionMessage = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML attribute mapper delegate must not be null!");
+
+            #endregion
+
+            var _XAttribute = ParentXElement.Attribute(XName);
+
+            if (_XAttribute == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The given XML attribute '" + XName.LocalName + "' was not found!");
+
+
+            try
+            {
+
+                return ValueMapper(_XAttribute.Value);
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The XML attribute '" + XName.LocalName + "' is invalid!",
+                                    e);
+
+            }
+
+        }
+
+        #endregion
+
+        #region MapAttributeValueOrNullable(this ParentXElement, XName, ValueMapper, ExceptionMessage = null)
+
+        /// <summary>
+        /// Return the value of the first (in document order) attribute with the
+        /// specified System.Xml.Linq.XName or the given default value.
+        /// </summary>
+        /// <param name="ParentXElement">The XML parent element.</param>
+        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
+        /// <param name="ExceptionMessage">An optional exception message.</param>
+        public static T? MapAttributeValueOrNullable<T>(this XElement    ParentXElement,
+                                                        XName            XName,
+                                                        Func<String, T>  ValueMapper,
+                                                        String           ExceptionMessage = null)
+
+            where T : struct
+
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML attribute mapper delegate must not be null!");
+
+            #endregion
+
+            var _XAttribute = ParentXElement.Attribute(XName);
+
+            if (_XAttribute == null)
+                return new T?();
+
+
+            try
+            {
+
+                return new T?(ValueMapper(_XAttribute.Value));
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The XML attribute '" + XName.LocalName + "' is invalid!",
+                                    e);
+
+            }
+
+        }
+
+        #endregion
+
+
+
+        // Stuff...
 
         #region ToUTF8Bytes(this XML)
 
@@ -571,6 +1391,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         }
 
         #endregion
+
 
     }
 

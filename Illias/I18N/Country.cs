@@ -28,105 +28,49 @@ namespace org.GraphDefined.Vanaheimr.Illias
     /// <summary>
     /// A country.
     /// </summary>
-    public class Country : IEquatable<Country>, IComparable<Country>, IComparable
+    public class Country : IEquatable <Country>,
+                           IComparable<Country>,
+                           IComparable
     {
 
         #region Data
 
         private static readonly Dictionary<I18NString, Country> CountryNames  = new Dictionary<I18NString, Country>();
-        private static readonly Dictionary<String,    Country> Alpha2Codes   = new Dictionary<String,    Country>();
-        private static readonly Dictionary<String,    Country> Alpha3Codes   = new Dictionary<String,    Country>();
-        private static readonly Dictionary<UInt16,    Country> NumericCodes  = new Dictionary<UInt16,    Country>();
-        private static readonly Dictionary<UInt16,    Country> TelefonCodes  = new Dictionary<UInt16,    Country>();
+        private static readonly Dictionary<String,     Country> Alpha2Codes   = new Dictionary<String,    Country>();
+        private static readonly Dictionary<String,     Country> Alpha3Codes   = new Dictionary<String,    Country>();
+        private static readonly Dictionary<UInt16,     Country> NumericCodes  = new Dictionary<UInt16,    Country>();
+        private static readonly Dictionary<UInt16,     Country> TelefonCodes  = new Dictionary<UInt16,    Country>();
 
         #endregion
 
         #region Properties
 
-        #region CountryName
-
-        private readonly I18NString _CountryName;
-
         /// <summary>
         /// The name of the country.
         /// </summary>
-        public I18NString CountryName
-        {
-            get
-            {
-                return _CountryName;
-            }
-        }
-
-        #endregion
-
-        #region Alpha2Code
-
-        private readonly String _Alpha2Code;
+        public I18NString  CountryName    { get; }
 
         /// <summary>
         /// The ISO Alpha-2 Code of the country.
         /// </summary>
-        public String Alpha2Code
-        {
-            get
-            {
-                return _Alpha2Code;
-            }
-        }
-
-        #endregion
-
-        #region Alpha3Code
-
-        private readonly String _Alpha3Code;
+        public String      Alpha2Code     { get; }
 
         /// <summary>
         /// The ISO Alpha-3 Code of the country.
         /// </summary>
-        public String Alpha3Code
-        {
-            get
-            {
-                return _Alpha3Code;
-            }
-        }
-
-        #endregion
-
-        #region NumericCode
-
-        private readonly UInt16 _NumericCode;
+        public String      Alpha3Code     { get; }
 
         /// <summary>
         /// The ISO numeric code UN M49 Numerical Code of the country.
         /// </summary>
-        public UInt16 NumericCode
-        {
-            get
-            {
-                return _NumericCode;
-            }
-        }
-
-        #endregion
-
-        #region TelefonCode
-
-        private readonly UInt16 _TelefonCode;
+        public UInt16      NumericCode    { get; }
 
         /// <summary>
-        /// Country calling code or dial in code defined by ITU-T recommendations E.123 and E.164, also called IDD (International Direct Dialling) or ISD (International Subscriber Dialling) code.
+        /// Country calling code or dial in code defined by ITU-T recommendations
+        /// E.123 and E.164, also called IDD (International Direct Dialling) or
+        /// ISD (International Subscriber Dialling) code.
         /// </summary>
-        public UInt16 TelefonCode
-        {
-            get
-            {
-                return _TelefonCode;
-            }
-        }
-
-        #endregion
+        public UInt16      TelefonCode    { get; }
 
         #endregion
 
@@ -147,11 +91,11 @@ namespace org.GraphDefined.Vanaheimr.Illias
                        UInt16     TelefonCode)
         {
 
-            this._CountryName  = CountryName;
-            this._Alpha2Code   = Alpha2Code;
-            this._Alpha3Code   = Alpha3Code;
-            this._NumericCode  = NumericCode;
-            this._TelefonCode  = TelefonCode;
+            this.CountryName  = CountryName;
+            this.Alpha2Code   = Alpha2Code;
+            this.Alpha3Code   = Alpha3Code;
+            this.NumericCode  = NumericCode;
+            this.TelefonCode  = TelefonCode;
 
         }
 
@@ -999,10 +943,10 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
 
             return CountryName. GetHashCode() ^
-                   _Alpha2Code. GetHashCode() ^
-                   _Alpha3Code. GetHashCode() ^
-                   _NumericCode.GetHashCode() ^
-                   _TelefonCode.GetHashCode();
+                   Alpha2Code. GetHashCode() ^
+                   Alpha3Code. GetHashCode() ^
+                   NumericCode.GetHashCode() ^
+                   TelefonCode.GetHashCode();
 
         }
 
@@ -1015,7 +959,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         public override String ToString()
         {
-            return String.Concat(_CountryName, ", ", _Alpha2Code, ", ", _Alpha3Code, ", ", _NumericCode, ", +", _TelefonCode);
+            return String.Concat(CountryName, ", ", Alpha2Code, ", ", Alpha3Code, ", ", NumericCode, ", +", TelefonCode);
         }
 
         #endregion
