@@ -1030,7 +1030,36 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region MapValuesOrFail(ParentXElement, XWrapper, XName, ValueMapper, ExceptionMessage = null)
+        #region MapValuesOrFail(ParentXElement, XName, ValueMapper, ExceptionMessage = null)
+
+        public static IEnumerable<T> MapValuesOrFail<T>(this XElement    ParentXElement,
+                                                        XName            XName,
+                                                        Func<String, T>  ValueMapper,
+                                                        String           ExceptionMessage = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _XElements = ParentXElement.Elements(XName);
+
+            if (_XElements == null || !_XElements.Any())
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "Missing or empty XML elements '" + XName.LocalName + "'!");
+
+
+            return _XElements.SafeSelect(__XElement => ValueMapper(__XElement.Value));
+
+        }
 
         public static IEnumerable<T> MapValuesOrFail<T>(this XElement    ParentXElement,
                                                         XName            XWrapper,

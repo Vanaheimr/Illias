@@ -438,6 +438,11 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region IsNullOrEmpty<T>(this Enumerable)
 
+        /// <summary>
+        /// The given enumeration is null or empty.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of the enumeration.</typeparam>
+        /// <param name="Enumerable">An enumeration.</param>
         public static Boolean IsNullOrEmpty<T>(this IEnumerable<T> Enumerable)
         {
 
