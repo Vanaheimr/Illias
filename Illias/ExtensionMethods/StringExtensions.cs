@@ -342,17 +342,14 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region SubstringMax(this Text, Length)
 
+        /// <summary>
+        /// Return a substring of the given maximum length.
+        /// </summary>
+        /// <param name="Text">A text.</param>
+        /// <param name="Length">The maximum length of the substring.</param>
         public static String SubstringMax(this String Text, Int32 Length)
-        {
-            try
-            {
-                return Text.Substring(0, Math.Min(Text.Length, Length));
-            }
-            catch (Exception e)
-            {
-                return "";
-            }
-        }
+
+            => Text.Substring(0, Math.Min(Text.Length, Length));
 
         #endregion
 
