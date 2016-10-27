@@ -1303,6 +1303,116 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region MapEnumValuesOrNull(ParentXElement, XWrapper, XName, ValueMapper, ExceptionMessage = null)
+
+        public static T? MapEnumValuesOrNull<T>(this XElement    ParentXElement,
+                                                XName            XName,
+                                                Func<String, T>  ValueMapper,
+                                                String           ExceptionMessage = null)
+
+            where T : struct
+
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _XElements = ParentXElement.Elements(XName);
+
+            if (_XElements == null || !_XElements.Any())
+                return new T?();
+
+
+            try
+            {
+
+                Int64 Value = 0;
+
+                foreach (var _T in _XElements.Select(__XElement => ValueMapper(__XElement.Value)))
+                    Value |= (Int64) (Object) _T;
+
+                return new T?((T) (Object) Value);
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "A value of the XML element '" + XName.LocalName + "' could not be parsed as type '" + typeof(T) + "'!",
+                                    e);
+
+            }
+
+        }
+
+
+        public static T? MapEnumValuesOrNull<T>(this XElement    ParentXElement,
+                                                XName            XWrapper,
+                                                XName            XName,
+                                                Func<String, T>  ValueMapper,
+                                                String           ExceptionMessage = null)
+
+            where T : struct
+
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _XElement = ParentXElement.Element(XWrapper);
+
+            if (_XElement == null)
+                return default(T);
+
+
+            var _XElements = _XElement.Elements(XName);
+
+            if (_XElements == null || !_XElements.Any())
+                return new T?();
+
+
+            try
+            {
+
+                Int64 Value = 0;
+
+                foreach (var _T in _XElements.Select(__XElement => ValueMapper(__XElement.Value)))
+                    Value |= (Int64) (Object) _T;
+
+                return new T?((T) (Object) Value);
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "A value of the XML element '" + XName.LocalName + "' could not be parsed as type '" + typeof(T) + "'!",
+                                    e);
+
+            }
+
+        }
+
+        #endregion
+
         #region MapEnumValuesOrFail(ParentXElement, XName, ValueMapper, ExceptionMessage = null)
 
         public static T MapEnumValuesOrFail<T>(this XElement    ParentXElement,
@@ -1415,7 +1525,6 @@ namespace org.GraphDefined.Vanaheimr.Illias
         }
 
         #endregion
-
 
 
         // Attributes
