@@ -925,11 +925,11 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region MapBoolean(ParentXElement, XName, ExceptionMessage = null)
+        #region MapBooleanOrFail(ParentXElement, XName, ExceptionMessage = null)
 
-        public static Boolean MapBoolean(this XElement  ParentXElement,
-                                         XName          XName,
-                                         String         ExceptionMessage = null)
+        public static Boolean MapBooleanOrFail(this XElement  ParentXElement,
+                                               XName          XName,
+                                               String         ExceptionMessage = null)
         {
 
             #region Initial checks
