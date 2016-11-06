@@ -336,6 +336,58 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region MapElementOrNullable(ParentXElement, XName, Mapper, Default = default(T))
+
+        public static T? MapElementOrNullable<T>(this XElement      ParentXElement,
+                                                 XName              XName,
+                                                 Func<XElement, T>  Mapper)
+
+            where T : struct
+
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null || Mapper == null)
+                return new T?();
+
+            #endregion
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return new T?();
+
+            return Mapper(_XElement);
+
+        }
+
+        public static T? MapElementOrNullable<T>(this XElement                           ParentXElement,
+                                                 XName                                   XName,
+                                                 Func<XElement, OnExceptionDelegate, T>  Mapper)
+
+            where T : struct
+
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null || Mapper == null)
+                return new T?();
+
+            #endregion
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return new T?();
+
+            return Mapper(_XElement, null);
+
+        }
+
+        #endregion
+
 
         // Map XML Elements
 
