@@ -1576,6 +1576,66 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        public static T MapEnumValuesOrFail2<T>(this XElement    ParentXElement,
+                                                XName            XWrapper,
+                                                XName            XName,
+                                                Func<String, T>  ValueMapper,
+                                                String           ExceptionMessage = null)
+
+            where T : struct
+
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _WrapperXElements = ParentXElement.Elements(XWrapper);
+
+            if (_WrapperXElements == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                            ? ExceptionMessage
+                                            : "Missing XML element(s) '" + XWrapper.LocalName + "'!");
+
+
+            var _XElements = _WrapperXElements.Select(xml => xml.Element(XName));
+
+            if (_XElements == null || !_XElements.Any())
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "Missing or empty XML elements '" + XWrapper.LocalName + "' > '" + XName.LocalName + "'!");
+
+            try
+            {
+
+                Int32 Value = 0;
+
+                foreach (var _T in _XElements.Select(__XElement => ValueMapper(__XElement.Value)))
+                    Value |= (Int32) (Object) _T;
+
+                return (T) Enum.ToObject(typeof(T), Value);
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "A value of the XML element '" + XName.LocalName + "' could not be parsed as type '" + typeof(T) + "'!",
+                                    e);
+
+            }
+
+        }
+
+
         #endregion
 
 
