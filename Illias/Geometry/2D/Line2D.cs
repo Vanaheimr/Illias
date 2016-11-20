@@ -364,7 +364,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Geometry
         /// </summary>
         /// <param name="Line">A line.</param>
         /// <param name="Pixel">The intersection of both lines.</param>
-        /// <param name="InfiniteLines">Wether the lines should be treated as infinite or not.</param>
+        /// <param name="InfiniteLines">Whether the lines should be treated as infinite or not.</param>
         /// <returns>True if the lines intersect; False otherwise.</returns>
         public Boolean IntersectsWith(ILine2D<T> Line, out IPixel<T> Pixel, Boolean InfiniteLines = false)
         {

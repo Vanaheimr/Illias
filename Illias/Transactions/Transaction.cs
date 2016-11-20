@@ -73,12 +73,12 @@ namespace org.GraphDefined.Vanaheimr.Illias.Transactions
         public IsolationLevel IsolationLevel { get; private set; }
 
         /// <summary>
-        /// Wether this transaction should be synched within an distributed QuadStore.
+        /// Whether this transaction should be synched within an distributed QuadStore.
         /// </summary>
         public Boolean Distributed { get; private set; }
 
         /// <summary>
-        /// Wether this transaction is a long-running transaction.
+        /// Whether this transaction is a long-running transaction.
         /// Long-running transactions may e.g. be swapped on disc.
         /// </summary>
         public Boolean LongRunning { get; private set; }

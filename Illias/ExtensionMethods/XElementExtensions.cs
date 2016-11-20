@@ -86,6 +86,32 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region IfElementIsNotNullOrEmpty(ParentXElement, XName, ElementAction)
+
+        public static void IfElementIsNotNullOrEmpty(this XElement     ParentXElement,
+                                                     XName             XName,
+                                                     Action<XElement>  ElementAction)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null || ElementAction == null)
+                return;
+
+            #endregion
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                return;
+
+            if (_XElement != null)
+                ElementAction(_XElement);
+
+        }
+
+        #endregion
+
 
         #region ElementValueOrDefault(this ParentXElement, XName, DefaultValue = null)
 
@@ -205,10 +231,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
             #region Initial checks
 
-            if (ParentXElement == null)
-                return;
-
-            if (ValueAction    == null)
+            if (ParentXElement == null || ValueAction == null)
                 return;
 
             #endregion

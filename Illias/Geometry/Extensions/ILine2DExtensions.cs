@@ -40,7 +40,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Geometry
         /// </summary>
         /// <param name="Line1">A line.</param>
         /// <param name="Line2">A line.</param>
-        /// <param name="InfiniteLines">Wether the lines should be treated as infinite or not.</param>
+        /// <param name="InfiniteLines">Whether the lines should be treated as infinite or not.</param>
         /// <returns>True if the lines intersect; False otherwise.</returns>
         public static Boolean IntersectsWith<T>(this ILine2D<T> Line1, ILine2D<T> Line2, Boolean InfiniteLines = false)
             where T : IEquatable<T>, IComparable<T>, IComparable
@@ -58,7 +58,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Geometry
         /// </summary>
         /// <param name="Line1">A line.</param>
         /// <param name="Line2">A line.</param>
-        /// <param name="InfiniteLines">Wether the lines should be treated as infinite or not.</param>
+        /// <param name="InfiniteLines">Whether the lines should be treated as infinite or not.</param>
         public static IPixel<T> Intersection<T>(this ILine2D<T> Line1, ILine2D<T> Line2, Boolean InfiniteLines = false)
             where T : IEquatable<T>, IComparable<T>, IComparable
         {
