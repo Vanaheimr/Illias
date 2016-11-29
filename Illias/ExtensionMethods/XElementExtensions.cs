@@ -1785,6 +1785,89 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region MapAttributeValueOrDefault(this ParentXElement, XName, ValueMapper, ExceptionMessage = null)
+
+        /// <summary>
+        /// Return the value of the first (in document order) attribute with the
+        /// specified System.Xml.Linq.XName or the given default value.
+        /// </summary>
+        /// <param name="ParentXElement">The XML parent element.</param>
+        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
+        /// <param name="ExceptionMessage">An optional exception message.</param>
+        public static T MapAttributeValueOrDefault<T>(this XElement    ParentXElement,
+                                                      XName            XName,
+                                                      Func<String, T>  ValueMapper,
+                                                      String           ExceptionMessage  = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML attribute mapper delegate must not be null!");
+
+            #endregion
+
+            var _XAttribute = ParentXElement.Attribute(XName);
+
+            if (_XAttribute == null)
+                return default(T);
+
+
+            try
+            {
+
+                return ValueMapper(_XAttribute.Value);
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The XML attribute '" + XName.LocalName + "' is invalid!",
+                                    e);
+
+            }
+
+        }
+
+        #endregion
+
+        #region MapAttributeValueOrDefault(this ParentXElement, XName, ExceptionMessage = null)
+
+        /// <summary>
+        /// Return the value of the first (in document order) attribute with the
+        /// specified System.Xml.Linq.XName or the given default value.
+        /// </summary>
+        /// <param name="ParentXElement">The XML parent element.</param>
+        /// <param name="XName">The System.Xml.Linq.XName to match.</param>
+        /// <param name="ExceptionMessage">An optional exception message.</param>
+        public static String MapAttributeValueOrDefault(this XElement  ParentXElement,
+                                                        XName          XName,
+                                                        String         ExceptionMessage  = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            #endregion
+
+            var _XAttribute = ParentXElement.Attribute(XName);
+
+            if (_XAttribute == null)
+                return null;
+
+            return _XAttribute.Value;
+
+        }
+
+        #endregion
+
         #region MapAttributeValueOrNullable(this ParentXElement, XName, ValueMapper, ExceptionMessage = null)
 
         /// <summary>
