@@ -33,7 +33,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
         public HashedSet(IEnumerable<T> Enumeration)
         {
 
-            this.InternalDictionary = Enumeration.ToDictionary(v => v, v => true);
+            this.InternalDictionary = Enumeration.Distinct().ToDictionary(v => v, v => true);
 
         }
 
