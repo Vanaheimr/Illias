@@ -32,39 +32,15 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Properties
 
-        #region Language
-
-        private readonly Languages _Language;
-
         /// <summary>
         /// The internationalized (I18N) language.
         /// </summary>
-        public Languages Language
-        {
-            get
-            {
-                return _Language;
-            }
-        }
-
-        #endregion
-
-        #region Text
-
-        private readonly String    _Text;
+        public Languages  Language   { get; }
 
         /// <summary>
         /// The internationalized (I18N) text.
         /// </summary>
-        public String Text
-        {
-            get
-            {
-                return _Text;
-            }
-        }
-
-        #endregion
+        public String     Text       { get; }
 
         #endregion
 
@@ -78,8 +54,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public I18NPair(Languages Language,
                         String    Text)
         {
-            _Language  = Language;
-            _Text      = Text;
+            this.Language  = Language;
+            this.Text      = Text;
         }
 
         #endregion

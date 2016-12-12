@@ -77,6 +77,7 @@
     <Compile Include="Entities\Builder.cs" />
     <Compile Include="Entities\Mandatory.cs" />
     <Compile Include="Entities\OnPropertyChangedDelegate.cs" />
+    <Compile Include="Entities\Dynamic.cs" />
     <Compile Include="Entities\Optional.cs" />
     <Compile Include="Exceptions\ExceptionHelpers.cs" />
     <Compile Include="ExtensionMethods\ByteExtensions.cs" />

@@ -27,9 +27,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
 {
 
     /// <summary>
-    /// Tag a class or property as 'mandatory'.
+    /// Tag a struct, class or property as 'mandatory'.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Property,
+    [AttributeUsage(AttributeTargets.Struct|AttributeTargets.Class|AttributeTargets.Property,
                     AllowMultiple  = false,
                     Inherited      = true)]
     public class MandatoryAttribute : Attribute

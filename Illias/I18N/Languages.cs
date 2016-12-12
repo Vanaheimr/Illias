@@ -19,10 +19,32 @@ namespace org.GraphDefined.Vanaheimr.Illias
 {
 
     /// <summary>
+    /// ISO 639-3 codes for languages.
+    /// http://www-01.sil.org/iso639-3/codes.asp?order=639_3
+    /// </summary>
+    public enum Languages
+    {
+        unknown,
+        be,
+        deu,
+        eng,
+        fra,
+        dk,
+        no,
+        fi,
+        se,
+        nld,
+        ru,
+        sk,
+        gb,
+        ita
+    }
+
+    /// <summary>
     /// ISO 639-1 codes for languages.
     /// http://www.loc.gov/standards/iso639-2/php/code_list.php
     /// </summary>
-    public enum Languages
+    public enum Languages1
     {
         unknown,
         be,

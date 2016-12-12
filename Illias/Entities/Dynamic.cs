@@ -27,12 +27,12 @@ namespace org.GraphDefined.Vanaheimr.Illias
 {
 
     /// <summary>
-    /// Tag a struct, class or property as 'optional'.
+    /// Tag a struct, class or property as 'dynamic'.
     /// </summary>
     [AttributeUsage(AttributeTargets.Struct|AttributeTargets.Class|AttributeTargets.Property,
                     AllowMultiple  = false,
                     Inherited      = true)]
-    public class OptionalAttribute : Attribute
+    public class DynamicAttribute : Attribute
     {
 
         #region Tags
@@ -53,10 +53,10 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #endregion
 
         /// <summary>
-        /// Create a new 'optional'-tag having the given tags.
+        /// Create a new 'dynamic'-tag having the given tags.
         /// </summary>
         /// <param name="Tags">Some tags.</param>
-        public OptionalAttribute(params String[] Tags)
+        public DynamicAttribute(params String[] Tags)
         {
             this._Tags = Tags?.Where(tag => !tag.IsNullOrEmpty()).ToArray();
         }
