@@ -64,11 +64,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
             Random.NextBytes(ByteArray);
 
             for (var i = 0; i < ByteArray.Length; i++)
-            {
-                ByteArray[i] = (Byte) (ByteArray[i] % 26 + 64);
-            }
+                ByteArray[i] = (Byte) (ByteArray[i] % 26 + 65);
 
-            return System.Text.Encoding.UTF8.GetString(ByteArray, 0, ByteArray.Length);
+            return Encoding.UTF8.GetString(ByteArray, 0, ByteArray.Length);
 
         }
 
