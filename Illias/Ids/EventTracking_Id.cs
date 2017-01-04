@@ -148,8 +148,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="EventTrackingId1">A EventTrackingId.</param>
-        /// <param name="EventTrackingId2">Another EventTrackingId.</param>
+        /// <param name="EventTrackingId1">An event tracking identification.</param>
+        /// <param name="EventTrackingId2">Another event tracking identification.</param>
         /// <returns>true|false</returns>
         public static Boolean operator == (EventTracking_Id EventTrackingId1, EventTracking_Id EventTrackingId2)
         {
@@ -173,13 +173,11 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="EventTrackingId1">A EventTrackingId.</param>
-        /// <param name="EventTrackingId2">Another EventTrackingId.</param>
+        /// <param name="EventTrackingId1">An event tracking identification.</param>
+        /// <param name="EventTrackingId2">Another event tracking identification.</param>
         /// <returns>true|false</returns>
         public static Boolean operator != (EventTracking_Id EventTrackingId1, EventTracking_Id EventTrackingId2)
-        {
-            return !(EventTrackingId1 == EventTrackingId2);
-        }
+            => !(EventTrackingId1 == EventTrackingId2);
 
         #endregion
 
@@ -188,8 +186,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="EventTrackingId1">A EventTrackingId.</param>
-        /// <param name="EventTrackingId2">Another EventTrackingId.</param>
+        /// <param name="EventTrackingId1">An event tracking identification.</param>
+        /// <param name="EventTrackingId2">Another event tracking identification.</param>
         /// <returns>true|false</returns>
         public static Boolean operator < (EventTracking_Id EventTrackingId1, EventTracking_Id EventTrackingId2)
         {
@@ -208,13 +206,11 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="EventTrackingId1">A EventTrackingId.</param>
-        /// <param name="EventTrackingId2">Another EventTrackingId.</param>
+        /// <param name="EventTrackingId1">An event tracking identification.</param>
+        /// <param name="EventTrackingId2">Another event tracking identification.</param>
         /// <returns>true|false</returns>
         public static Boolean operator <= (EventTracking_Id EventTrackingId1, EventTracking_Id EventTrackingId2)
-        {
-            return !(EventTrackingId1 > EventTrackingId2);
-        }
+            => !(EventTrackingId1 > EventTrackingId2);
 
         #endregion
 
@@ -223,8 +219,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="EventTrackingId1">A EventTrackingId.</param>
-        /// <param name="EventTrackingId2">Another EventTrackingId.</param>
+        /// <param name="EventTrackingId1">An event tracking identification.</param>
+        /// <param name="EventTrackingId2">Another event tracking identification.</param>
         /// <returns>true|false</returns>
         public static Boolean operator > (EventTracking_Id EventTrackingId1, EventTracking_Id EventTrackingId2)
         {
@@ -243,13 +239,11 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <summary>
         /// Compares two instances of this object.
         /// </summary>
-        /// <param name="EventTrackingId1">A EventTrackingId.</param>
-        /// <param name="EventTrackingId2">Another EventTrackingId.</param>
+        /// <param name="EventTrackingId1">An event tracking identification.</param>
+        /// <param name="EventTrackingId2">Another event tracking identification.</param>
         /// <returns>true|false</returns>
         public static Boolean operator >= (EventTracking_Id EventTrackingId1, EventTracking_Id EventTrackingId2)
-        {
-            return !(EventTrackingId1 < EventTrackingId2);
-        }
+            => !(EventTrackingId1 < EventTrackingId2);
 
         #endregion
 
@@ -267,12 +261,11 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
 
             if (Object == null)
-                throw new ArgumentNullException("The given object must not be null!");
+                throw new ArgumentNullException(nameof(Object), "The given object must not be null!");
 
-            // Check if the given object is an EventTrackingId.
             var EventTrackingId = Object as EventTracking_Id;
             if ((Object) EventTrackingId == null)
-                throw new ArgumentException("The given object is not a EventTrackingId!");
+                throw new ArgumentException("The given object is not an event tracking identification!");
 
             return CompareTo(EventTrackingId);
 
@@ -290,9 +283,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
 
             if ((Object) EventTrackingId == null)
-                throw new ArgumentNullException("The given EventTrackingId must not be null!");
+                throw new ArgumentNullException(nameof(EventTrackingId), "The given event tracking identification must not be null!");
 
-            return _Id.CompareTo(EventTrackingId._Id);
+            return String.Compare(_Id, EventTrackingId._Id, StringComparison.Ordinal);
 
         }
 
@@ -300,7 +293,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region IEquatable<EventTracking_Id> Members
+        #region IEquatable<EventTrackingId> Members
 
         #region Equals(Object)
 
@@ -315,7 +308,6 @@ namespace org.GraphDefined.Vanaheimr.Illias
             if (Object == null)
                 return false;
 
-            // Check if the given object is an EventTrackingId.
             var EventTrackingId = Object as EventTracking_Id;
             if ((Object) EventTrackingId == null)
                 return false;
@@ -354,9 +346,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         /// <returns>The HashCode of this object.</returns>
         public override Int32 GetHashCode()
-        {
-            return _Id.GetHashCode();
-        }
+            => _Id.GetHashCode();
 
         #endregion
 
@@ -366,9 +356,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// Return a string representation of this object.
         /// </summary>
         public override String ToString()
-        {
-            return _Id;
-        }
+            => _Id;
 
         #endregion
 
