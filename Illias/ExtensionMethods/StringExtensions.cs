@@ -349,7 +349,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="Length">The maximum length of the substring.</param>
         public static String SubstringMax(this String Text, Int32 Length)
 
-            => Text.Substring(0, Math.Min(Text.Length, Length));
+            => Text.IsNotNullOrEmpty()
+                   ? Text.Substring(0, Math.Min(Text.Length, Length))
+                   : Text;
 
         #endregion
 
