@@ -396,21 +396,21 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region RemoveLastSlash(this Text)
+        //#region RemoveLastSlash(this Text)
 
-        public static String RemoveLastSlash(this String Text)
-        {
+        //public static String RemoveLastSlash(this String Text)
+        //{
 
-            if (Text[Text.Length - 1] == '/')
-                return Text.Substring(0, Text.Length - 1);
+        //    if (Text[Text.Length - 1] == '/')
+        //        return Text.Substring(0, Text.Length - 1);
 
-            return Text;
+        //    return Text;
 
-        }
+        //}
 
-        #endregion
+        //#endregion
 
-        
+
         #region IsNullOrEmpty(GivenString, Delegate, [CallerMemberName] ParameterName = "")
 
         /// <summary>
