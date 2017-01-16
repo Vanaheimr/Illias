@@ -85,10 +85,10 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="NumericCode">The ISO numeric code UN M49 Numerical Code of the country.</param>
         /// <param name="TelefonCode">Country calling code or dial in code defined by ITU-T recommendations E.123 and E.164, also called IDD (International Direct Dialling) or ISD (International Subscriber Dialling) code.</param>
         public Country(I18NString  CountryName,
-                       String     Alpha2Code,
-                       String     Alpha3Code,
-                       UInt16     NumericCode,
-                       UInt16     TelefonCode)
+                       String      Alpha2Code,
+                       String      Alpha3Code,
+                       UInt16      NumericCode,
+                       UInt16      TelefonCode)
         {
 
             this.CountryName  = CountryName;
@@ -755,87 +755,110 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Operator overloading
 
-        #region Operator == (myCountry1, myCountry2)
+        #region Operator == (Country1, Country2)
 
-        public static Boolean operator == (Country myCountry1, Country myCountry2)
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Country1">A country.</param>
+        /// <param name="Country2">Another country.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator == (Country Country1, Country Country2)
         {
 
             // If both are null, or both are same instance, return true.
-            if (Object.ReferenceEquals(myCountry1, myCountry2))
+            if (Object.ReferenceEquals(Country1, Country2))
                 return true;
 
             // If one is null, but not both, return false.
-            if (((Object) myCountry1 == null) || ((Object) myCountry2 == null))
+            if (((Object) Country1 == null) || ((Object) Country2 == null))
                 return false;
 
-            return myCountry1.Equals(myCountry2);
+            if ((Object) Country1 == null)
+                throw new ArgumentNullException(nameof(Country1),  "The given country must not be null!");
+
+            return Country1.Equals(Country2);
 
         }
 
         #endregion
 
-        #region Operator != (myCountry1, myCountry2)
+        #region Operator != (Country1, Country2)
 
-        public static Boolean operator != (Country myCountry1, Country myCountry2)
-        {
-            return !(myCountry1 == myCountry2);
-        }
-
-        #endregion
-
-        #region Operator <  (myCountry1, myCountry2)
-
-        public static Boolean operator < (Country myCountry1, Country myCountry2)
-        {
-
-            // Check if myCountry1 is null
-            if ((Object) myCountry1 == null)
-                throw new ArgumentNullException("Parameter myCountry1 must not be null!");
-
-            // Check if myCountry2 is null
-            if ((Object) myCountry2 == null)
-                throw new ArgumentNullException("Parameter myCountry2 must not be null!");
-
-            return myCountry1.CompareTo(myCountry2) < 0;
-
-        }
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Country1">A country.</param>
+        /// <param name="Country2">Another country.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator != (Country Country1, Country Country2)
+            => !(Country1 == Country2);
 
         #endregion
 
-        #region Operator >  (myCountry1, myCountry2)
+        #region Operator <  (Country1, Country2)
 
-        public static Boolean operator > (Country myCountry1, Country myCountry2)
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Country1">A country.</param>
+        /// <param name="Country2">Another country.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator < (Country Country1, Country Country2)
         {
 
-            // Check if myCountry1 is null
-            if ((Object) myCountry1 == null)
-                throw new ArgumentNullException("Parameter myCountry1 must not be null!");
+            if ((Object) Country1 == null)
+                throw new ArgumentNullException(nameof(Country1),  "The given country must not be null!");
 
-            // Check if myCountry2 is null
-            if ((Object) myCountry2 == null)
-                throw new ArgumentNullException("Parameter myCountry2 must not be null!");
-
-            return myCountry1.CompareTo(myCountry2) > 0;
+            return Country1.CompareTo(Country2) < 0;
 
         }
 
         #endregion
 
-        #region Operator <= (myCountry1, myCountry2)
+        #region Operator <= (Country1, Country2)
 
-        public static Boolean operator <= (Country myCountry1, Country myCountry2)
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Country1">A country.</param>
+        /// <param name="Country2">Another country.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator <= (Country Country1, Country Country2)
+            => !(Country1 > Country2);
+
+        #endregion
+
+        #region Operator >  (Country1, Country2)
+
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Country1">A country.</param>
+        /// <param name="Country2">Another country.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator > (Country Country1, Country Country2)
         {
-            return !(myCountry1 > myCountry2);
+
+            if ((Object) Country1 == null)
+                throw new ArgumentNullException(nameof(Country1),  "The given country must not be null!");
+
+            return Country1.CompareTo(Country2) > 0;
+
         }
 
         #endregion
 
-        #region Operator >= (myCountry1, myCountry2)
+        #region Operator >= (Country1, Country2)
 
-        public static Boolean operator >= (Country myCountry1, Country myCountry2)
-        {
-            return !(myCountry1 < myCountry2);
-        }
+        /// <summary>
+        /// Compares two instances of this object.
+        /// </summary>
+        /// <param name="Country1">A country.</param>
+        /// <param name="Country2">Another country.</param>
+        /// <returns>true|false</returns>
+        public static Boolean operator >= (Country Country1, Country Country2)
+            => !(Country1 < Country2);
 
         #endregion
 
@@ -853,12 +876,11 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
 
             if (Object == null)
-                throw new ArgumentNullException("The given object must not be null!");
+                throw new ArgumentNullException(nameof(Object), "The given object must not be null!");
 
-            // Check if the given object is an Country.
             var Country = Object as Country;
             if ((Object) Country == null)
-                throw new ArgumentException("The given object is not a Country!");
+                throw new ArgumentException("The given object is not a country!");
 
             return CompareTo(Country);
 
@@ -876,9 +898,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
 
             if ((Object) Country == null)
-                throw new ArgumentNullException("The given Country must not be null!");
+                throw new ArgumentNullException(nameof(Country), "The given country must not be null!");
 
-            return Alpha2Code.CompareTo(Country.Alpha2Code);
+            return String.Compare(Alpha2Code, Country.Alpha2Code, StringComparison.Ordinal);
 
         }
 
@@ -901,7 +923,6 @@ namespace org.GraphDefined.Vanaheimr.Illias
             if (Object == null)
                 return false;
 
-            // Check if the given object is an Country.
             var Country = Object as Country;
             if ((Object) Country == null)
                 return false;
@@ -940,15 +961,12 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         /// <returns>The HashCode of this object.</returns>
         public override Int32 GetHashCode()
-        {
 
-            return CountryName. GetHashCode() ^
-                   Alpha2Code. GetHashCode() ^
-                   Alpha3Code. GetHashCode() ^
-                   NumericCode.GetHashCode() ^
-                   TelefonCode.GetHashCode();
-
-        }
+            => CountryName.GetHashCode() ^
+               Alpha2Code. GetHashCode() ^
+               Alpha3Code. GetHashCode() ^
+               NumericCode.GetHashCode() ^
+               TelefonCode.GetHashCode();
 
         #endregion
 
@@ -958,9 +976,12 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// Return a string representation of this object.
         /// </summary>
         public override String ToString()
-        {
-            return String.Concat(CountryName, ", ", Alpha2Code, ", ", Alpha3Code, ", ", NumericCode, ", +", TelefonCode);
-        }
+
+            => String.Concat(CountryName, ", ",
+                             Alpha2Code,  ", ",
+                             Alpha3Code,  ", ",
+                             NumericCode, ", +",
+                             TelefonCode);
 
         #endregion
 
