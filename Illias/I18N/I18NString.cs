@@ -41,51 +41,24 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #region Properties
 
-        #region IsEmpty
-
         /// <summary>
         /// The I18N text is empty.
         /// </summary>
         public Boolean IsEmpty
-        {
-            get
-            {
-                return I18NStrings.Count == 0;
-            }
-        }
-
-        #endregion
-
-        #region IsNotEmpty
+            => I18NStrings.Count == 0;
 
         /// <summary>
         /// The I18N text is not empty.
         /// </summary>
         public Boolean IsNotEmpty
-        {
-            get
-            {
-                return I18NStrings.Count > 0;
-            }
-        }
+            => I18NStrings.Count > 0;
 
-        #endregion
-
-        #region FirstText
 
         public String FirstText
-        {
-            get
-            {
 
-                return I18NStrings.Any()
-                           ? I18NStrings.First().Value
-                           : null;
-
-            }
-        }
-
-        #endregion
+            => I18NStrings.Any()
+                   ? I18NStrings.First().Value
+                   : null;
 
         #endregion
 
@@ -166,9 +139,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="Text">The internationalized (I18N) text.</param>
         public static I18NString Create(Languages  Language,
                                         String     Text)
-        {
-            return new I18NString(Language, Text);
-        }
+
+            => new I18NString(Language, Text);
 
         #endregion
 
@@ -212,8 +184,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// Add a new language-text-pair to the given
         /// internationalized (I18N) string.
         /// </summary>
-        /// <param name="Language">The internationalized (I18N) language.</param>
-        /// <param name="Text">The internationalized (I18N) text.</param>
+        /// <param name="I18NPair">The internationalized (I18N) text.</param>
         public I18NString Add(I18NPair I18NPair)
         {
 
@@ -236,9 +207,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         /// <param name="Language">The internationalized (I18N) language.</param>
         public Boolean has(Languages Language)
-        {
-            return I18NStrings.ContainsKey(Language);
-        }
+
+            => I18NStrings.ContainsKey(Language);
 
         #endregion
 
@@ -291,19 +261,6 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
-        #region Clear()
-
-        /// <summary>
-        /// Remove all internationalized (I18N) texts.
-        /// </summary>
-        public I18NString Clear()
-        {
-            I18NStrings.Clear();
-            return this;
-        }
-
-        #endregion
-
 
         public Boolean Is(Languages  Language,
                           String     Value)
@@ -329,25 +286,19 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
 
 
-
-
         #region GetEnumerator()
 
         /// <summary>
         /// Enumerate all internationalized (I18N) texts.
         /// </summary>
         public IEnumerator<I18NPair> GetEnumerator()
-        {
-            return I18NStrings.Select(kvp => new I18NPair(kvp.Key, kvp.Value)).GetEnumerator();
-        }
+            => I18NStrings.Select(kvp => new I18NPair(kvp.Key, kvp.Value)).GetEnumerator();
 
         /// <summary>
         /// Enumerate all internationalized (I18N) texts.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return I18NStrings.Select(kvp => new I18NPair(kvp.Key, kvp.Value)).GetEnumerator();
-        }
+            => I18NStrings.Select(kvp => new I18NPair(kvp.Key, kvp.Value)).GetEnumerator();
 
         #endregion
 
@@ -410,12 +361,11 @@ namespace org.GraphDefined.Vanaheimr.Illias
             if (Object == null)
                 return false;
 
-            // Check if the given object is an I18NString.
             var I18NString = Object as I18NString;
             if ((Object) I18NString == null)
                 return false;
 
-            return this.Equals(I18NString);
+            return Equals(I18NString);
 
         }
 
