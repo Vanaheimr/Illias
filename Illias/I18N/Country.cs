@@ -374,6 +374,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         //Zanzibar	+255
         public static readonly Country Zimbabwe                                 = new Country(new I18NString(Languages.eng, "Zimbabwe"),                                       "ZW", "ZWE", 716, 263);
 
+        public static readonly Country Testland                                 = new Country(new I18NString(Languages.eng, "Testland"),                                       "YY", "YYY", 999, 999);
+
         #endregion
 
 
