@@ -767,6 +767,40 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="Seperator">A string as element seperator.</param>
         /// <param name="DefaultValue">The default value to return for an empty enumeration.</param>
         public static String AggregateWith<T>(this IEnumerable<T>  Enumeration,
+                                              Char                 Seperator,
+                                              String               DefaultValue = null)
+        {
+
+            if (DefaultValue == null)
+                DefaultValue = String.Empty;
+
+            if (Enumeration == null)
+                return DefaultValue;
+
+            var Array = Enumeration.ToArray();
+
+            if (Array.Length == 0)
+                return DefaultValue;
+
+            return Array.
+                       Select(v => v.ToString()).
+                       AggregateOrDefault((a, b) => a + Seperator + b, DefaultValue);
+
+        }
+
+        #endregion
+
+        #region AggregateWith(this Enumeration, Seperator, DefaultValue = null)
+
+        /// <summary>
+        /// Safely aggregates the given enumeration. If the enumeration is null
+        /// or has no elements an empty string will be returned.
+        /// </summary>
+        /// <typeparam name="T">The type of the enumeration.</typeparam>
+        /// <param name="Enumeration">An enumeration.</param>
+        /// <param name="Seperator">A string as element seperator.</param>
+        /// <param name="DefaultValue">The default value to return for an empty enumeration.</param>
+        public static String AggregateWith<T>(this IEnumerable<T>  Enumeration,
                                               String               Seperator,
                                               String               DefaultValue = null)
         {

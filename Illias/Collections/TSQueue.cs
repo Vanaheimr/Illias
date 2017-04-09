@@ -52,14 +52,11 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
             /// <summary>
             /// Return the value stored within the element.
             /// </summary>
-            public T            Value { get; private set; }
+            public T            Value { get; }
 
             #endregion
 
             #region Constructor(s)
-
-            #region QueueElement(Value)
-
             /// <summary>
             /// Create a single queue element.
             /// </summary>
@@ -69,8 +66,6 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
                 this.Value = Value;
                 this.Next  = null;
             }
-
-            #endregion
 
             #endregion
 
@@ -195,7 +190,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
                 OldFirst              = First;
                 NewQueueElement.Next  = OldFirst;
             }
-            while (Interlocked.CompareExchange<QueueElement>(ref _FirstQueueElement, NewQueueElement, OldFirst) != OldFirst);
+            while (Interlocked.CompareExchange(ref _FirstQueueElement, NewQueueElement, OldFirst) != OldFirst);
 
             Interlocked.Increment(ref _Count);
 
@@ -204,9 +199,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
             while ((UInt64) _Count > _MaxNumberOfElements)
                 Pop();
 
-            var _OnAdded = OnAdded;
-            if (_OnAdded != null)
-                _OnAdded(this, Value);
+            OnAdded?.Invoke(this, Value);
 
             return NewQueueElement;
 
@@ -220,9 +213,8 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
         /// Return the oldest value of the queue without removing it.
         /// </summary>
         public T Peek()
-        {
-            return _FirstQueueElement.Value;
-        }
+
+            => _FirstQueueElement.Value;
 
         #endregion
 
@@ -249,9 +241,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
                 Interlocked.Decrement(ref _Count);
             }
 
-            var _OnRemoved = OnRemoved;
-            if (_OnRemoved != null)
-                _OnRemoved(this, _FirstQueueElement.Value);
+            OnRemoved?.Invoke(this, _FirstQueueElement.Value);
 
             return Oldest.Value;
 
@@ -274,7 +264,9 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
             {
                 do
                 {
+
                     yield return node.Value;
+
                 } while ((node = node.Next) != null);
             }
 
@@ -282,7 +274,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
         #endregion
