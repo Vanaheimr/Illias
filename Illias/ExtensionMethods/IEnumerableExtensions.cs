@@ -588,6 +588,27 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region SafeWhere(this IEnumerable, Filter)
+
+        /// <summary>
+        /// Safely filters the given enumeration.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the enumeration.</typeparam>
+        /// <param name="IEnumerable">An enumeration.</param>
+        /// <param name="Filter">The delegate to filter the given enumeration.</param>
+        public static IEnumerable<TSource> SafeWhere<TSource>(this IEnumerable<TSource>  IEnumerable,
+                                                              Func<TSource, Boolean>     Filter)
+        {
+
+            if (IEnumerable == null || Filter == null)
+                return new TSource[0];
+
+            return IEnumerable.Where(Filter);
+
+        }
+
+        #endregion
+
         #region SelectIgnoreErrors(this IEnumerable, SelectionDelegate, DefaultValues = null)
 
         /// <summary>

@@ -25,19 +25,24 @@ namespace org.GraphDefined.Vanaheimr.Illias
     public enum Languages
     {
         unknown,
-        be,
+        bgn,
         deu,
         eng,
         fra,
         dk,
         no,
-        fi,
-        se,
+        slo,
+        usa,
+        aut,
+        isr,
+        ita,
+        fin,
+        swe,
         nld,
         ru,
         sk,
-        gb,
-        ita
+        gbr,
+        heb
     }
 
     /// <summary>
