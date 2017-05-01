@@ -26,6 +26,31 @@ using System.Collections.Generic;
 namespace org.GraphDefined.Vanaheimr.Illias
 {
 
+    public static class I18NStringExtentions
+    {
+
+        /// <summary>
+        /// The I18N text is empty.
+        /// </summary>
+        public static Boolean IsNullOrEmpty(this I18NString Text)
+            => Text != null || !Text.Any();
+
+        /// <summary>
+        /// The I18N text is not empty.
+        /// </summary>
+        public static Boolean IsNotNullOrEmpty(this I18NString Text)
+            => Text != null && Text.Any();
+
+        /// <summary>
+        /// The first text of an I18N text.
+        /// </summary>
+        public static String FirstText(this I18NString Text)
+            => Text.Any()
+                   ? Text.First().Text
+                   : null;
+
+    }
+
     /// <summary>
     /// An internationalized (I18N) text/string.
     /// </summary>
@@ -36,29 +61,6 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #region Data
 
         private readonly Dictionary<Languages, String> I18NStrings;
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// The I18N text is empty.
-        /// </summary>
-        public Boolean IsEmpty
-            => I18NStrings.Count == 0;
-
-        /// <summary>
-        /// The I18N text is not empty.
-        /// </summary>
-        public Boolean IsNotEmpty
-            => I18NStrings.Count > 0;
-
-
-        public String FirstText
-
-            => I18NStrings.Any()
-                   ? I18NStrings.First().Value
-                   : null;
 
         #endregion
 

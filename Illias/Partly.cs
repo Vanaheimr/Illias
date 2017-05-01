@@ -30,9 +30,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
     {
 
         public static Partly Generate(IEnumerable<Boolean> Booleans)
-        {
-            return Generate(Booleans.ToArray());
-        }
+            => Generate(Booleans.ToArray());
+
 
         public static Partly Generate(params Boolean[] Booleans)
         {

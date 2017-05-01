@@ -138,9 +138,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         /// <param name="Items">An array of items.</param>
         public ReactiveSet<T> Add(params T[] Items)
-        {
-            return Add(Items as IEnumerable<T>);
-        }
+
+            => Add(Items as IEnumerable<T>);
 
         #endregion
 
@@ -153,22 +152,21 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public ReactiveSet<T> Add(IEnumerable<T> Items)
         {
 
-            if (Items != null)
-            {
+            if (Items != null && Items.Any())
+                lock(_Set)
+                {
 
-                var OnItemAddedLocal  = OnItemAdded;
-                var Timestamp         = DateTime.Now;
+                    var Timestamp = DateTime.Now;
 
-                Items.ForEach(Item => {
+                    Items.ForEach(Item => {
 
-                    _Set.Add(Item);
+                        _Set.Add(Item);
 
-                    if (OnItemAddedLocal != null)
-                        OnItemAddedLocal(Timestamp, this, Item);
+                         OnItemAdded?.Invoke(Timestamp, this, Item);
 
-                });
+                    });
 
-            }
+                }
 
             return this;
 
@@ -186,17 +184,16 @@ namespace org.GraphDefined.Vanaheimr.Illias
         {
 
             if (Item != null)
-            {
+                lock(_Set)
+                {
 
-                var OnItemAddedLocal = OnItemAdded;
-                var Timestamp = DateTime.Now;
+                    var Timestamp = DateTime.Now;
 
-                _Set.Add(Item);
+                    _Set.Add(Item);
 
-                if (OnItemAddedLocal != null)
-                    OnItemAddedLocal(Timestamp, this, Item);
+                    OnItemAdded?.Invoke(Timestamp, this, Item);
 
-            }
+                }
 
             return Item;
 
@@ -213,9 +210,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="Item">An item.</param>
         /// <returns>true if the reactive set contains the specified item; otherwise, false.</returns>
         public Boolean Contains(T Item)
-        {
-            return _Set.Contains(Item);
-        }
+
+            => _Set.Contains(Item);
 
         #endregion
 
@@ -226,9 +222,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// </summary>
         /// <param name="Items">An array of items.</param>
         public ReactiveSet<T> Remove(params T[] Items)
-        {
-            return Remove(Items as IEnumerable<T>);
-        }
+
+            => Remove(Items as IEnumerable<T>);
 
         #endregion
 
@@ -241,22 +236,57 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public ReactiveSet<T> Remove(IEnumerable<T> Items)
         {
 
-            if (Items != null)
-            {
+            if (Items != null && Items.Any())
+                lock(_Set)
+                {
 
-                var OnItemRemovedLocal  = OnItemRemoved;
-                var Timestamp           = DateTime.Now;
+                    var Timestamp = DateTime.Now;
 
-                Items.ForEach(Item => {
+                    Items.ForEach(Item => {
 
-                    _Set.Remove(Item);
+                        _Set.Remove(Item);
 
-                    if (OnItemRemovedLocal != null)
-                        OnItemRemovedLocal(Timestamp, this, Item);
+                        OnItemRemoved?.Invoke(Timestamp, this, Item);
 
-                });
+                    });
 
-            }
+                }
+
+            return this;
+
+        }
+
+        #endregion
+
+
+        #region Set(Items)
+
+        /// <summary>
+        /// Remove the given enumeration of items from the reactive set.
+        /// </summary>
+        /// <param name="Items">An enumeration of items.</param>
+        public ReactiveSet<T> Set(IEnumerable<T> Items)
+        {
+
+            if (Items != null && Items.Any())
+                lock(_Set)
+                {
+
+                    var ToAdd      = Items.Except(_Set);
+                    var ToRemove   = _Set.Except(Items);
+                    var Timestamp  = DateTime.Now;
+
+                    ToRemove.ForEach(Item => {
+                        _Set.Remove(Item);
+                         OnItemRemoved?.Invoke(Timestamp, this, Item);
+                    });
+
+                    ToAdd.ForEach(Item => {
+                        _Set.Add(Item);
+                         OnItemAdded?.Invoke(Timestamp, this, Item);
+                    });
+
+                }
 
             return this;
 
