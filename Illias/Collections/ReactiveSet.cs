@@ -268,25 +268,27 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public ReactiveSet<T> Set(IEnumerable<T> Items)
         {
 
-            if (Items != null && Items.Any())
-                lock(_Set)
+            if (Items?.Any() == true)
+            {
+                lock (_Set)
                 {
 
-                    var ToAdd      = Items.Except(_Set);
-                    var ToRemove   = _Set.Except(Items);
-                    var Timestamp  = DateTime.Now;
+                    var ToAdd = Items.Except(_Set);
+                    var ToRemove = _Set.Except(Items);
+                    var Timestamp = DateTime.Now;
 
                     ToRemove.ForEach(Item => {
                         _Set.Remove(Item);
-                         OnItemRemoved?.Invoke(Timestamp, this, Item);
+                        OnItemRemoved?.Invoke(Timestamp, this, Item);
                     });
 
                     ToAdd.ForEach(Item => {
                         _Set.Add(Item);
-                         OnItemAdded?.Invoke(Timestamp, this, Item);
+                        OnItemAdded?.  Invoke(Timestamp, this, Item);
                     });
 
                 }
+            }
 
             return this;
 

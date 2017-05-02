@@ -276,6 +276,22 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// Skips the given number of elements in the enumeration.
         /// </summary>
         /// <typeparam name="T">The type fo the enumeration.</typeparam>
+        /// <param name="Enumerable">An enumeration.</param>
+        /// <param name="Count">The number of elements to skip.</param>
+        public static IEnumerable<T> Skip<T>(this IEnumerable<T> Enumerable, UInt32? Count)
+        {
+
+            if (Count.HasValue)
+                return Enumerable.Skip(Count.Value);
+
+            return Enumerable;
+
+        }
+
+        /// <summary>
+        /// Skips the given number of elements in the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type fo the enumeration.</typeparam>
         /// <param name="IEnumerable">An enumeration.</param>
         /// <param name="Count">The number of elements to skip.</param>
         public static IEnumerable<T> Skip<T>(this IEnumerable<T> IEnumerable, UInt64 Count)
@@ -288,6 +304,22 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
             while (IEnumerator.MoveNext())
                 yield return IEnumerator.Current;
+
+        }
+
+        /// <summary>
+        /// Skips the given number of elements in the enumeration.
+        /// </summary>
+        /// <typeparam name="T">The type fo the enumeration.</typeparam>
+        /// <param name="Enumerable">An enumeration.</param>
+        /// <param name="Count">The number of elements to skip.</param>
+        public static IEnumerable<T> Skip<T>(this IEnumerable<T> Enumerable, UInt64? Count)
+        {
+
+            if (Count.HasValue)
+                return Enumerable.Skip(Count.Value);
+
+            return Enumerable;
 
         }
 
