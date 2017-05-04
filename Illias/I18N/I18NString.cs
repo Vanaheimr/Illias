@@ -33,7 +33,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// The I18N text is empty.
         /// </summary>
         public static Boolean IsNullOrEmpty(this I18NString Text)
-            => Text != null || !Text.Any();
+            => Text == null || !Text.Any();
 
         /// <summary>
         /// The I18N text is not empty.
