@@ -303,7 +303,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public static T MapElement<T>(this XElement                           ParentXElement,
                                       XName                                   XName,
                                       Func<XElement, OnExceptionDelegate, T>  Mapper,
-                                      T                                       Default = default(T))
+                                      OnExceptionDelegate                     OnException  = null,
+                                      T                                       Default      = default(T))
         {
 
             #region Initial checks
@@ -318,7 +319,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
             if (_XElement == null)
                 return Default;
 
-            return Mapper(_XElement, null);
+            return Mapper(_XElement, OnException);
 
         }
 
@@ -387,7 +388,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         public static T? MapElementOrNullable<T>(this XElement                           ParentXElement,
                                                  XName                                   XName,
-                                                 Func<XElement, OnExceptionDelegate, T>  Mapper)
+                                                 Func<XElement, OnExceptionDelegate, T>  Mapper,
+                                                 OnExceptionDelegate                     OnException = null)
 
             where T : struct
 
@@ -405,7 +407,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
             if (_XElement == null)
                 return new T?();
 
-            return Mapper(_XElement, null);
+            return Mapper(_XElement, OnException);
 
         }
 
@@ -454,6 +456,64 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
             var _XElements = ParentXElement.Elements(XName);
 
+            if (_XElements == null || !_XElements.Any())
+                return new T[0];
+
+            return _XElements.Select(XML   => Mapper(XML, OnException)).
+                              Where (value => value != null);
+
+        }
+
+        #endregion
+
+        #region MapElements      (ParentXElement, XWrapper, XName, Mapper, OnException = null)
+
+        public static IEnumerable<T> MapElements<T>(this XElement        ParentXElement,
+                                                    XName                XWrapper,
+                                                    XName                XName,
+                                                    Func<XElement, T>    Mapper,
+                                                    OnExceptionDelegate  OnException = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null || Mapper == null)
+                return new T[0];
+
+            #endregion
+
+            var _XElement  = ParentXElement.Element(XWrapper);
+            if (_XElement == null)
+                return new T[0];
+
+            var _XElements = _XElement.Elements(XName);
+            if (_XElements == null || !_XElements.Any())
+                return new T[0];
+
+            return _XElements.Select(XML   => Mapper(XML)).
+                              Where (value => value != null);
+
+        }
+
+        public static IEnumerable<T> MapElements<T>(this XElement                           ParentXElement,
+                                                    XName                                   XWrapper,
+                                                    XName                                   XName,
+                                                    Func<XElement, OnExceptionDelegate, T>  Mapper,
+                                                    OnExceptionDelegate                     OnException = null)
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null || Mapper == null)
+                return new T[0];
+
+            #endregion
+
+            var _XElement  = ParentXElement.Element(XWrapper);
+            if (_XElement == null)
+                return new T[0];
+
+            var _XElements = _XElement.Elements(XName);
             if (_XElements == null || !_XElements.Any())
                 return new T[0];
 
