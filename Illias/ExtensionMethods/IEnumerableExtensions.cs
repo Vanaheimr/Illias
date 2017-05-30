@@ -611,7 +611,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
             var Items = IEnumerable.ToArray();
 
-            if (!Items.Any())
+            if (Items.Length == 0)
                 return DefaultValues;
 
             return Items.Select(SelectionDelegate);
