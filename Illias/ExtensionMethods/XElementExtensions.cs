@@ -864,6 +864,70 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         }
 
+        public static T MapValueOrFail<T>(this XElement                          ParentXElement,
+                                          XName                                  XName,
+                                          Func<String, OnExceptionDelegate, T?>  ValueMapper,
+                                          OnExceptionDelegate                    OnException       = null,
+                                          String                                 ExceptionMessage  = null)
+
+            where T : struct
+
+        {
+
+            #region Initial checks
+
+            if (ParentXElement == null)
+                throw new ArgumentNullException(nameof(ParentXElement),  "The given XML element must not be null!");
+
+            if (ValueMapper == null)
+                throw new ArgumentNullException(nameof(ValueMapper),     "The given XML element mapper delegate must not be null!");
+
+            #endregion
+
+
+            var _XElement = ParentXElement.Element(XName);
+
+            if (_XElement == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "Missing XML element '" + XName.LocalName + "'!");
+
+            if (_XElement.Value == null)
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                        ? ExceptionMessage
+                                        : "The value of the given XML element '" + XName.LocalName + "' must not be null!");
+
+            T? Value;
+
+            try
+            {
+
+                Value = ValueMapper(_XElement.Value, OnException);
+
+                if (!Value.HasValue)
+                    throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                            ? ExceptionMessage
+                                            : "The XML element '" + XName.LocalName + "' is invalid!");
+
+            }
+            catch (Exception e)
+            {
+
+                OnException?.Invoke(DateTime.Now,
+                                    _XElement,
+                                    e);
+
+                throw new Exception(ExceptionMessage.IsNotNullOrEmpty()
+                                    ? ExceptionMessage
+                                    : "The XML element '" + XName.LocalName + "' is invalid!",
+                                e);
+
+            }
+
+            return Value.Value;
+
+        }
+
         #endregion
 
         #region MapValueOrFail(ParentXElement, XWrapper, XName, ValueMapper, ExceptionMessage = null)
