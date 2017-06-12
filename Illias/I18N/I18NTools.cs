@@ -31,6 +31,28 @@ namespace org.GraphDefined.Vanaheimr.Illias
     public static class I18NTools
     {
 
+        #region SubstringMax(this I18NText, Length)
+
+        /// <summary>
+        /// Return a substring of the given maximum length.
+        /// </summary>
+        /// <param name="I18NText">A text.</param>
+        /// <param name="Length">The maximum length of the substring.</param>
+        public static I18NString SubstringMax(this I18NString I18NText, Int32 Length)
+        {
+
+            if (I18NText == null)
+                return null;
+
+            return new I18NString(I18NText.Select(text => new I18NPair(
+                                                              text.Language,
+                                                              text.Text.Substring(0, Math.Min(text.Text.Length, Length))
+                                                          )));
+
+        }
+
+        #endregion
+
         #region ToHTML(this I18NString)
 
         /// <summary>

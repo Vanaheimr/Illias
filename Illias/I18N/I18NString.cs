@@ -104,8 +104,27 @@ namespace org.GraphDefined.Vanaheimr.Illias
             : this()
         {
 
-            foreach (var Text in Texts)
-                I18NStrings.Add(Text.Key, Text.Value);
+            if (Texts != null)
+                foreach (var Text in Texts)
+                    I18NStrings.Add(Text.Key, Text.Value);
+
+        }
+
+        #endregion
+
+        #region I18NString(I18NPairs)
+
+        /// <summary>
+        /// Create a new internationalized (I18N) string
+        /// based on the given I18N-pairs.
+        /// </summary>
+        public I18NString(IEnumerable<I18NPair> I18NPairs)
+            : this()
+        {
+
+            if (I18NPairs != null)
+                foreach (var Text in I18NPairs)
+                    I18NStrings.Add(Text.Language, Text.Text);
 
         }
 
@@ -121,8 +140,9 @@ namespace org.GraphDefined.Vanaheimr.Illias
             : this()
         {
 
-            foreach (var Text in I18NPairs)
-                I18NStrings.Add(Text.Language, Text.Text);
+            if (I18NPairs != null)
+                foreach (var Text in I18NPairs)
+                    I18NStrings.Add(Text.Language, Text.Text);
 
         }
 
