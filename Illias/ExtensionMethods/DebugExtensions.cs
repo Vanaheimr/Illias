@@ -72,6 +72,20 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region Log(Message, Exception)
+
+        /// <summary>
+        /// Write the current timestamp and given exception to Debug.
+        /// </summary>
+        /// <param name="Message">An exception message..</param>
+        /// <param name="Exception">The exception.</param>
+        public static void Log(String Message, Exception Exception)
+        {
+            Debug.WriteLine("[" + DateTime.Now + "] " + Message + Environment.NewLine + Exception.Message);
+        }
+
+        #endregion
+
     }
 
 }
