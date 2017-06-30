@@ -18,9 +18,11 @@
 #region Usings
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -95,27 +97,11 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
 
         #region MaxNumberOfElements
 
-        private UInt64 _MaxNumberOfElements;
-
         /// <summary>
         /// The maximal number of values within the queue.
         /// RemoveOldestQueueElement() will be called to remove dispensable elements.
         /// </summary>
-        public UInt64 MaxNumberOfElements
-        {
-
-            get
-            {
-                return _MaxNumberOfElements;
-            }
-
-            set
-            {
-                if (value < Int32.MaxValue)
-                    _MaxNumberOfElements = value;
-            }
-
-        }
+        public UInt64 MaxNumberOfElements { get; }
 
         #endregion
 
@@ -143,8 +129,9 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
         /// <summary>
         /// A delegate called whenever an element was added to or removed from the queue.
         /// </summary>
-        /// <param name="Value"></param>
-        public delegate void QueueDelegate(TSQueue<T> Sender, T Value);
+        /// <param name="Sender">The sender of the event.</param>
+        /// <param name="Value">The value.</param>
+        public delegate Task QueueDelegate(TSQueue<T> Sender, T Value);
 
         /// <summary>
         /// Called whenever an element was added to the queue.
@@ -166,7 +153,9 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
         /// <param name="MaxNumberOfElements">The maximal number of values within the queue.</param>
         public TSQueue(UInt64 MaxNumberOfElements = 500)
         {
-            this.MaxNumberOfElements = MaxNumberOfElements;
+
+            this.MaxNumberOfElements  = Math.Max(MaxNumberOfElements, Int64.MaxValue);
+
         }
 
         #endregion
@@ -178,7 +167,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
         /// Push a new value into the queue.
         /// </summary>
         /// <param name="Value">The value.</param>
-        public QueueElement Push(T Value)
+        public async Task<QueueElement> Push(T Value)
         {
 
             var NewQueueElement = new QueueElement(Value);
@@ -196,10 +185,15 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
 
             // Multiple concurrent threads might remove more than expected!
             // But it is assumed, that this is not a problem to anyone.
-            while ((UInt64) _Count > _MaxNumberOfElements)
-                Pop();
+            while ((UInt64) _Count > MaxNumberOfElements)
+                await Pop();
 
-            OnAdded?.Invoke(this, Value);
+          //  OnAdded?.Invoke(this, Value);
+
+            await Task.WhenAll(OnAdded.GetInvocationList().
+                                   Cast<QueueDelegate>().
+                                   Select(e => e(this,
+                                                 Value)));
 
             return NewQueueElement;
 
@@ -223,7 +217,7 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
         /// <summary>
         /// Return the oldest value of the queue and remove it.
         /// </summary>
-        public T Pop()
+        public async Task<T> Pop()
         {
 
             QueueElement Oldest     = _FirstQueueElement;
@@ -241,7 +235,12 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
                 Interlocked.Decrement(ref _Count);
             }
 
-            OnRemoved?.Invoke(this, _FirstQueueElement.Value);
+           // OnRemoved?.Invoke(this, _FirstQueueElement.Value);
+
+            await Task.WhenAll(OnRemoved.GetInvocationList().
+                                   Cast<QueueDelegate>().
+                                   Select(e => e(this,
+                                                 _FirstQueueElement.Value)));
 
             return Oldest.Value;
 
