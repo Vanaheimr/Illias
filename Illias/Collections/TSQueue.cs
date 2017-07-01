@@ -188,12 +188,12 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
             while ((UInt64) _Count > MaxNumberOfElements)
                 await Pop();
 
-          //  OnAdded?.Invoke(this, Value);
-
-            await Task.WhenAll(OnAdded.GetInvocationList().
-                                   Cast<QueueDelegate>().
-                                   Select(e => e(this,
-                                                 Value)));
+            var OnAddedLocal = OnAdded;
+            if (OnAddedLocal != null)
+                await Task.WhenAll(OnAddedLocal.GetInvocationList().
+                                       Cast<QueueDelegate>().
+                                       Select(e => e(this,
+                                                     Value)));
 
             return NewQueueElement;
 
@@ -235,12 +235,12 @@ namespace org.GraphDefined.Vanaheimr.Illias.Collections
                 Interlocked.Decrement(ref _Count);
             }
 
-           // OnRemoved?.Invoke(this, _FirstQueueElement.Value);
-
-            await Task.WhenAll(OnRemoved.GetInvocationList().
-                                   Cast<QueueDelegate>().
-                                   Select(e => e(this,
-                                                 _FirstQueueElement.Value)));
+            var OnRemovedLocal = OnRemoved;
+            if (OnRemovedLocal != null)
+                await Task.WhenAll(OnRemovedLocal.GetInvocationList().
+                                       Cast<QueueDelegate>().
+                                       Select(e => e(this,
+                                                     _FirstQueueElement.Value)));
 
             return Oldest.Value;
 
