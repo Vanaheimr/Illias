@@ -82,6 +82,25 @@ namespace org.GraphDefined.Vanaheimr.Illias
 
         #endregion
 
+        #region ToIso8601WithOffset(this DateTime, Fractions = true)
+
+        /// <summary>
+        /// Convert the given DateTime object to an ISO 8601 datetime string with timezone offset.
+        /// </summary>
+        /// <param name="DateTime">A DateTime object.</param>
+        /// <param name="Fractions">Iclude the fractions of seconds.</param>
+        /// <returns>The DateTime formated as "yyyy-MM-ddTHH:mm:ss.fffzzz"</returns>
+        /// <example>2014-02-01T15:45:00.000+00:00</example>
+        public static String ToIso8601WithOffset(this DateTime DateTime, Boolean Fractions = true)
+
+            => (DateTime.Kind == DateTimeKind.Utc
+                    ? DateTime.ToLocalTime()
+                    : DateTime).
+
+                ToString("yyyy-MM-ddTHH:mm:ss" + (Fractions ? ".fff" : "") + "zzz");
+
+        #endregion
+
         #region ToRfc1123(this DateTime)
 
         /// <summary>
