@@ -61,13 +61,27 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #endregion
 
 
+        #region HexStringToByteArray(this HexValue)
+
+        /// <summary>
+        /// Convert a hex representation of an array of bytes
+        /// back into an array of bytes.
+        /// </summary>
+        /// <param name="HexValue">hex representation of a byte array.</param>
         public static Byte[] HexStringToByteArray(this String HexValue)
         {
+
+            if (HexValue.IsNullOrEmpty())
+                return new Byte[0];
+
             return Enumerable.Range(0, HexValue.Length)
-                             .Where(x => x % 2 == 0)
+                             .Where (x => x % 2 == 0)
                              .Select(x => Convert.ToByte(HexValue.Substring(x, 2), 16))
                              .ToArray();
+
         }
+
+        #endregion
 
         #region Reverse(this ByteArray)
 
