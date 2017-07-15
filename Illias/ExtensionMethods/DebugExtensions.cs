@@ -32,28 +32,30 @@ namespace org.GraphDefined.Vanaheimr.Illias
     public static class DebugX
     {
 
-        #region Log(Text)
+        #region Log(params Text)
 
         /// <summary>
         /// Write the current timestamp and given text to Debug.
         /// </summary>
         /// <param name="Text">The text to be logged.</param>
-        public static void Log(String Text)
+        public static void Log(params String[] Text)
         {
-            Debug.WriteLine("[" + DateTime.Now + "] " + Text);
+            if (Text.IsNullOrEmpty())
+                Debug.WriteLine("[" + DateTime.Now.ToString() + "] " + String.Concat(Text));
         }
 
         #endregion
 
-        #region LogT(Text)
+        #region LogT(params Text)
 
         /// <summary>
         /// Write the current timestamp and given text to Debug.
         /// </summary>
         /// <param name="Text">The text to be logged.</param>
-        public static void LogT(String Text)
+        public static void LogT(params String[] Text)
         {
-            Debug.WriteLine("[" + DateTime.Now + ", Thread " + Thread.CurrentThread.ManagedThreadId + "] " + Text);
+            if (Text.IsNullOrEmpty())
+                Debug.WriteLine("[" + DateTime.Now.ToString() + ", Thread " + Thread.CurrentThread.ManagedThreadId.ToString() + "] " + String.Concat(Text));
         }
 
         #endregion
@@ -67,7 +69,8 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="Source">The source of the exception.</param>
         public static void Log(this Exception Exception, String Source)
         {
-            Debug.WriteLine("[" + DateTime.Now + "] " + Source + " led to an exception: " + Exception.Message);
+            if (Exception != null)
+                Debug.WriteLine("[" + DateTime.Now.ToString() + "] " + (Source ?? "") + " led to an exception: " + Exception.Message);
         }
 
         #endregion
@@ -81,7 +84,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="Exception">The exception.</param>
         public static void Log(String Message, Exception Exception)
         {
-            Debug.WriteLine("[" + DateTime.Now + "] " + Message + Environment.NewLine + Exception.Message);
+            Debug.WriteLine("[" + DateTime.Now.ToString() + "] " + (Message ?? "") + Environment.NewLine + Exception.Message);
         }
 
         #endregion
