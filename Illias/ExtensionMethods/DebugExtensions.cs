@@ -55,7 +55,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public static void LogT(params String[] Text)
         {
             if (Text.IsNullOrEmpty())
-                Debug.WriteLine("[" + DateTime.Now.ToString() + ", Thread " + Thread.CurrentThread.ManagedThreadId.ToString() + "] " + String.Concat(Text));
+                Debug.WriteLine("[" + DateTime.UtcNow.ToString() + ", Thread " + Thread.CurrentThread.ManagedThreadId.ToString() + "] " + String.Concat(Text));
         }
 
         #endregion

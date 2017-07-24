@@ -24,6 +24,9 @@ using System;
 namespace org.GraphDefined.Vanaheimr.Illias
 {
 
+    /// <summary>
+    /// The common interface of a datastructure used as an unique identification.
+    /// </summary>
     public interface IId : IComparable
     {
 
@@ -33,6 +36,20 @@ namespace org.GraphDefined.Vanaheimr.Illias
         //int GetHashCode();
         //ulong Length { get; }
         //string ToString();
+
+    }
+
+    /// <summary>
+    /// The common interface of a datastructure used as an unique identification.
+    /// </summary>
+    public interface IId<T> : IComparable<T>,
+                              IComparable
+    {
+
+        /// <summary>
+        /// The unique identification of the data structure.
+        /// </summary>
+        T Id { get; }
 
     }
 

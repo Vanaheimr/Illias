@@ -492,10 +492,10 @@ namespace org.GraphDefined.Vanaheimr.Illias
         public static Boolean IsNeitherNullNorEmpty<T>(this IEnumerable<T> Enumerable)
         {
 
-            if (Enumerable == null || !Enumerable.Any())
+            if (Enumerable == null)
                 return false;
 
-            return true;
+            return Enumerable.Any();
 
         }
 
@@ -1053,22 +1053,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         #endregion
 
 
-        #region NotNullAny<T>(this Enumeration)
-
-        public static Boolean NotNullAny<T>(this IEnumerable<T> Enumeration)
-        {
-
-            if (Enumeration == null)
-                return false;
-
-            return Enumeration.Any();
-
-        }
-
-        #endregion
-
-
-        #region NotNullAny<T>(this Enumeration, Delegate)
+        #region WithFirstDo<T>(this Enumeration, Delegate)
 
         public static void WithFirstDo<T>(this IEnumerable<T>  Enumeration,
                                           Action<T>            Delegate)
