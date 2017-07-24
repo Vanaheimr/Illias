@@ -40,7 +40,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="Text">The text to be logged.</param>
         public static void Log(params String[] Text)
         {
-            if (Text.IsNullOrEmpty())
+            if (Text.IsNeitherNullNorEmpty())
                 Debug.WriteLine("[" + DateTime.Now.ToString() + "] " + String.Concat(Text));
         }
 
@@ -54,7 +54,7 @@ namespace org.GraphDefined.Vanaheimr.Illias
         /// <param name="Text">The text to be logged.</param>
         public static void LogT(params String[] Text)
         {
-            if (Text.IsNullOrEmpty())
+            if (Text.IsNeitherNullNorEmpty())
                 Debug.WriteLine("[" + DateTime.UtcNow.ToString() + ", Thread " + Thread.CurrentThread.ManagedThreadId.ToString() + "] " + String.Concat(Text));
         }
 
